@@ -6,12 +6,14 @@ using System.Collections;
 
 public class Test : MonoBehaviour {
 	//int count = 0;
+	public float x;
+
 	void Awake(){
 	}
 
 	void Update(){
 		//Time.timeScale = 0.0000f;
-		if (Input.GetKeyDown(KeyCode.Menu)){
+		if (Input.GetKeyDown(KeyCode.Space)){
 			if (Time.timeScale == 3)
 				Time.timeScale =1;
 			else
@@ -22,6 +24,12 @@ public class Test : MonoBehaviour {
 //			Application.CaptureScreenshot(count.ToString() + ".png");
 //			count ++;		
 			StartCoroutine(waitForEsacpe());
+		}
+
+		if (Input.GetKeyDown (KeyCode.Return)) {
+			//float x = 0.123f;
+			float y = x%1;
+			Debug.Log (y.ToString());
 		}
 	}
 

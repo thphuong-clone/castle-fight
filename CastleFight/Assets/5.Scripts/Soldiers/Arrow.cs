@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Arrow : MonoBehaviour {
 	public float arrowSpeed;
-	public AttackInformation attack = new AttackInformation(0,true);
+	public AttackInformation attack = new AttackInformation(0,0);
 
 	public void attackEnemy(GameObject e,AttackInformation info){
 		this.gameObject.SetActive(true);
 		attack.attackDamage = info.attackDamage;
-		attack.lightAttack = info.lightAttack;
+		attack.attackType = info.attackType;
 
 		StartCoroutine (moveToEnemy (e));
 	}

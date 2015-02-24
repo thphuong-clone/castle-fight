@@ -83,7 +83,30 @@ public class P1_HouseBuilder : MonoBehaviour {
 		}
 		//build 
 		Building build = (Building)Instantiate ((Building)b);
-		build.transform.position = new Vector3 (position.x,position.y,0);
+		//Round up the building position, so that the building will always be built on a round position
+		float modX = Mathf.Abs(position.x) % 1;
+		float modY = Mathf.Abs (position.y) % 1;
+		if (modX < 0.5f) {
+			//do nothing	
+		}
+		else{
+			if (position.x > 0)
+				position.x ++;
+			else
+				position.x --;
+		}
+
+		if (modY < 0.5f) {
+			//do nothing	
+		}
+		else{
+			if (position.y > 0)
+				position.y ++;
+			else
+				position.y --;
+		}
+
+		build.transform.position = new Vector3 ((int)position.x,(int)position.y,0);
 		//congratulations, you have a building!
 		cancleBuilding ();
 	}

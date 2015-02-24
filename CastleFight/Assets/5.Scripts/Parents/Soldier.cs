@@ -28,18 +28,18 @@ public class Soldier : Unit {
 
 	//There are 2 attack type, light attack and heavy attack.
 	public float attackDamage;
-	public bool isLightAttack;
+	public int attackType;
 
 	//this float is to check if the soldier is stuck
 	float lastY;
 
-	[SerializeField]
+	//[SerializeField]
 	List<Unit> listOfCollidingEnemy = new List<Unit> ();
 
 	//to move to the position, left or right, not important, will replace with A* anyway 
 //	int direction;
 
-	[SerializeField]
+	//[SerializeField]
 	bool collideEnemy;
 
 	protected Rigidbody2D r;
@@ -223,7 +223,10 @@ public class Soldier : Unit {
 			if(!this.isDead){
 				ani.SetBool ("Attack", true);
 				yield return new WaitForSeconds (animationTime);
-				AttackInformation attackInfo = new AttackInformation(this.attackDamage,this.isLightAttack);
+				if (this.isDead){
+					goto StopAttack;
+				}
+				AttackInformation attackInfo = new AttackInformation(this.attackDamage,this.attackType);
 				en.SendMessage("receiveDamage",attackInfo);
 				yield return new WaitForSeconds(2 - animationTime);
 
@@ -361,9 +364,16 @@ public class Soldier : Unit {
 			
 			if (transform.position.y > _position.y) 
 				a += 180 * Mathf.Deg2Rad;
-			
-			transform.localRotation = Quaternion.Euler (0,0,a * Mathf.Rad2Deg);
 
+			if (!float.IsNaN(a)){				
+				transform.localRotation = Quaternion.Euler (0,0,a * Mathf.Rad2Deg);
+			}
+			else{				
+				transform.localRotation = Quaternion.Euler (0,0,0);
+				angle = 0;
+				x = 0;
+				y = 0;
+			}
 		}
 		catch(Exception e){
 			Debug.Log(e.ToString());

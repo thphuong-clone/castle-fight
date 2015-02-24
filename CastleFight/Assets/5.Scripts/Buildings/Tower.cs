@@ -7,7 +7,7 @@ public class Tower : Building {
 	public Arrow arrow;
 
 	public float attackDamage;
-	public bool isLightAttack;
+	public int attackType;
 
 	bool isAttacking;
 
@@ -104,7 +104,7 @@ public class Tower : Building {
 		arrow.transform.localRotation = Quaternion.Euler (0,0,a * Mathf.Rad2Deg);
 
 
-		arrow.attackEnemy (en,new AttackInformation(attackDamage,isLightAttack));
+		arrow.attackEnemy (en,new AttackInformation(attackDamage,attackType));
 	}
 
 

@@ -11,7 +11,9 @@ public class P2_TacticalController : MonoBehaviour {
 	public Button orderButton;
 	
 	public List<Button> soldierButtons = new List<Button>();
-	
+
+	public GameObject displayMap;
+
 	//This is the current unit taking the order, be it horseman, or archer ....
 	[SerializeField]
 	int currentControlledUnit;
@@ -26,7 +28,16 @@ public class P2_TacticalController : MonoBehaviour {
 		orderButton.image.color = Color.red;
 		
 	}
+
+	//On enable this function, turn on the graphic map
+	void OnEnable(){
+		displayMap.gameObject.transform.position = new Vector3 (0,4,-3);
+	}
 	
+	void OnDisable(){
+		displayMap.gameObject.transform.position = new Vector3 (0,4,+3);
+	}
+
 
 	//This function change the currently controlled unit (swordman, archer, horseman ... )
 	//This function is called by clicking at the approtiate unit button on the tactical map

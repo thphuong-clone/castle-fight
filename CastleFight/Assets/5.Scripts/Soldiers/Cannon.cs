@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Cannon : Archer {
 	protected override void shootArrow (GameObject en){
 		arrow.gameObject.SetActive (true);
 		arrow.transform.localPosition = new Vector3 (0.0125f,0.35f,-1.25f);
-		arrow.attackEnemy (en,new AttackInformation(attackDamage,isLightAttack));
+		arrow.attackEnemy (en,new AttackInformation(attackDamage,attackType));
 	}
 
 	public override IEnumerator checkHealth (){

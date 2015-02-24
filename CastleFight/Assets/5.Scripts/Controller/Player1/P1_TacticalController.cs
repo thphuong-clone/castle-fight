@@ -32,11 +32,11 @@ public class P1_TacticalController : MonoBehaviour {
 
 	//On enable this function, turn on the graphic map
 	void OnEnable(){
-		displayMap.gameObject.SetActive (true);
+		displayMap.gameObject.transform.position = new Vector3 (0,-4,-3);
 	}
 
 	void OnDisable(){
-		displayMap.gameObject.SetActive (false);
+		displayMap.gameObject.transform.position = new Vector3 (0,-4,+3);
 	}
 
 	//This function change the currently controlled unit (swordman, archer, horseman ... )

@@ -2,7 +2,15 @@
 This is the barrack, it will spawn unit
 It can heals unit around it as well.
 */
-
+/*
+ *Balancing issue
+ *Swordman counter horsema and gladiator but weak to archer and watch tower. Cost 100.
+ *Archer counter swordman but weak to horseman and gladiator. Cost 120
+ *Horseman counter archer and cannon, but weak to swordman. Cost 220
+ *Gladiator counter archer and watch tower but weak to cannon and swordman. Cost 350
+ *cannon counter buildings and gladiator but weak to horseman.
+ *watch tower counter swordman and generally other unit but weak to cannon
+ */
 using UnityEngine;
 using System.Collections;
 using System;
