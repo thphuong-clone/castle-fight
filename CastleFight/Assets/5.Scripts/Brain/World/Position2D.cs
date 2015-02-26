@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AStar
+namespace PathFinder
 {
     public class Position2D
     {

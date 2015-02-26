@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AStar
+namespace PathFinder
 {
     //should be wraper class, just leave it like this for now
     public class QueueNode
