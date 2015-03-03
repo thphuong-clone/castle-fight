@@ -5,17 +5,17 @@ using System.Linq;
 namespace PathFinder
 {
     //should be wraper class, just leave it like this for now
-    public class QueueNode
+    public class SearchNode
     {
         public Position2D position;
         public int cost;
         public int pathCost;
         //public QueueNode prev;
-        public QueueNode next;
-        public QueueNode nextInQueue;
+        public SearchNode next;
+        public SearchNode nextInQueue;
         public bool closed;
 
-        public QueueNode(Position2D position, int cost, int pathCost, QueueNode next)
+        public SearchNode(Position2D position, int cost, int pathCost, SearchNode next)
         {
             this.position = position;
             this.cost = cost;

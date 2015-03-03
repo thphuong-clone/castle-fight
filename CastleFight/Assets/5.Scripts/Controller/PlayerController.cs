@@ -5,8 +5,10 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using PathFinder;
 
 public class PlayerController : MonoBehaviour {
+    public static SimpleWorld2D knownWorld = new SimpleWorld2D(9, 16);
 
 //The attack order for player one - the z dimension of the vector is the order.
 //0 = stay idle at current position, 1 is move, 2 is attack
@@ -66,22 +68,43 @@ public class PlayerController : MonoBehaviour {
 
 	//this function order every unit to do its destinated task
 	public static void orderSoldier(){
+        knownWorld.SetPosition(new Position2D(0, 10), true);
+        knownWorld.SetPosition(new Position2D(1, 10), true);
+        knownWorld.SetPosition(new Position2D(2, 10), true);
+        knownWorld.SetPosition(new Position2D(3, 10), true);
+        knownWorld.SetPosition(new Position2D(4, 10), true);
+        knownWorld.SetPosition(new Position2D(5, 10), true);
+        knownWorld.SetPosition(new Position2D(6, 10), true);
+        knownWorld.SetPosition(new Position2D(6, 7), true);
+        knownWorld.SetPosition(new Position2D(6, 8), true);
 		for (int i = 0; i < 5; i ++) {
+            Position2D p1End = GridMapUtils.GetTile(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
 			//for the player one
 			foreach(Soldier s in p1_listOfSoldierLists[i]){
 				s.soldierState = (int)p1_soldierOrder[i].z;
-				if (p1_soldierOrder[i].z==0)
-					s.destinatedPos = new Vector2(s.transform.position.x,s.transform.position.y);
-				else
-					s.destinatedPos = new Vector2(p1_soldierOrder[i].x,p1_soldierOrder[i].y);
+                if (p1_soldierOrder[i].z == 0)
+                {
+                    s.destinatedPos = new Vector2(s.transform.position.x, s.transform.position.y);
+                }
+                else
+                {
+                    s.destinatedPos = new Vector2(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
+                    Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
+                    s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p1End);
+                }
 			}
+            Position2D p2End = GridMapUtils.GetTile(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
 			//for the player 2
 			foreach(Soldier s in p2_listOfSoldierLists[i]){
 				s.soldierState = (int)p2_soldierOrder[i].z;
-				if (p2_soldierOrder[i].z==0)
-					s.destinatedPos = new Vector2(s.transform.position.x,s.transform.position.y);
-				else
-					s.destinatedPos = new Vector2(p2_soldierOrder[i].x,p2_soldierOrder[i].y);
+                if (p2_soldierOrder[i].z == 0)
+                    s.destinatedPos = new Vector2(s.transform.position.x, s.transform.position.y);
+                else
+                {
+                    s.destinatedPos = new Vector2(p2_soldierOrder[i].x, p2_soldierOrder[i].y);
+                    Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
+                    s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p2End);
+                }
 			}
 
 		}

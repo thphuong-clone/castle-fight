@@ -8,40 +8,35 @@ namespace PathFinder
     {
         public int width;
         public int height;
-        private bool[] gridMap; //just free or not right now, consider adding cost later
+        private bool[,] gridMap; //just free or not right now, consider adding cost later
 
         public SimpleWorld2D(int width, int height)
         {
             this.width = width;
             this.height = height;
-            gridMap = new bool[width * height];
+            gridMap = new bool[width, height];
         }
 
         public void SetPosition(Position2D position, bool status)
         {
-            gridMap[position.x + position.y * width] = status;
+            if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
+                return;
+            gridMap[position.x, position.y] = status;
         }
 
         public bool IsValidPosition(Position2D position)
         {
-            try
-            {
-                if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
-                    return false;
-                return !gridMap[position.x + position.y * width];
-            }
-            catch (Exception)
-            {
+            if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
                 return false;
-            }
+            return !gridMap[position.x, position.y];
         }
 
-        public Dictionary<Position2D, int> getSurroundingPoint()
+        public Dictionary<Position2D, int> GetNeighbors()
         {
-            return surrounding;
+            return neighbors;
         }
 
-        private static readonly Dictionary<Position2D, int> surrounding = new Dictionary<Position2D, int>
+        private static readonly Dictionary<Position2D, int> neighbors = new Dictionary<Position2D, int>
         {
             {new Position2D(-1, 1), 2}, {new Position2D(0, 1), 1}, {new Position2D(1,1), 2},
             {new Position2D(-1, 0), 1}, {new Position2D(1, 0), 1},

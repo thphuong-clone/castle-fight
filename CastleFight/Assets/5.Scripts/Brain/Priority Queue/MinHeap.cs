@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace PathFinder
 {
-    public sealed class MinHeap<T> where T : QueueNode
+    public sealed class MinHeap<T> where T : SearchNode
     {
         private T head;
 
@@ -44,24 +44,45 @@ namespace PathFinder
 
         public T Dequeue()
         {
-            T first = head;
-            head = (T)head.nextInQueue;
-            return first;
+            try
+            {
+                T first = head;
+                head = (T)head.nextInQueue;
+                return first;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public T GetFirst()
+        {
+            return head;
+        }
+
+        public void Clear()
+        {
+            this.head = null;
         }
 
         public override string ToString()
         {
-            string s = "";
+            StringBuilder builder = new StringBuilder();
 
             T node = head;
 
+            builder.Append(head.position.ToString() + ": " + node.cost + "; ");
+
             while (node.nextInQueue != null)
             {
-                Console.Write(node.position.ToString() + ": " + node.cost + "; ");
+                builder.Append(node.position.ToString() + ": " + node.cost);
                 node = (T)node.nextInQueue;
+                if (node.nextInQueue != null)
+                    builder.Append("; ");
             }
 
-            return s;
+            return builder.ToString();
         }
     }
 }
