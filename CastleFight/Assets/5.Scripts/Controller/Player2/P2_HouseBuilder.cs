@@ -7,6 +7,10 @@ public class P2_HouseBuilder : MonoBehaviour {
 	[SerializeField]//0 = barrack, 1 = wall, 2 = tower.
 	int houseToBuild;
 	
+	[SerializeField]int costOfBarrack;
+	[SerializeField]int costOfTower;
+	[SerializeField]int costOfWall;
+
 	public P2_Controller masterController;
 	
 	//This button is used to place the house down.
@@ -44,13 +48,33 @@ public class P2_HouseBuilder : MonoBehaviour {
 		position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 #endif
 		//enable this line for mobile device
+#if UNITY_ANDROID 
 		foreach (Touch t in Input.touches) {
 			if (t.position.y >=0.6f * y){
 				position = t.position;
 				break;
 			}
 		}
-
+#endif
+		int costToBuild = costOfBarrack;
+		
+		switch (houseToBuild) {
+		case 0:
+			costToBuild = costOfBarrack;
+			break;
+		case 1:
+			costToBuild = costOfWall;
+			break;
+		case 2:
+			costToBuild = costOfTower;
+			break;
+		default:
+			break;
+		}
+		if (ResourceSystem.p1_gold < costToBuild) {
+			cancleBuilding();
+			return;		
+		}
 
 		//The mouse position range from 0,0 to screen width and screen height
 		position = new Vector2(position.x / x,position.y / y);//it is now range from 0 ,0 ~ 0.6, 0.9
@@ -78,6 +102,7 @@ public class P2_HouseBuilder : MonoBehaviour {
 			break;
 		}
 		//build 
+		ResourceSystem.p1_gold -= costToBuild;
 		Building build = (Building)Instantiate ((Building)b);
 		build.isPlayerOne = false;
 		build.transform.rotation = Quaternion.Euler (new Vector3(0,0,180));

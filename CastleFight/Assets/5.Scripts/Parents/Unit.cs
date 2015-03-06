@@ -134,7 +134,7 @@ public class Unit : MonoBehaviour {
 				attackMultiply = 0.45f;
 			else{
 				if (info.attackType == 5)
-					attackMultiply = 1.35f;
+					attackMultiply = 2f;
 				else
 					attackMultiply = 1;
 			}
@@ -142,14 +142,25 @@ public class Unit : MonoBehaviour {
 		case 5://cannon take reduce damage from archer and watch tower
 			if (info.attackType == 2 || info.attackType == 6)
 				attackMultiply = 0.75f;
-			else
-				attackMultiply = 1;
+			else{
+				if (info.attackType == 4){
+					attackMultiply = 0.65f;
+				}
+				else
+					attackMultiply = 1;
+			}
+
 			break;
 		case 6://building type, will take more damage from cannon
-			if (info.attackType == 6)
-				attackMultiply = 1.3f;
-			else			
-				attackMultiply = 1;
+			if (info.attackType == 5)
+				attackMultiply = 2.25f;
+			else{
+				if (info.attackType == 2 || info.attackType == 1)
+					attackMultiply = 0.45f;
+				else
+					attackMultiply = 1;
+			}
+
 			break;
 		default:
 			Debug.Log("Something is wrong!");

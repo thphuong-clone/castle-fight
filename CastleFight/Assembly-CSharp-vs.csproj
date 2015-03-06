@@ -51,7 +51,7 @@
      <Compile Include="Assets\2.SceneAssets\2.0.TestScene\POneController.cs" />
      <Compile Include="Assets\2.SceneAssets\NewTest\NewPath.cs" />
      <Compile Include="Assets\2.SceneAssets\NewTest\PathFinding.cs" />
-     <Compile Include="Assets\2.SceneAssets\TestAI\AStar.cs" />
+     <Compile Include="Assets\2.SceneAssets\TestAI\oldAStar.cs" />
      <Compile Include="Assets\5.Scripts\Buildings\Barrack.cs" />
      <Compile Include="Assets\5.Scripts\Buildings\MainCastle.cs" />
      <Compile Include="Assets\5.Scripts\Buildings\SelectedBarrack.cs" />
@@ -59,17 +59,20 @@
      <Compile Include="Assets\5.Scripts\Buildings\SelectedCastle.cs" />
      <Compile Include="Assets\5.Scripts\Buildings\Tower.cs" />
      <Compile Include="Assets\5.Scripts\Buildings\Wall.cs" />
+     <Compile Include="Assets\5.Scripts\Controller\CaravanSpawner.cs" />
      <Compile Include="Assets\5.Scripts\Controller\HouseBuilder.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player1\P1_BarrackController.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player1\P1_Controller.cs" />
-     <Compile Include="Assets\5.Scripts\Controller\Player1\P1_DisplayMap.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player1\P1_HouseBuilder.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player1\P1_TacticalController.cs" />
+     <Compile Include="Assets\5.Scripts\Controller\Player1\P1_soldierBuilt.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player2\P2_BarrackController.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player2\P2_Controller.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player2\P2_HouseBuilder.cs" />
      <Compile Include="Assets\5.Scripts\Controller\Player2\P2_TacticalController.cs" />
+     <Compile Include="Assets\5.Scripts\Controller\Player2\P2_soldierBuilt.cs" />
      <Compile Include="Assets\5.Scripts\Controller\PlayerController.cs" />
+     <Compile Include="Assets\5.Scripts\Controller\ResourceSystem.cs" />
      <Compile Include="Assets\5.Scripts\CoolDownController.cs" />
      <Compile Include="Assets\5.Scripts\InputManager.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Building.cs" />
@@ -85,8 +88,19 @@
      <Compile Include="Assets\5.Scripts\Soldiers\Medic.cs" />
      <Compile Include="Assets\5.Scripts\Soldiers\SwordMan.cs" />
      <Compile Include="Assets\5.Scripts\Test.cs" />
+     <Compile Include="Assets\5.Scripts\brain\PathFinder.cs" />
+     <Compile Include="Assets\5.Scripts\brain\Priority Queue\Element.cs" />
+     <Compile Include="Assets\5.Scripts\brain\Priority Queue\MinHeap.cs" />
+     <Compile Include="Assets\5.Scripts\brain\Priority Queue\QueueNode.cs" />
+     <Compile Include="Assets\5.Scripts\brain\Properties\AssemblyInfo.cs" />
+     <Compile Include="Assets\5.Scripts\brain\World\Position.cs" />
+     <Compile Include="Assets\5.Scripts\brain\World\Position2D.cs" />
+     <Compile Include="Assets\5.Scripts\brain\World\SimpleWorld2D.cs" />
+     <Compile Include="Assets\5.Scripts\brain\World\World.cs" />
+     <None Include="Assets\uIntelliSense\LICENSE.txt" />
      <None Include="Assets\6.Prefabs\uIntelliSense\Editor\Resources\additional-docs-data.xml" />
      <None Include="Assets\6.Prefabs\uIntelliSense\LICENSE.txt" />
+     <None Include="Assets\uIntelliSense\Editor\Resources\additional-docs-data.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity3d/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

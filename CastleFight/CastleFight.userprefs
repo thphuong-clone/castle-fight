@@ -1,13 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\Buildings\Barrack.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\Controller\Player2\P2_soldierBuilt.cs">
     <Files>
-      <File FileName="Assets\5.Scripts\Parents\Soldier.cs" Line="227" Column="21" />
-      <File FileName="Assets\5.Scripts\Parents\Unit.cs" Line="128" Column="25" />
-      <File FileName="Assets\5.Scripts\Soldiers\Caravan.cs" Line="210" Column="27" />
-      <File FileName="Assets\5.Scripts\Test.cs" Line="1" Column="1" />
-      <File FileName="Assets\5.Scripts\Soldiers\Arrow.cs" Line="1" Column="1" />
-      <File FileName="Assets\5.Scripts\Buildings\Barrack.cs" Line="11" Column="63" />
+      <File FileName="Assets\5.Scripts\Controller\Player1\P1_Controller.cs" Line="26" Column="17" />
+      <File FileName="Assets\5.Scripts\Controller\Player2\P2_Controller.cs" Line="43" Column="31" />
+      <File FileName="Assets\5.Scripts\Controller\Player2\P2_soldierBuilt.cs" Line="50" Column="10" />
+      <File FileName="Assets\5.Scripts\Controller\Player2\P2_TacticalController.cs" Line="38" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

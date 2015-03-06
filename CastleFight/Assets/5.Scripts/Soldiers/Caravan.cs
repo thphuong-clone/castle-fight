@@ -148,15 +148,37 @@ public class Caravan : MonoBehaviour {
 		if (currentNode > 0) {
 			returnVector = - returnVector;
 		}
+		//Debug.Log (returnVector.ToString());
 		return returnVector;
 
 	}
 
 	//move the the destinated position
 	void moveToPos(Vector2 _position){
+
 		if (followingState == 0)
 			return;
 
+		//This part is to fix a really weird bug that I don't know why it is happenning
+		if (followingState == 1 && currentNode == 1) {
+			//Debug.Log ("why?");
+			transform.localRotation = Quaternion.Euler(0,0,90);
+
+			Vector2 _returnVector = new Vector2 (-1, 0) * moveSpeed /4;
+			r.velocity = _returnVector;
+			if (Mathf.Abs (this.transform.position.x - _position.x) < 0.35f && Mathf.Abs (this.transform.position.y - _position.y) < 0.35f && followingState != 0) {
+				if (followingState == 1)
+					currentNode ++;
+				else
+					currentNode --;
+				
+				if (Mathf.Abs(currentNode) >= 6){
+					destinationComplete();
+				}
+			}
+			return;
+		}
+		//end of the weird bug fixxing part ????
 		float angle = 0;
 		float x = 0;
 		float y = 0;
@@ -276,9 +298,12 @@ public class Caravan : MonoBehaviour {
 
 	void destinationComplete(){
 		if (currentNode > 0) {
+			ResourceSystem.p1_gold += 100;
+			GameObject.Find("Player1-UI").gameObject.GetComponent<P1_Controller>().playerMoney.text = ResourceSystem.p1_gold.ToString();
 			//give player 1 the money
 		}
 		else {
+			ResourceSystem.p2_gold += 100;
 			//give player 2 the money
 		}
 		Destroy (this.gameObject);
@@ -287,6 +312,12 @@ public class Caravan : MonoBehaviour {
 	void OnDisable(){
 		Destroy (p1_mapDisplayer);
 		Destroy (p2_mapDisplayer);
+	}
+
+	void OnCollisionEnter2D(Collision2D col){
+//		if (col.gameObject.tag == "Soldier") {
+//			Debug.Log("Derp");		
+//		}
 	}
 
 	//This function is absolutely useless, but I keep it here so that the game won't annoy me with the 

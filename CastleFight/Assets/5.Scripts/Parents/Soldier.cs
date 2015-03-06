@@ -193,7 +193,7 @@ public class Soldier : Unit {
 		isAttacking = true;
 		int exState = soldierState;
 		soldierState = -1;
-		
+		float exMass = r.mass;
 		Unit en = enemy.GetComponent<Unit> ();
 
 //		float dis = this.radius + en.radius + 0.35f;
@@ -221,14 +221,14 @@ public class Soldier : Unit {
 		if (!en.isDead) {
 			//Deal damage to him, if this unit is not dead
 			if(!this.isDead){
+				r.mass *= 2;
 				ani.SetBool ("Attack", true);
 				yield return new WaitForSeconds (animationTime);
-				if (this.isDead){
-					goto StopAttack;
+				if (!this.isDead){
+					AttackInformation attackInfo = new AttackInformation(this.attackDamage,this.attackType);
+					en.SendMessage("receiveDamage",attackInfo);
+					yield return new WaitForSeconds(2 - animationTime);
 				}
-				AttackInformation attackInfo = new AttackInformation(this.attackDamage,this.attackType);
-				en.SendMessage("receiveDamage",attackInfo);
-				yield return new WaitForSeconds(2 - animationTime);
 
 			}
 
@@ -241,6 +241,7 @@ public class Soldier : Unit {
 		if (soldierState == -1)
 			soldierState = exState;
 
+		r.mass = exMass;
 		r.drag = 12;
 		ani.SetBool ("Attack", false);
 		isAttacking = false;
@@ -254,6 +255,9 @@ public class Soldier : Unit {
 			if (health <= 0){
 				isDead = true;
 				 //push the unit back
+				if (this.isAttacking){
+					r.mass /= 2;
+				}
 				r.velocity = Vector2.zero;
 				Vector2 force = calculateVelocity(destinatedPos);
 				force = new Vector2(force.x * 10 / moveSpeed,force.y * 10 / moveSpeed);

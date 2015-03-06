@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace AStar
 {
-    interface Position
+    public interface Position
     {
-        public int getDistance(Position other);
+//		public int getDistance(Position other);
     }
 }

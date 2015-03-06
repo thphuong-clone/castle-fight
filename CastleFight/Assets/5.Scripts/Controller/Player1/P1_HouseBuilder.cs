@@ -12,6 +12,10 @@ public class P1_HouseBuilder : MonoBehaviour {
 	[SerializeField]//0 = barrack, 1 = wall, 2 = tower.
 	int houseToBuild;
 
+	[SerializeField]int costOfBarrack;
+	[SerializeField]int costOfTower;
+	[SerializeField]int costOfWall;
+
 	public P1_Controller masterController;
 
 	//This button is used to place the house down.
@@ -29,6 +33,26 @@ public class P1_HouseBuilder : MonoBehaviour {
 
 	public void chooseHouseBuilt(int house){
 		houseToBuild = house;
+
+		int costToBuild = costOfBarrack;
+		
+		switch (houseToBuild) {
+		case 0:
+			costToBuild = costOfBarrack;
+			break;
+		case 1:
+			costToBuild = costOfWall;
+			break;
+		case 2:
+			costToBuild = costOfTower;
+			break;
+		default:
+			break;
+		}
+		if (ResourceSystem.p1_gold < costToBuild) {
+			//cancleBuilding();
+			return;		
+		}
 		//deactive all the button
 		wallButton.gameObject.SetActive (false);
 		barrackButton.gameObject.SetActive (false);
@@ -48,12 +72,14 @@ public class P1_HouseBuilder : MonoBehaviour {
 		position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 #endif
 		//mobile touch
+#if UNITY_ANDROID
 		foreach (Touch t in Input.touches) {
 			if (t.position.y <= 0.4f * y){
 				position = t.position;
 				break;
 			}
 		}
+#endif
 		//end of mobile touch
 
 		//The mouse position range from 0,0 to screen width and screen height
@@ -62,7 +88,25 @@ public class P1_HouseBuilder : MonoBehaviour {
 		position += new Vector2 (-0.5f, -0.5f); 
 		position = new Vector2 (position.x * 9f, position.y * 16);
 		//round it up
+		int costToBuild = costOfBarrack;
 
+		switch (houseToBuild) {
+		case 0:
+			costToBuild = costOfBarrack;
+			break;
+		case 1:
+			costToBuild = costOfWall;
+			break;
+		case 2:
+			costToBuild = costOfTower;
+			break;
+		default:
+			break;
+		}
+		if (ResourceSystem.p1_gold < costToBuild) {
+			cancleBuilding();
+			return;		
+		}
 		//select house to build
 		Building b = barrackPrefab;
 		switch (houseToBuild) {
@@ -82,6 +126,7 @@ public class P1_HouseBuilder : MonoBehaviour {
 			break;
 		}
 		//build 
+		ResourceSystem.p1_gold -= costToBuild;
 		Building build = (Building)Instantiate ((Building)b);
 		//Round up the building position, so that the building will always be built on a round position
 		float modX = Mathf.Abs(position.x) % 1;

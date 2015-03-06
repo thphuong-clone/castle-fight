@@ -8,7 +8,7 @@ It can heals unit around it as well.
  *Archer counter swordman but weak to horseman and gladiator. Cost 120
  *Horseman counter archer and cannon, but weak to swordman. Cost 220
  *Gladiator counter archer and watch tower but weak to cannon and swordman. Cost 350
- *cannon counter buildings and gladiator but weak to horseman.
+ *cannon counter buildings and gladiator but weak to horseman. - cost 240
  *watch tower counter swordman and generally other unit but weak to cannon
  */
 using UnityEngine;
@@ -247,7 +247,7 @@ public class Barrack : Building {
 				else{ // heal him
 					foreach (Soldier s in alliesList){
 						if (s.health < s.maxHealth){
-							s.health += 0.5f;
+							s.health += s.maxHealth * 0.05f;
 							if (s.health >= s.maxHealth)
 								s.health = s.maxHealth;
 						}

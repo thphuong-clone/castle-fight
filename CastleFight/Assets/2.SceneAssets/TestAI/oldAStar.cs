@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AStar : MonoBehaviour {
+public class oldAStar : MonoBehaviour {
 	public int[,] board = new int[9,16];
 	public Vector3 startPos;
 	public Vector3 endPos;

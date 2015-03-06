@@ -74,11 +74,10 @@ public class P1_TacticalController : MonoBehaviour {
 			float y = Screen.height;
 
 #if UNITY_EDITOR
-
 			position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 #endif
 			//This is the touch control.
-//#if UNITY_ANDROID
+#if UNITY_ANDROID
 			foreach (Touch t in Input.touches) {
 				if (t.position.x > 0.25f * x && t.position.x < 0.75f* x){
 					if (t.position.y < 0.5f * y){
@@ -87,7 +86,7 @@ public class P1_TacticalController : MonoBehaviour {
 					}
 				}
 			}
-//#endif
+#endif
 
 
 			//The mouse position range from 0,0 to screen width and screen height
