@@ -21,4 +21,15 @@ public class Wall : Building {
 		Destroy (this.gameObject);
 		
 	}
+
+	public override void OnDestroy (){
+		if (this.isPlayerOne) {
+			PlayerController.p1_buildingList[3].Remove(this.gameObject.GetComponent<Building>());
+		}
+		else{
+			PlayerController.p2_buildingList[3].Remove(this.gameObject.GetComponent<Building>());
+		}
+		base.OnDestroy ();
+	}
+
 }

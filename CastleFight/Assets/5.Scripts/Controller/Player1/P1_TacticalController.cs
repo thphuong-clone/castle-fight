@@ -73,9 +73,9 @@ public class P1_TacticalController : MonoBehaviour {
 			float x = Screen.width;
 			float y = Screen.height;
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 			position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-#endif
+//#endif
 			//This is the touch control.
 #if UNITY_ANDROID
 			foreach (Touch t in Input.touches) {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using PathFinder;
 
 public class P2_HouseBuilder : MonoBehaviour {
 	//This is the building I want to built
@@ -28,6 +29,27 @@ public class P2_HouseBuilder : MonoBehaviour {
 	
 	public void chooseHouseBuilt(int house){
 		houseToBuild = house;
+		houseToBuild = house;
+		
+		int costToBuild = costOfBarrack;
+		
+		switch (houseToBuild) {
+		case 0:
+			costToBuild = costOfBarrack;
+			break;
+		case 1:
+			costToBuild = costOfWall;
+			break;
+		case 2:
+			costToBuild = costOfTower;
+			break;
+		default:
+			break;
+		}
+		if (ResourceSystem.p2_gold < costToBuild) {
+			//cancleBuilding();
+			return;		
+		}
 		//deactive all the button
 		wallButton.gameObject.SetActive (false);
 		barrackButton.gameObject.SetActive (false);
@@ -42,11 +64,10 @@ public class P2_HouseBuilder : MonoBehaviour {
 		Vector2 position = Vector2.zero;
 		float x = Screen.width;
 		float y = Screen.height;
-
-#if UNITY_EDITOR
-		//enable this line when test on computer
-		position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-#endif
+//#if UNITY_EDITOR
+        //enable this line when test on computer
+        position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+//#endif
 		//enable this line for mobile device
 #if UNITY_ANDROID 
 		foreach (Touch t in Input.touches) {
@@ -71,7 +92,7 @@ public class P2_HouseBuilder : MonoBehaviour {
 		default:
 			break;
 		}
-		if (ResourceSystem.p1_gold < costToBuild) {
+		if (ResourceSystem.p2_gold < costToBuild) {
 			cancleBuilding();
 			return;		
 		}
@@ -102,7 +123,7 @@ public class P2_HouseBuilder : MonoBehaviour {
 			break;
 		}
 		//build 
-		ResourceSystem.p1_gold -= costToBuild;
+		ResourceSystem.p2_gold -= costToBuild;
 		Building build = (Building)Instantiate ((Building)b);
 		build.isPlayerOne = false;
 		build.transform.rotation = Quaternion.Euler (new Vector3(0,0,180));
@@ -129,7 +150,25 @@ public class P2_HouseBuilder : MonoBehaviour {
 
 		build.transform.position = new Vector3 ((int)position.x,(int)position.y,0);
 		//congratulations, you have a building!
+		//now add the building to the list
+		switch (houseToBuild) {
+		case 0:
+			PlayerController.p2_buildingList[1].Add(build);
+			break;
+		case 1:
+			b = wallPrefab;
+			PlayerController.p2_buildingList[3].Add(build);
+			break;
+		case 2:
+			b = towerPrefab;
+			PlayerController.p2_buildingList[2].Add(build);
+			break;
+		default:
+			break;
+		}
+		
 		cancleBuilding ();
+		PlayerController.knownWorld = GridMapUtils.MakeWorld ();	
 	}
 	
 	public void cancleBuilding(){

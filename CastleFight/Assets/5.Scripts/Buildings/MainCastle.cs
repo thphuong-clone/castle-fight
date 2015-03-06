@@ -56,4 +56,14 @@ public class MainCastle : Building {
 		
 	}
 
+	public override void OnDestroy (){
+		if (this.isPlayerOne) {
+			PlayerController.p1_buildingList[0].Remove(this.gameObject.GetComponent<Building>());
+		}
+		else{
+			PlayerController.p2_buildingList[0].Remove(this.gameObject.GetComponent<Building>());
+		}
+		base.OnDestroy ();
+	}
+
 }

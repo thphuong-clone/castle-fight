@@ -138,4 +138,14 @@ public class Tower : Building {
 		
 	}
 
+	public override void OnDestroy (){
+		if (this.isPlayerOne) {
+			PlayerController.p1_buildingList[2].Remove(this.gameObject.GetComponent<Building>());
+		}
+		else{
+			PlayerController.p2_buildingList[2].Remove(this.gameObject.GetComponent<Building>());
+		}
+		base.OnDestroy ();
+	}
+
 }

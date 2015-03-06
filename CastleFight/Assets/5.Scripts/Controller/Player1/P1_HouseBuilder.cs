@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 
-public class P1_HouseBuilder : MonoBehaviour {
-	//This is the building I want to built
-	[SerializeField]//0 = barrack, 1 = wall, 2 = tower.
-	int houseToBuild;
+public class P1_HouseBuilder : MonoBehaviour
+{
+    //This is the building I want to built
+    [SerializeField]//0 = barrack, 1 = wall, 2 = tower.
+    int houseToBuild;
 
 	[SerializeField]int costOfBarrack;
 	[SerializeField]int costOfTower;
@@ -18,18 +19,18 @@ public class P1_HouseBuilder : MonoBehaviour {
 
 	public P1_Controller masterController;
 
-	//This button is used to place the house down.
-	public Button buildButton;
-	//This button is there in case I don't want to create that building.
-	public Button cancleButton;
+    //This button is used to place the house down.
+    public Button buildButton;
+    //This button is there in case I don't want to create that building.
+    public Button cancleButton;
 
-	public Button wallButton;
-	public Button barrackButton;
-	public Button towerButton;
+    public Button wallButton;
+    public Button barrackButton;
+    public Button towerButton;
 
-	public Barrack barrackPrefab;
-	public Wall wallPrefab;
-	public Tower towerPrefab;
+    public Barrack barrackPrefab;
+    public Wall wallPrefab;
+    public Tower towerPrefab;
 
 	public void chooseHouseBuilt(int house){
 		houseToBuild = house;
@@ -62,15 +63,16 @@ public class P1_HouseBuilder : MonoBehaviour {
 		cancleButton.gameObject.SetActive (true);
 	}
 
-	public void buildAHouse(){
-		Vector2 position = Vector2.zero;
-		float x = Screen.width;
-		float y = Screen.height;
+    public void buildAHouse()
+    {
+        Vector2 position = Vector2.zero;
+        float x = Screen.width;
+        float y = Screen.height;
 
-		//delete if build for mobile
-#if UNITY_EDITOR
-		position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-#endif
+        //delete if build for mobile
+//#if UNITY_EDITOR
+        position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+//#endif
 		//mobile touch
 #if UNITY_ANDROID
 		foreach (Touch t in Input.touches) {
@@ -112,15 +114,12 @@ public class P1_HouseBuilder : MonoBehaviour {
 		switch (houseToBuild) {
 		case 0:
 			b = barrackPrefab;
-			PlayerController.p1_buildingList[1].Add(b);
 			break;
 		case 1:
 			b = wallPrefab;
-			PlayerController.p1_buildingList[3].Add(b);
 			break;
 		case 2:
 			b = towerPrefab;
-			PlayerController.p1_buildingList[2].Add(b);
 			break;
 		default:
 			break;
@@ -140,32 +139,50 @@ public class P1_HouseBuilder : MonoBehaviour {
 			else
 				position.x --;
 		}
+        if (modY < 0.5f)
+        {
+            //do nothing	
+        }
+        else {
+            if (position.y > 0)
+                position.y++;
+            else
+                position.y--;
+        }
 
-		if (modY < 0.5f) {
-			//do nothing	
+        build.transform.position = new Vector3((int)position.x, (int)position.y, 0);
+		switch (houseToBuild) {
+		case 0:
+			PlayerController.p1_buildingList[1].Add(build);
+			break;
+		case 1:
+			b = wallPrefab;
+			PlayerController.p1_buildingList[3].Add(build);
+			break;
+		case 2:
+			b = towerPrefab;
+			PlayerController.p1_buildingList[2].Add(build);
+			break;
+		default:
+			break;
 		}
-		else{
-			if (position.y > 0)
-				position.y ++;
-			else
-				position.y --;
-		}
 
-		build.transform.position = new Vector3 ((int)position.x,(int)position.y,0);
-		//congratulations, you have a building!
-		cancleBuilding ();
-	}
 
-	public void cancleBuilding(){
-		//active the button, again.
-		wallButton.gameObject.SetActive (true);
-		barrackButton.gameObject.SetActive (true);
-		towerButton.gameObject.SetActive (true);
-		//deactive the other button, err
-		buildButton.gameObject.SetActive (false);
-		cancleButton.gameObject.SetActive (false);
-		//hide everythig
-		masterController.hideAllUI ();
-	}
+        //congratulations, you have a building!
+        cancleBuilding();
+		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld ();	
+    }
+
+    public void cancleBuilding(){
+        //active the button, again.
+        wallButton.gameObject.SetActive(true);
+        barrackButton.gameObject.SetActive(true);
+        towerButton.gameObject.SetActive(true);
+        //deactive the other button, err
+        buildButton.gameObject.SetActive(false);
+        cancleButton.gameObject.SetActive(false);
+        //hide everythig
+        masterController.hideAllUI();
+    }
 
 }

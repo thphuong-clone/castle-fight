@@ -77,7 +77,8 @@ public class P2_TacticalController : MonoBehaviour {
 			//Delete if build for mobile
 			position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
 #endif
-			//enabl for mobile input
+			//enable for mobile input
+#if UNITY_ANDROID
 			foreach (Touch t in Input.touches) {
 				if (t.position.x > 0.25f * x && t.position.x < 0.75f* x){
 					if (t.position.y > 0.5f * y){
@@ -86,7 +87,7 @@ public class P2_TacticalController : MonoBehaviour {
 					}
 				}
 			}
-
+#endif
 			//The mouse position range from 0,0 to screen width and screen height
 			position = new Vector2(position.x / x,position.y / y);
 			position += new Vector2(-0.5f,-0.75f);

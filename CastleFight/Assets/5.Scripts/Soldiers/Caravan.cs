@@ -146,7 +146,7 @@ public class Caravan : MonoBehaviour {
 			break;
 		}
 		if (currentNode > 0) {
-			returnVector = - returnVector;
+			returnVector =  Vector2.zero - returnVector;
 		}
 		//Debug.Log (returnVector.ToString());
 		return returnVector;
@@ -185,7 +185,9 @@ public class Caravan : MonoBehaviour {
 		try {
 			x =Mathf.Abs(_position.x - transform.position.x);
 			y =Mathf.Abs( _position.y - transform.position.y);
+            //Debug.Log(x + "," + y);
 			angle = Mathf.Atan(x/y);
+
 			
 			float a = -Mathf.Atan((_position.x - transform.position.x )/ (_position.y - transform.position.y));
 			
@@ -208,16 +210,25 @@ public class Caravan : MonoBehaviour {
 			y = 0;
 		}
 		//calculate the angle
-		
+
+        //Debug.Log(angle);
 		
 		x = Mathf.Sin(angle);
 		y = Mathf.Sqrt(1 - x * x );
-		
-		if (transform.position.x > _position.x)
-			x = -x;
-		
-		if (transform.position.y > _position.y)
-			y = -y;
+
+        //Debug.Log(x + "," + y);
+
+        if (transform.position.x > _position.x)
+        {
+            x = -x;
+        }
+
+        if (transform.position.y > _position.y)
+        {
+            y = -y;
+        }
+
+        //Debug.Log(x + "," + y);
 		
 		Vector2 returnVector = new Vector2 (x, y) * moveSpeed /4;
 		r.velocity = returnVector;

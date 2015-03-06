@@ -277,4 +277,14 @@ public class Barrack : Building {
 		
 	}
 
+	public override void OnDestroy (){
+		if (this.isPlayerOne) {
+			PlayerController.p1_buildingList[1].Remove(this.gameObject.GetComponent<Building>());
+		}
+		else{
+			PlayerController.p2_buildingList[1].Remove(this.gameObject.GetComponent<Building>());
+		}
+		base.OnDestroy ();
+	}
+
 }

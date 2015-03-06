@@ -38,7 +38,7 @@ public class P1_Controller : MonoBehaviour {
 
 
 	void Update(){
-#if UNITY_EDITOR
+		//this is the PC or web input check
 		if (Input.GetMouseButtonDown(0)){
 			if (Input.mousePosition.y < Screen.height / 2){
 				if (isIdle)
@@ -47,7 +47,18 @@ public class P1_Controller : MonoBehaviour {
 				idleTime = 3;
 			}
 		}
-#endif
+		//This is the touch input check
+		foreach (Touch t in Input.touches) {
+			if (t.phase == TouchPhase.Began){
+				if (Input.mousePosition.y < Screen.height / 2){
+					if (isIdle)
+						hideAllUI();
+					isIdle = false;
+					idleTime = 3;
+					break;
+				}
+			}
+		}
 		if (!isIdle) {
 			idleTime -= Time.deltaTime;
 			if (idleTime <= 0){
