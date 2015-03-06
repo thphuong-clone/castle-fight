@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
                     s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p1End);
                 }
 			}
-            Position2D p2End = GridMapUtils.GetTile(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
+            Position2D p2End = GridMapUtils.GetTile(p2_soldierOrder[i].x, p2_soldierOrder[i].y);
 			//for the player 2
 			foreach(Soldier s in p2_listOfSoldierLists[i]){
 				s.soldierState = (int)p2_soldierOrder[i].z;

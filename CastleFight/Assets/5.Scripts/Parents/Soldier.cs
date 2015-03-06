@@ -160,17 +160,13 @@ public class Soldier : Unit
         if (node != null){
 			//if the unit is in the next node.
             if (GridMapUtils.IsInsideGridCell(transform.position, node.position)){
-				try{
 	                //Debug.Log("reached node " + node.position);
 	                nextPathNode = nextPathNode.next;
-	               	nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
+	               	//nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
 	                //Debug.Log("next position is " + nextPosition);
-				}
-				catch{
-					soldierState = 0;
-					Debug.Log("PHUONG, FIX ME PLEASE!!!!!");
-					//debugException(e);
-				}
+					if (nextPathNode != null){
+						nextPosition  = GridMapUtils.GetRealPosition(nextPathNode.position);
+					}
             }
 
             //Debug.Log("moving to " + nextPosition);
