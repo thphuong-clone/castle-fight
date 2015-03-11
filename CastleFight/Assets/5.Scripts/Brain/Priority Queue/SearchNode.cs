@@ -4,13 +4,14 @@ using System.Linq;
 
 namespace PathFinder
 {
-    //should be wraper class, just leave it like this for now
     public class SearchNode
     {
         public Position2D position;
+        //estimated cost to reach goal
         public int cost;
+        //cost so far
         public int pathCost;
-        //public QueueNode prev;
+        //parent
         public SearchNode next;
         public SearchNode nextInQueue;
         public bool closed;
@@ -21,7 +22,7 @@ namespace PathFinder
             this.cost = cost;
             this.pathCost = pathCost;
             this.next = next;
-            closed = false;
+            //closed = false;
             this.nextInQueue = null;
         }
     } 

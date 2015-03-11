@@ -53,8 +53,8 @@ namespace PathFinder
             {
                 foreach (Building b in lb)
                 {
-//                    Debug.Log(b.gameObject.transform.localPosition.x + " " + b.gameObject.transform.localPosition.y);
-//                    Debug.Log(GetTile(b.transform.position.x, b.transform.position.y));
+                    //Debug.Log(b.gameObject.transform.localPosition.x + " " + b.gameObject.transform.localPosition.y);
+                    //Debug.Log(GetTile(b.transform.position.x, b.transform.position.y));
                     Position2D buildingPosition = GetTile(b.transform.position.x, b.transform.position.y);
                     world.SetPosition(buildingPosition, true);
                 }

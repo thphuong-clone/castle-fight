@@ -61,6 +61,14 @@ public class PlayerController : MonoBehaviour {
 	//In single player mode, we have the ability to single control one unit, so it will be really fucked up.
 	public static void orderSoldier(){
 
+        //knownWorld.SetPosition(new Position2D(0, 10), true);
+        //knownWorld.SetPosition(new Position2D(1, 10), true);
+        //knownWorld.SetPosition(new Position2D(2, 10), true);
+        //knownWorld.SetPosition(new Position2D(3, 10), true);
+        //knownWorld.SetPosition(new Position2D(4, 10), true);
+        //knownWorld.SetPosition(new Position2D(5, 10), true);
+        //knownWorld.SetPosition(new Position2D(6, 10), true);
+
 		for (int i = 0; i < 5; i ++) {
             Position2D p1End = GridMapUtils.GetTile(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
 			//for the player one
@@ -74,7 +82,9 @@ public class PlayerController : MonoBehaviour {
                 {
                     s.destinatedPos = new Vector2(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
                     Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
+                    Debug.Log("from: " + start + " to: " + p1End);
                     s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p1End);
+                    s.EndCurrentMove();
                 }
 			}
             Position2D p2End = GridMapUtils.GetTile(p2_soldierOrder[i].x, p2_soldierOrder[i].y);
@@ -88,6 +98,7 @@ public class PlayerController : MonoBehaviour {
                     s.destinatedPos = new Vector2(p2_soldierOrder[i].x, p2_soldierOrder[i].y);
                     Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
                     s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p2End);
+                    s.EndCurrentMove();
                 }
 			}
 
