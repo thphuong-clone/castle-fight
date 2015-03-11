@@ -22,6 +22,14 @@ namespace PathFinder
             return dx * dx + dy * dy;
         }
 
+        public float OctileHeuristic(Position2D other)
+        {
+            int dx = Math.Abs(this.x - other.x);
+            int dy = Math.Abs(this.y - other.y);
+
+            return (float)(Math.Min(dx, dy) * Math.Sqrt(2) + Math.Max(dx, dy) - Math.Min(dx, dy));
+        }
+
         public override int GetHashCode()
         {
             return (this.x + " " + this.y).GetHashCode();

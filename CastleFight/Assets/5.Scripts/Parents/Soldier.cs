@@ -20,6 +20,7 @@ public class Soldier : Unit
     public Vector2 destinatedPos;
     public SearchNode nextPathNode;
     private Vector2 nextPosition;
+    private bool doneMoving = true;
 
     protected Vector2 tempPos;
 
@@ -53,17 +54,20 @@ public class Soldier : Unit
 
     protected Rigidbody2D r;
 
-    public override void Awake()   {
+    public override void Awake()
+    {
         base.Awake();
         //PlayerController.orderSoldier ();
         collideEnemy = false;
 
         r = gameObject.GetComponent<Rigidbody2D>();
 
-        try{
+        try
+        {
             ani = soldierSprite.gameObject.GetComponent<Animator>();
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             Debug.Log(e.ToString());
         }
         //		direction = 1;
@@ -77,9 +81,12 @@ public class Soldier : Unit
     }
 
     //This loop will be caled almost every frame, for the soldier to do his action.
-    IEnumerator soldierLoop(){
-        while (!this.isDead){
-            switch (soldierState){
+    IEnumerator soldierLoop()
+    {
+        while (!this.isDead)
+        {
+            switch (soldierState)
+            {
                 case -1: // soldier is busy killing enemy
                     yield return null;
                     break;
@@ -91,20 +98,24 @@ public class Soldier : Unit
                     //find enemy, if find, then attack.
                     break;
                 case 1: // move only - 
-                    if (isAttacking){
+                    if (isAttacking)
+                    {
                         yield return null;
                     }
-                    else{
-                        moveToPosition_searchNode(nextPathNode);
+                    else
+                    {
+                        MoveToPosition(nextPathNode);
                         yield return new WaitForSeconds(0.05f);
                     }
                     break;
                 case 2: // move and attack
-                    if (isAttacking){
+                    if (isAttacking)
+                    {
                         yield return null;
                     }
-                    else{
-						moveToPosition_searchNode(nextPathNode);
+                    else
+                    {
+                        MoveToPosition(nextPathNode);
                         findEnemy();
                         yield return new WaitForSeconds(0.05f);
                     }
@@ -122,25 +133,33 @@ public class Soldier : Unit
 
 
     //move straight to the destinated position. this unit won't stop, and won't listen to anything.
-    void moveToPosition(Vector2 pos){
-        bool doneMoving = false;
+    void moveToPosition(Vector2 pos)
+    {
+        //bool doneMoving = false;
         //if the unit is done moving, than change him to idle state
         r.drag = 12;
         //wait is doneMoving always false here. Why check it????????????????????
-        if (!doneMoving && !isAttacking){
+        if (!doneMoving && !isAttacking)
+        {
             //the game will give an error if this case happend, so we put it here to avoid problems
-            if (transform.position.x == pos.x && transform.position.y == pos.y){
-                doneMoving = true;
-                soldierState = 0;
-                return;
-            }
+            //if (transform.position.x == pos.x && transform.position.y == pos.y)
+            //{
+            //    doneMoving = true;
+            //    soldierState = 0;
+            //    return;
+            //}
             //Make the unit move to the destinated position - set up the velocity
             r.velocity = calculateVelocity(pos);
 
             //if the unit is sooo close to the destinated position
-            if (functionDoneMoving())
+            //if (functionDoneMoving())
+            //{
+            //    //it will be false again anyway so why set it here
+            //    doneMoving = true;
+            //    soldierState = 0;
+            //}
+            if (ReachedPoint(pos))
             {
-                //it will be false again anyway so why set it here
                 doneMoving = true;
                 soldierState = 0;
             }
@@ -154,33 +173,40 @@ public class Soldier : Unit
 
     }
 
-	//This functions make the unit move to the next node in the list/
-    public void moveToPosition_searchNode(SearchNode node){
-		//if there are next node.
-        if (node != null){
-			//if the unit is in the next node.
-            if (GridMapUtils.IsInsideGridCell(transform.position, node.position)){
-	                //Debug.Log("reached node " + node.position);
-	                nextPathNode = nextPathNode.next;
-	               	//nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
-	                //Debug.Log("next position is " + nextPosition);
-					if (nextPathNode != null){
-						nextPosition  = GridMapUtils.GetRealPosition(nextPathNode.position);
-					}
+    //This functions make the unit move to the next node in the list/
+    public void MoveToPosition(SearchNode node)
+    {
+        //if there are next node.
+        if (node != null)
+        {
+            //if the unit is in the next node.
+            if (doneMoving)
+            {
+                //Debug.Log("reached node " + node.position);
+                nextPathNode = nextPathNode.next;
+                //nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
+                //Debug.Log("next position is " + nextPosition);
+                if (nextPathNode != null)
+                {
+                    doneMoving = false;
+                    nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
+                }
             }
 
             //Debug.Log("moving to " + nextPosition);
             moveToPosition(nextPosition);
 
         }
-        else{
+        else
+        {
             //Debug.Log("done moving");
             soldierState = 0;
         }
     }
 
     //To find if there are any enemy in the sight of this unit.
-    protected virtual void findEnemy(){
+    protected virtual void findEnemy()
+    {
         if (!isAttacking)
         {
 
@@ -473,6 +499,22 @@ public class Soldier : Unit
         return returnVector;
     }
 
+    bool FloatEqual (float x, float y)
+    {
+        return (Math.Abs(x - y) < 0.07f);
+    }
+
+    public void EndCurrentMove()
+    {
+        doneMoving = true;
+    }
+
+    bool ReachedPoint(Vector2 p2)
+    {
+        if (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y))
+            Debug.Log("current: " + transform.position + "\nreached: " + p2);
+        return (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y));
+    }
 
     //Check if the unit has reach the destinated position. Might increase a little bit more.
     bool functionDoneMoving()
@@ -504,7 +546,7 @@ public class Soldier : Unit
         return false;
     }
 
-//	void OnDestroy(){
-//		Debug.LogWarning ("I am killed :(");
-//	}
+    //	void OnDestroy(){
+    //		Debug.LogWarning ("I am killed :(");
+    //	}
 }
