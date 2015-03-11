@@ -15,6 +15,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using PathFinder;
 
 public class Barrack : Building {
 	//What type of soldier this is building. 
@@ -63,37 +64,37 @@ public class Barrack : Building {
 			case 1:
 				if(buildCountDown >= swordmanCost){
 					buildCountDown -= swordmanCost;
-					spawnSwordman();
+					StartCoroutine(spawnSwordman());
 				}
 				break;
 			case 2:
 				if(buildCountDown >= archerCost){
 					buildCountDown -= archerCost;
-					spawnArcher();
+					StartCoroutine(spawnArcher());
 				}
 				break;
 			case 3:
 				if(buildCountDown >= horsemanCost){
 					buildCountDown -= horsemanCost;
-					spawnHorseMan();
+					StartCoroutine(spawnHorseMan());
 				}
 				break;
 			case 4:
 				if(buildCountDown >= gladiatorCost){
 					buildCountDown -= gladiatorCost;
-					spawnGladiator();
+					StartCoroutine(spawnGladiator());
 				}
 				break;
 			case 5:
 				if(buildCountDown >= cannonCost){
 					buildCountDown -= cannonCost;
-					spawnCannon();
+					StartCoroutine(spawnCannon());
 				}
 				break;
 			default:
 				if(buildCountDown >= swordmanCost){
 					buildCountDown -= swordmanCost;
-					spawnSwordman();
+					StartCoroutine(spawnSwordman());
 				}
 				break;
 			}
@@ -103,8 +104,10 @@ public class Barrack : Building {
 	}
 
 	//spawn a swordman
-	void spawnSwordman(){
-		SwordMan newSoldier = (SwordMan)Instantiate (swordmanPrefab);
+	IEnumerator spawnSwordman(){
+		//SwordMan newSoldier = (SwordMan)Instantiate (swordmanPrefab);
+		Soldier newSoldier = (SwordMan)Instantiate (swordmanPrefab);
+
 		newSoldier.isPlayerOne = this.isPlayerOne;
 		newSoldier.GetComponent<SpriteRenderer> ().color = unitAura.GetComponent<SpriteRenderer> ().color;
 		newSoldier.transform.position = this.transform.position + new Vector3 (0,0.1f,0);
@@ -120,12 +123,16 @@ public class Barrack : Building {
 			PlayerController.p1_listOfSoldierLists[0].Add(newSoldier);
 		}
 		//newSoldier.destinatedPos = new Vector2 (newSoldier.transform.position.x,newSoldier.transform.position.y);
-		PlayerController.orderSoldier ();
+		//PlayerController.orderSoldier ();
+		yield return new WaitForSeconds (0.25f);
+		orderUnit (ref newSoldier,newSoldier.isPlayerOne, 0);
 	}
 
 	//spawn an archer
-	void spawnArcher(){
-		Archer newSoldier = (Archer)Instantiate (archerPrefab);
+	IEnumerator spawnArcher(){
+		//Archer newSoldier = (Archer)Instantiate (archerPrefab);
+		Soldier newSoldier = (Archer)Instantiate (archerPrefab);
+
 		newSoldier.isPlayerOne = this.isPlayerOne;
 		newSoldier.GetComponent<SpriteRenderer> ().color = unitAura.GetComponent<SpriteRenderer> ().color;
 		newSoldier.transform.position = this.transform.position + new Vector3 (0,0.1f,0);
@@ -141,13 +148,17 @@ public class Barrack : Building {
 			PlayerController.p1_listOfSoldierLists[1].Add(newSoldier);
 		}
 		//newSoldier.destinatedPos = new Vector2 (newSoldier.transform.position.x,newSoldier.transform.position.y);
-		PlayerController.orderSoldier ();
+		//PlayerController.orderSoldier ();
+		yield return new WaitForSeconds (0.25f);
+		orderUnit (ref newSoldier,newSoldier.isPlayerOne,1);
 	}
 
 
 	//spawn a horseman
-	void spawnHorseMan(){
-		HorseMan newSoldier = (HorseMan)Instantiate (horsemanPrefab);
+	IEnumerator spawnHorseMan(){
+		//HorseMan newSoldier = (HorseMan)Instantiate (horsemanPrefab);
+		Soldier newSoldier = (HorseMan)Instantiate (horsemanPrefab);
+
 		newSoldier.isPlayerOne = this.isPlayerOne;
 		newSoldier.GetComponent<SpriteRenderer> ().color = unitAura.GetComponent<SpriteRenderer> ().color;
 		newSoldier.transform.position = this.transform.position + new Vector3 (0,0.75f,0);
@@ -163,13 +174,17 @@ public class Barrack : Building {
 			PlayerController.p1_listOfSoldierLists[2].Add(newSoldier);
 		}
 		//newSoldier.destinatedPos = new Vector2 (newSoldier.transform.position.x,newSoldier.transform.position.y);
-		PlayerController.orderSoldier ();
+		//PlayerController.orderSoldier ();
+		yield return new WaitForSeconds (0.25f);
+		orderUnit (ref newSoldier,newSoldier.isPlayerOne,2);
 	}
 
 
 	//spawn a gladiator
-	void spawnGladiator(){
-		Gladiator newSoldier = (Gladiator)Instantiate (gladiatorPrefab);
+	IEnumerator spawnGladiator(){
+//		Gladiator newSoldier = (Gladiator)Instantiate (gladiatorPrefab);
+		Soldier newSoldier = (Gladiator)Instantiate (gladiatorPrefab);
+
 		newSoldier.isPlayerOne = this.isPlayerOne;
 		newSoldier.GetComponent<SpriteRenderer> ().color = unitAura.GetComponent<SpriteRenderer> ().color;
 		newSoldier.transform.position = this.transform.position + new Vector3 (0,0.75f,0);
@@ -185,13 +200,17 @@ public class Barrack : Building {
 			PlayerController.p1_listOfSoldierLists[3].Add(newSoldier);
 		}
 		//newSoldier.destinatedPos = new Vector2 (newSoldier.transform.position.x,newSoldier.transform.position.y);
-		PlayerController.orderSoldier ();
+		//		PlayerController.orderSoldier ();
+		yield return new WaitForSeconds (0.25f);
+		orderUnit (ref newSoldier,newSoldier.isPlayerOne,3);
 	}
 
 
 	//spawn a cannon
-	void spawnCannon(){
-		Cannon newSoldier = (Cannon)Instantiate (cannonPrefab);
+	IEnumerator spawnCannon(){
+//		Cannon newSoldier = (Cannon)Instantiate (cannonPrefab);
+		Soldier newSoldier = (Cannon)Instantiate (cannonPrefab);
+
 		newSoldier.isPlayerOne = this.isPlayerOne;
 		newSoldier.GetComponent<SpriteRenderer> ().color = unitAura.GetComponent<SpriteRenderer> ().color;
 		newSoldier.transform.position = this.transform.position + new Vector3 (0,0.75f,0);
@@ -207,9 +226,37 @@ public class Barrack : Building {
 			PlayerController.p1_listOfSoldierLists[4].Add(newSoldier);
 		}
 		//newSoldier.destinatedPos = new Vector2 (newSoldier.transform.position.x,newSoldier.transform.position.y);
-		PlayerController.orderSoldier ();
+		//		PlayerController.orderSoldier ();
+		yield return new WaitForSeconds (0.25f);
+		orderUnit (ref newSoldier,newSoldier.isPlayerOne,4);
 	}
 
+	//This function order the newly created unit to a place with a order.
+	void orderUnit(ref Soldier _sol,bool _isPlayerOne,int _unitType){
+		if (_isPlayerOne) {
+			_sol.soldierState = (int)PlayerController.p1_soldierOrder[_unitType].z;
+			if (PlayerController.p1_soldierOrder[_unitType].z == 0){
+				_sol.destinatedPos = new Vector2(_sol.transform.position.x,_sol.transform.position.y);
+			}
+			else{				
+				Position2D p1_end = GridMapUtils.GetTile(PlayerController.p1_soldierOrder[_unitType].x,PlayerController.p1_soldierOrder[_unitType].y);
+				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
+				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1_end);
+
+			}
+		}
+		else{
+			_sol.soldierState = (int)PlayerController.p2_soldierOrder[_unitType].z;
+			if (PlayerController.p2_soldierOrder[_unitType].z == 0){
+				_sol.destinatedPos = new Vector2(_sol.transform.position.x,_sol.transform.position.y);
+			}
+			else{				
+				Position2D p2_end = GridMapUtils.GetTile(PlayerController.p2_soldierOrder[_unitType].x,PlayerController.p2_soldierOrder[_unitType].y);
+				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
+				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p2_end);
+			}
+		}
+	}
 
 //The coroutine to heal soldier around the building
 	IEnumerator checkAndHealSoldiers(){
@@ -247,7 +294,7 @@ public class Barrack : Building {
 				else{ // heal him
 					foreach (Soldier s in alliesList){
 						if (s.health < s.maxHealth){
-							s.health += s.maxHealth * 0.05f;
+							s.health += s.maxHealth * 0.025f;
 							if (s.health >= s.maxHealth)
 								s.health = s.maxHealth;
 						}

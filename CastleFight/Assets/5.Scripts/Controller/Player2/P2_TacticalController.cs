@@ -73,10 +73,10 @@ public class P2_TacticalController : MonoBehaviour {
 			float x = Screen.width;
 			float y = Screen.height;
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 			//Delete if build for mobile
 			position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-#endif
+//#endif
 			//enable for mobile input
 #if UNITY_ANDROID
 			foreach (Touch t in Input.touches) {

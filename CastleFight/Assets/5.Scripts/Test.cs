@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Test : MonoBehaviour {
 	//int count = 0;
-	public float x;
+	//public float x;
 
 	void Awake(){
 	}
@@ -26,11 +26,6 @@ public class Test : MonoBehaviour {
 			StartCoroutine(waitForEsacpe());
 		}
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
-			//float x = 0.123f;
-			float y = x%1;
-			Debug.Log (y.ToString());
-		}
 	}
 
 	IEnumerator waitForEsacpe(){

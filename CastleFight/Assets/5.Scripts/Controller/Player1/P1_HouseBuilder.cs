@@ -17,7 +17,7 @@ public class P1_HouseBuilder : MonoBehaviour
 	[SerializeField]int costOfTower;
 	[SerializeField]int costOfWall;
 
-	public P1_Controller masterController;
+	//public P1_Controller masterController;
 
     //This button is used to place the house down.
     public Button buildButton;
@@ -182,7 +182,12 @@ public class P1_HouseBuilder : MonoBehaviour
         buildButton.gameObject.SetActive(false);
         cancleButton.gameObject.SetActive(false);
         //hide everythig
-        masterController.hideAllUI();
+		try{
+        	GameObject.FindObjectOfType<P1_Controller>().hideAllUI();
+		}
+		catch{
+			GameObject.FindObjectOfType<SP_UI>().hideAllUI();	
+		}
     }
 
 }

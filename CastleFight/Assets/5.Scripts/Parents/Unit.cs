@@ -181,23 +181,30 @@ public class Unit : MonoBehaviour {
 
 	public virtual void setUpIcons(){
 		//Instantiate the p1_map displayer and the p2 displayer onto the map
-		p1_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
-		p2_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
-		
+
 		//This is the parent of the icon, which is the displayer map
 		GameObject p1_parent;
 		GameObject p2_parent;
 		
 		//find the parent game object and set this game object to be the parent of this unit icon
 		GameObject[] parent = GameObject.FindGameObjectsWithTag ("DisplayMap");
-		if (parent [0].transform.name == "Player1_DisplayMap") {
-			p1_parent = parent[0];
-			p2_parent = parent[1];
+		try{
+			if (parent [0].transform.name == "Player1_DisplayMap") {
+				p1_parent = parent[0];
+				p2_parent = parent[1];
+			}
+			else{
+				p1_parent = parent[1];
+				p2_parent = parent[0];
+			}
 		}
-		else{
-			p1_parent = parent[1];
-			p2_parent = parent[0];
+		catch{
+			//Debug.Log("Singple player");
+			return;
 		}
+		p1_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
+		p2_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
+
 		//set the parent of the icon
 		p1_mapDisplayer.transform.parent = p1_parent.transform;
 		p2_mapDisplayer.transform.parent = p2_parent.transform;

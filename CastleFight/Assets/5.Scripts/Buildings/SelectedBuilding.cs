@@ -7,6 +7,8 @@ using System.Collections;
 public class SelectedBuilding : MonoBehaviour {	
 	//public Building parentBuilding;
 
-	public virtual void isSeleted(){
+	public virtual void isSeleted(){}
+
+	public virtual void SP_isSelected(){
 	}
 }
