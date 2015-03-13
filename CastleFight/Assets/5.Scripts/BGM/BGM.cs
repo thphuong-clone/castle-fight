@@ -36,6 +36,7 @@ public class BGM : MonoBehaviour {
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            created = true;
         }
 	}
 

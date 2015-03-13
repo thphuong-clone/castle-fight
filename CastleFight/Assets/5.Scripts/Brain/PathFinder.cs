@@ -73,7 +73,6 @@ namespace PathFinder
                             }
                             else
                             {
-                                Console.Out.WriteLine("No LOS from " + current.next.position.ToString() + " to " + p);
                                 int pathCost = current.pathCost + s.Value;
                                 int cost = pathCost + p.getDistance(end);
                                 newNode = new SearchNode(p, cost, pathCost, current);

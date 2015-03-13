@@ -4,11 +4,22 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using PathFinder;
+using System;
 
 public class SP_InputManager : MonoBehaviour {
+    Vector2 one;
+    Vector2 two;
+    GameObject go;
+    LineRenderer line;
+
+    bool dragging;
+    bool draggingCancelled = true;
+    bool displayLine;
 	public static int controlingState;
 	//0 = one unit. 1-2-3-4-5 = swordman,archer, ... group play
 	public static Soldier selectedSoldier;
+    Vector3 oldPos;
 
 	public Button orderButton;
 
@@ -16,6 +27,7 @@ public class SP_InputManager : MonoBehaviour {
 	
 	void Awake(){
 		_eventSystem = EventSystem.current;
+        line = gameObject.GetComponent<LineRenderer>();
 
 		controlingState = -1;
 		selectedSoldier = null;
@@ -37,7 +49,13 @@ public class SP_InputManager : MonoBehaviour {
 			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 			
 			if (hit && !hitUI) {
-				//Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+                draggingCancelled = false;
+                displayLine = false;
+                //two = Input.mousePosition;
+                //two.y = Screen.height - two.y;
+                go = hitInfo.transform.parent.gameObject;
+
+                Debug.Log("Hit " + go.name);
 				if (hitInfo.transform.gameObject.tag == "SelectedBuilding"){
 					SelectedBuilding b  = hitInfo.transform.gameObject.GetComponent<SelectedBuilding>();
 					b.SP_isSelected();
@@ -49,7 +67,47 @@ public class SP_InputManager : MonoBehaviour {
 					orderButton.gameObject.SetActive(true);
 				}
 			}
+            oldPos = Input.mousePosition;
 		}
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log(oldPos);
+            Debug.Log(Input.mousePosition);
+            draggingCancelled = true;
+            
+            if ((Math.Abs(Input.mousePosition.x - oldPos.x) >  1 || Math.Abs(Input.mousePosition.y - oldPos.y) > 1) && selectedSoldier != null)
+            {
+                Debug.Log("weeeeeee");
+                Debug.Log(selectedSoldier == null);
+
+                Vector2 mousePos = Input.mousePosition;
+
+                go = selectedSoldier.gameObject;
+
+                Vector2 startPos = Camera.main.ScreenToWorldPoint(oldPos);
+                Vector2 endPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+                two = endPos;
+
+                selectedSoldier.destinatedPos = endPos;
+
+                Position2D start = GridMapUtils.GetTile(startPos.x, startPos.y);
+                Position2D end = GridMapUtils.GetTile(endPos.x, endPos.y);
+
+                Debug.Log(start);
+                Debug.Log(end);
+
+                selectedSoldier.EndCurrentMove();
+                selectedSoldier.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+                Debug.Log(PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end));
+                selectedSoldier = null;
+                controlingState = -1;
+                displayLine = true;
+            }
+
+        }
+
 		//#endif
 		//touch input
 		#if UNITY_ANDROID		
@@ -77,6 +135,15 @@ public class SP_InputManager : MonoBehaviour {
 
 				}
 				break;
+            case TouchPhase.Moved:
+                dragging = true;
+                break;
+            case TouchPhase.Ended:
+                if (dragging)
+                {
+                    Vector2 endPos = touch.position;
+                }
+                break;
 			default:
 				break;
 			}
@@ -84,5 +151,33 @@ public class SP_InputManager : MonoBehaviour {
 		
 		//end of touch input
 		#endif
+
+        if (displayLine && draggingCancelled)
+        {
+            one = go.transform.position;
+            line.SetPosition(0, one);
+            line.SetPosition(1, two);
+            line.enabled = true;
+            StartCoroutine(HideLine());
+        }
+        else if (!draggingCancelled && !displayLine)
+        {
+            one = go.transform.position;
+            two = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            line.SetPosition(0, one);
+            line.SetPosition(1, two);
+            line.enabled = true;
+        }
+        else
+        {
+            line.enabled = false;
+        }
 	}
+
+    IEnumerator HideLine()
+    {
+        yield return new WaitForSeconds(1);
+        displayLine = false;
+    }
+
 }
