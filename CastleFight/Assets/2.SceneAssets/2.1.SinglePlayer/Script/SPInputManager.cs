@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using PathFinder;
 using System;
 
-public class SP_InputManager : MonoBehaviour {
+public class SPInputManager : MonoBehaviour {
     Vector2 one;
     Vector2 two;
     GameObject go;
@@ -43,43 +43,68 @@ public class SP_InputManager : MonoBehaviour {
 			if (_eventSystem.IsPointerOverGameObject()){
 				hitUI = true;
 			}
-			
-			RaycastHit hitInfo = new RaycastHit();
-			
-			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-			
-			if (hit && !hitUI) {
+
+            RaycastHit hitInfo = new RaycastHit();
+
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+
+            RaycastHit2D hit2d = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit2d.collider != null)
+            {
                 draggingCancelled = false;
                 displayLine = false;
                 //two = Input.mousePosition;
                 //two.y = Screen.height - two.y;
-                go = hitInfo.transform.parent.gameObject;
+                go = hit2d.transform.gameObject;
 
-                Debug.Log("Hit " + go.name);
-				if (hitInfo.transform.gameObject.tag == "SelectedBuilding"){
-					SelectedBuilding b  = hitInfo.transform.gameObject.GetComponent<SelectedBuilding>();
-					b.SP_isSelected();
-				}
-				if (hitInfo.transform.gameObject.tag == "SelectedSoldier"){
-					SelectedSoldier s = hitInfo.transform.gameObject.GetComponent<SelectedSoldier>();
-					s.isSelected();
-					controlingState = 0;
-					orderButton.gameObject.SetActive(true);
-				}
-			}
+                //Debug.Log("Hit " + go.name);
+                if (hit && !hitUI && hitInfo.transform.gameObject.tag == "SelectedBuilding")
+                {
+                    SelectedBuilding b = hitInfo.transform.gameObject.GetComponent<SelectedBuilding>();
+                    b.SP_isSelected();
+                }
+                if (hit2d.transform.gameObject.tag == "Soldier")
+                {
+                    SelectedSoldier s = hit2d.transform.gameObject.GetComponent<SelectedSoldier>();
+                    //Debug.Log(s == null);
+                    s.isSelected();
+                    controlingState = 0;
+                    orderButton.gameObject.SetActive(true);
+                }
+            }
+			
+            //if (hit && !hitUI) {
+            //    draggingCancelled = false;
+            //    displayLine = false;
+            //    //two = Input.mousePosition;
+            //    //two.y = Screen.height - two.y;
+            //    go = hitInfo.transform.parent.gameObject;
+
+            //    //Debug.Log("Hit " + go.name);
+            //    if (hitInfo.transform.gameObject.tag == "SelectedBuilding"){
+            //        SelectedBuilding b  = hitInfo.transform.gameObject.GetComponent<SelectedBuilding>();
+            //        b.SP_isSelected();
+            //    }
+            //    if (hitInfo.transform.gameObject.tag == "SelectedSoldier"){
+            //        SelectedSoldier s = hitInfo.transform.gameObject.GetComponent<SelectedSoldier>();
+            //        s.isSelected();
+            //        controlingState = 0;
+            //        orderButton.gameObject.SetActive(true);
+            //    }
+            //}
             oldPos = Input.mousePosition;
 		}
 
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log(oldPos);
-            Debug.Log(Input.mousePosition);
+            //Debug.Log(oldPos);
+            //Debug.Log(Input.mousePosition);
             draggingCancelled = true;
             
             if ((Math.Abs(Input.mousePosition.x - oldPos.x) >  1 || Math.Abs(Input.mousePosition.y - oldPos.y) > 1) && selectedSoldier != null)
             {
-                Debug.Log("weeeeeee");
-                Debug.Log(selectedSoldier == null);
+                //Debug.Log("weeeeeee");
+                //Debug.Log(selectedSoldier == null);
 
                 Vector2 mousePos = Input.mousePosition;
 
@@ -95,12 +120,11 @@ public class SP_InputManager : MonoBehaviour {
                 Position2D start = GridMapUtils.GetTile(startPos.x, startPos.y);
                 Position2D end = GridMapUtils.GetTile(endPos.x, endPos.y);
 
-                Debug.Log(start);
-                Debug.Log(end);
+                //Debug.Log(start);
+                //Debug.Log(end);
 
-                selectedSoldier.EndCurrentMove();
                 selectedSoldier.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
-                Debug.Log(PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end));
+                //Debug.Log(PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end));
                 selectedSoldier = null;
                 controlingState = -1;
                 displayLine = true;

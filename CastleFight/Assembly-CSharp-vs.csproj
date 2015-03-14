@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\MainMenu.cs" />
-     <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SP_InputManager.cs" />
+     <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SPInputManager.cs" />
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SP_Tactical.cs" />
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SP_UI.cs" />
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SelectedSoldier.cs" />
@@ -85,6 +85,7 @@
      <Compile Include="Assets\5.Scripts\Cortana\Action.cs" />
      <Compile Include="Assets\5.Scripts\Cortana\Interop.cs" />
      <Compile Include="Assets\5.Scripts\Cortana\VoiceCommand.cs" />
+     <Compile Include="Assets\5.Scripts\GameUtil\GameConstant.cs" />
      <Compile Include="Assets\5.Scripts\InputManager.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Building.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Soldier.cs" />

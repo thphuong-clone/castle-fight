@@ -12,7 +12,7 @@ public class SelectedSoldier : MonoBehaviour {
 		//Debug.Log ("Errr");
 		parentSoldier.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1,1,1,0.60784313725f);
 		//set the unit is to be the only one to be controlled by the player.
-		SP_InputManager.selectedSoldier = parentSoldier.gameObject.GetComponent<Soldier> ();
+		SPInputManager.selectedSoldier = parentSoldier.gameObject.GetComponent<Soldier> ();
 		//open the control interface
 		//parentSoldier.gameObject.SetActive (false);
 
@@ -30,7 +30,7 @@ public class SelectedSoldier : MonoBehaviour {
 			count ++;
 		}
 		if (count >= 19) {
-			SP_InputManager.selectedSoldier = null;
+			SPInputManager.selectedSoldier = null;
 			parentSoldier.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1,0,0,0.60784313725f);
 		}
 	}
