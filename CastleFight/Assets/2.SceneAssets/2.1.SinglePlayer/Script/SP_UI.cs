@@ -82,8 +82,6 @@ public class SP_UI : MonoBehaviour {
 //			SPInputManager.selectedSoldier.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1End);
 
 
-			SPInputManager.selectedSoldier.gameObject.GetComponent<SpriteRenderer>().color = new Color (1,0,0,0.60784313725f);
-			SPInputManager.selectedSoldier = null;
             //SPInputManager.selectedSoldier.EndCurrentMove();
 		}
 		//controling group of unit, like all soldiers, all archer ....

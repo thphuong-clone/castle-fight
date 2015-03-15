@@ -37,7 +37,7 @@ public class AIController : MonoBehaviour {
 
 		StartCoroutine (randomSpawnUnit ());
 
-		//StartCoroutine (updateBrain ());
+		StartCoroutine (updateBrain ());
 
 		StartCoroutine (updateOrder());
 		StartCoroutine (plusGold());
@@ -90,12 +90,12 @@ public class AIController : MonoBehaviour {
 		float strengthRatio = AIStrength / playerStrength;
 		//if the AI is overwhemingly stronger, 
 		if (strengthRatio >= 1.5f) {
-			//Debug.Log("attack");
+			Debug.Log("attack");
 			attackOrder();
 			//issue an attack order
 		}
 		else{
-			//Debug.Log("def");
+			Debug.Log("def");
 			defenseOrder();
 		}
 		//if not, first, attack the caravan, and heal all unit. if there is no caravan, group unit up, wait for power to come up
