@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.1">
+
+  <CommandSet xml:lang="en-gb">
+    <CommandPrefix>Castle Fight</CommandPrefix>
+    <Example>Speak to the game</Example>
+
+    <Command Name="startBattle">
+      <Example>Battle</Example>
+      <ListenFor> {naturalLanguage} </ListenFor>
+      <Feedback> Starting Game... </Feedback>
+      <Navigate/>
+    </Command>
+
+
+    <PhraseTopic Label="naturalLanguage" Scenario="Natural Language"/>
+
+  </CommandSet>
+
+
+</VoiceCommands>

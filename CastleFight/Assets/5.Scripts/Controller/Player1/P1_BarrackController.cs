@@ -69,6 +69,7 @@ public class P1_BarrackController : MonoBehaviour {
 	IEnumerator updateColdDown(){
 		//check if barrack change
 		while (true) {
+            Debug.Log("weeeeeeeee");
 			if (barrackChanged) {
 				barrackChanged = false;
 				//update the button countdown

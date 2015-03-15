@@ -58,6 +58,7 @@ public class SP_UI : MonoBehaviour {
 	public void orderUnit(){
 		Vector2 orderedPosition = getCommandPosition ();
 		//controlling a single UNIT
+
 		if (SP_InputManager.controlingState == -1) {
 			SP_InputManager.selectedSoldier.destinatedPos = orderedPosition;
 			SP_InputManager.selectedSoldier.soldierState = controlledSoldierState;
@@ -71,6 +72,19 @@ public class SP_UI : MonoBehaviour {
 			SP_InputManager.selectedSoldier.gameObject.GetComponent<SpriteRenderer>().color = new Color (1,0,0,0.60784313725f);
 			SP_InputManager.selectedSoldier = null;
 
+//		if (SPInputManager.controlingState == 0) {
+//			SPInputManager.selectedSoldier.destinatedPos = orderedPosition;
+//			SPInputManager.selectedSoldier.soldierState = controlledSoldierState;
+//			
+//			Position2D p1End = GridMapUtils.GetTile(orderedPosition.x,orderedPosition.y);
+//
+//			Position2D start = GridMapUtils.GetTile(SPInputManager.selectedSoldier.transform.position.x,SPInputManager.selectedSoldier.transform.position.y);
+//			SPInputManager.selectedSoldier.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1End);
+
+
+			SPInputManager.selectedSoldier.gameObject.GetComponent<SpriteRenderer>().color = new Color (1,0,0,0.60784313725f);
+			SPInputManager.selectedSoldier = null;
+            //SPInputManager.selectedSoldier.EndCurrentMove();
 		}
 		//controling group of unit, like all soldiers, all archer ....
 		else{
