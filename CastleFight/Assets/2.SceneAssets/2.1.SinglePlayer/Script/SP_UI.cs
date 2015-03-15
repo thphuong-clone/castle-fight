@@ -35,6 +35,7 @@ public class SP_UI : MonoBehaviour {
 		controlledSoldierState = 2;
 		orderButton.image.color = new Color (1,0,0,0.6078f);
 		ResourceSystem.p1_gold = 160;
+		StartCoroutine (plusGold ());
 		StartCoroutine (updateGold ());
 	}
 
@@ -45,11 +46,19 @@ public class SP_UI : MonoBehaviour {
 		}
 	}
 
-	//This function order a single unit or a lot to move to a position on map
+	IEnumerator plusGold(){
+		yield return new WaitForSeconds(0.1f);
+		while (true) {
+			yield return new WaitForSeconds(0.5f);
+			ResourceSystem.p1_gold ++;
+		}
+	}
+	
+		//This function order a single unit or a lot to move to a position on map
 	public void orderUnit(){
 		Vector2 orderedPosition = getCommandPosition ();
 		//controlling a single UNIT
-		if (SP_InputManager.controlingState == 0) {
+		if (SP_InputManager.controlingState == -1) {
 			SP_InputManager.selectedSoldier.destinatedPos = orderedPosition;
 			SP_InputManager.selectedSoldier.soldierState = controlledSoldierState;
 			
@@ -57,6 +66,7 @@ public class SP_UI : MonoBehaviour {
 
 			Position2D start = GridMapUtils.GetTile(SP_InputManager.selectedSoldier.transform.position.x,SP_InputManager.selectedSoldier.transform.position.y);
 			SP_InputManager.selectedSoldier.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1End);
+			SP_InputManager.selectedSoldier.EndCurrentMove();
 
 			SP_InputManager.selectedSoldier.gameObject.GetComponent<SpriteRenderer>().color = new Color (1,0,0,0.60784313725f);
 			SP_InputManager.selectedSoldier = null;
@@ -64,8 +74,20 @@ public class SP_UI : MonoBehaviour {
 		}
 		//controling group of unit, like all soldiers, all archer ....
 		else{
+			Position2D p1End = GridMapUtils.GetTile(orderedPosition.x,orderedPosition.y);
+			//all unit in the position
+			foreach(Soldier s in PlayerController.p1_listOfSoldierLists[SP_InputManager.controlingState]){
+				s.destinatedPos = orderedPosition;
+				s.soldierState = controlledSoldierState;
+				Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
+				s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1End);
+				s.EndCurrentMove();
+				s.gameObject.GetComponent<SpriteRenderer>().color = new Color (1,0,0,0.60784313725f);
+				//SP_InputManager.selectedSoldier = null;
+			}
+
 		}
-		unitCommandButton.gameObject.SetActive (false);
+		hideAllUI ();
 	}
 
 	Vector2 getCommandPosition(){

@@ -108,7 +108,7 @@ public class P1_soldierBuilt : MonoBehaviour {
 				Position2D p1_end = GridMapUtils.GetTile(PlayerController.p1_soldierOrder[_unitType].x,PlayerController.p1_soldierOrder[_unitType].y);
 				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
 				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1_end);
-				
+				_sol.EndCurrentMove();
 			}
 		}
 		else{
@@ -120,6 +120,7 @@ public class P1_soldierBuilt : MonoBehaviour {
 				Position2D p2_end = GridMapUtils.GetTile(PlayerController.p2_soldierOrder[_unitType].x,PlayerController.p2_soldierOrder[_unitType].y);
 				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
 				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p2_end);
+				_sol.EndCurrentMove();
 			}
 		}
 	}

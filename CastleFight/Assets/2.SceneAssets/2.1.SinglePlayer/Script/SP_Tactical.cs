@@ -24,6 +24,10 @@ public class SP_Tactical : MonoBehaviour {
 	public void changeControlledUnit(int _controlledSoldier){
 		controlledSoldier = _controlledSoldier;
 		masterUI.cancleEverythingButton.gameObject.SetActive (false);
-		//masterUI.unitCommandButton.gameObject.SetActive (true);
+		masterUI.unitCommandButton.gameObject.SetActive (true);
+		SP_InputManager.controlingState = _controlledSoldier;
+		foreach (Soldier s in PlayerController.p1_listOfSoldierLists[_controlledSoldier]) {
+			s.gameObject.GetComponent<SpriteRenderer>().color =  new Color (1,1,1,0.60784313725f);		
+		}
 	}
 }

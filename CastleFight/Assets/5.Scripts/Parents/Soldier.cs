@@ -511,8 +511,8 @@ public class Soldier : Unit
 
     bool ReachedPoint(Vector2 p2)
     {
-        if (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y))
-            Debug.Log("current: " + transform.position + "\nreached: " + p2);
+        //if (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y))
+//            Debug.Log("current: " + transform.position + "\nreached: " + p2);
         return (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y));
     }
 

@@ -33,7 +33,7 @@ public class Test : MonoBehaviour {
 		while (time > 0){
 			time -= Time.unscaledDeltaTime;
 			if (Input.GetKeyDown(KeyCode.Escape)){
-				Application.Quit();
+				Application.LoadLevel("1.0.SceneSelection");
 			}
 			yield return null;
 		}

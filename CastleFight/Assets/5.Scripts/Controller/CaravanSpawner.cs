@@ -28,6 +28,7 @@ public class CaravanSpawner : MonoBehaviour {
 
 	void spawnCaravan(){
 		Caravan newCaravan = (Caravan)Instantiate (caravanPrefab);
+		PlayerController.caravanList.Add (newCaravan);
 		newCaravan.transform.position = Vector3.zero;
 	}
 

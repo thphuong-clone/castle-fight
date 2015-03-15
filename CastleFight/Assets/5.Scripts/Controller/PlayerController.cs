@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour {
 
 	public static List<Vector3> p2_soldierOrder = new List<Vector3>();
 
+
+	//this list contains all the caravan
+	public static List<Caravan> caravanList = new List<Caravan> ();
 //This lsit contain all the list of soldier. List 0 = swordman, 1 = archer ....
 	public static List<List<Soldier>> p1_listOfSoldierLists = new List<List<Soldier>>(); 
 	public static List<List<Soldier>> p2_listOfSoldierLists = new List<List<Soldier>>();
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour {
 		p2_listOfSoldierLists.Clear ();
 		p1_buildingList.Clear ();
 		p2_buildingList.Clear ();
+//		ResourceSystem.p1_gold = 100;
+//		ResourceSystem.p2_gold = 100;
 		//There are 5 types of unit so there will be 5 lists of soldier
 		for (int i = 0; i < 5; i ++) {
 			p1_listOfSoldierLists.Add(new List<Soldier>());

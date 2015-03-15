@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class SP_InputManager : MonoBehaviour {
 	public static int controlingState;
-	//0 = one unit. 1-2-3-4-5 = swordman,archer, ... group play
+	//-1 = one unit. 0 - 4 = swordman,archer, ... group play
 	public static Soldier selectedSoldier;
 
 	public Button orderButton;
@@ -43,9 +43,10 @@ public class SP_InputManager : MonoBehaviour {
 					b.SP_isSelected();
 				}
 				if (hitInfo.transform.gameObject.tag == "SelectedSoldier"){
+
 					SelectedSoldier s = hitInfo.transform.gameObject.GetComponent<SelectedSoldier>();
 					s.isSelected();
-					controlingState = 0;
+					controlingState = -1;
 					orderButton.gameObject.SetActive(true);
 				}
 			}

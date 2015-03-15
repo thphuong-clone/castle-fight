@@ -247,23 +247,29 @@ public class Caravan : MonoBehaviour {
 
 	public virtual void setUpIcons(){
 		//Instantiate the p1_map displayer and the p2 displayer onto the map
-		p1_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
-		p2_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
-		
+
 		//This is the parent of the icon, which is the displayer map
 		GameObject p1_parent;
 		GameObject p2_parent;
 		
 		//find the parent game object and set this game object to be the parent of this unit icon
 		GameObject[] parent = GameObject.FindGameObjectsWithTag ("DisplayMap");
-		if (parent [0].transform.name == "Player1_DisplayMap") {
-			p1_parent = parent[0];
-			p2_parent = parent[1];
+		try{			
+			if (parent [0].transform.name == "Player1_DisplayMap") {
+				p1_parent = parent[0];
+				p2_parent = parent[1];
+			}
+			else{
+				p1_parent = parent[1];
+				p2_parent = parent[0];
+			}
 		}
-		else{
-			p1_parent = parent[1];
-			p2_parent = parent[0];
-		}
+		catch{
+			return;
+		}		
+		p1_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
+		p2_mapDisplayer = (GameObject)Instantiate (displayerIconPrefab);
+
 		//set the parent of the icon
 		p1_mapDisplayer.transform.parent = p1_parent.transform;
 		p2_mapDisplayer.transform.parent = p2_parent.transform;
@@ -310,13 +316,13 @@ public class Caravan : MonoBehaviour {
 	void destinationComplete(){
 		if (currentNode > 0) {
 			ResourceSystem.p1_gold += 100;
-			GameObject.Find("Player1-UI").gameObject.GetComponent<P1_Controller>().playerMoney.text = ResourceSystem.p1_gold.ToString();
 			//give player 1 the money
 		}
 		else {
 			ResourceSystem.p2_gold += 100;
 			//give player 2 the money
 		}
+		PlayerController.caravanList.Remove (this);
 		Destroy (this.gameObject);
 	}
 

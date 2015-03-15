@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class MainCastle : Building {
-//	public override void Awake(){
-//		base.Awake ();
-//	}
+	public override void Awake(){
+		StartCoroutine (checkAndHealSoldiers ());
+		base.Awake ();
+	}
 
 	public override IEnumerator updateHealth(){
 		float lastHealth = health;
@@ -33,6 +36,51 @@ public class MainCastle : Building {
 				else{
 					healthBar.GetComponent<SpriteRenderer>().color = new Color(0,255,0);
 				}
+			}
+		}
+	}
+
+	IEnumerator checkAndHealSoldiers(){
+		while (true) {
+			healSoldiers();
+			yield return new WaitForSeconds(1f);
+		}
+	}
+
+	public void healSoldiers(){
+		if (!this.isDead) {
+			Vector2 thisPos = new Vector2(transform.position.x,transform.position.y);
+			//find all the collider in the range of the unit, which is 1.5 radius - maybe 2, I can't decide yet
+			Collider2D[] col = Physics2D.OverlapCircleAll(thisPos,2f);
+			List<Soldier> alliesList = new List<Soldier> ();
+			if (col.Length == 0){}//there are no unit in the area, nope
+			else{
+				foreach(Collider2D c in col){
+					try{
+						//If there is allies nearby, add him to the list.
+						if (c.gameObject.GetComponent<Soldier>().isPlayerOne == this.isPlayerOne){
+							//add him to the list if he is not dead yet.
+							if (!c.gameObject.GetComponent<Soldier>().isDead){
+								alliesList.Add(c.gameObject.GetComponent<Soldier>());
+							}
+						}
+					}
+					//that mean it's a moutain or whatever, I haven't invented it yet.
+					catch (Exception e){
+						debugException(e.ToString());
+					}
+				}
+				if (alliesList.Count == 0){}//the list is empty, there is no ally
+				else{ // heal him
+					foreach (Soldier s in alliesList){
+						if (s.health < s.maxHealth){
+							s.health += s.maxHealth * 0.035f;
+							if (s.health >= s.maxHealth)
+								s.health = s.maxHealth;
+						}
+					}
+				}
+				
 			}
 		}
 	}

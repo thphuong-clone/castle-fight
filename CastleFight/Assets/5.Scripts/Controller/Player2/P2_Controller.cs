@@ -33,6 +33,7 @@ public class P2_Controller : MonoBehaviour {
 		showMap = false;
 		hideAllUI ();
 		hideMajorButton ();
+		StartCoroutine (plusGold());
 		StartCoroutine (updateGold());
 	}
 	
@@ -155,8 +156,16 @@ public class P2_Controller : MonoBehaviour {
 	
 	
 	IEnumerator updateGold(){
+		yield return new WaitForSeconds (0.1f);
 		while (true) {
 			playerMoney.text = ResourceSystem.p2_gold.ToString();		
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
+
+	IEnumerator plusGold(){
+		while (true) {
+			ResourceSystem.p2_gold ++;
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
