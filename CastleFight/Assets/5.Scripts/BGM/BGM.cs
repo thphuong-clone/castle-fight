@@ -43,7 +43,7 @@ public class BGM : MonoBehaviour {
     public void Play()
     {
         //implement play (change sound, add sound ...)
-        audio.Play();
+        GetComponent<AudioSource>().Play();
     }
 	
 }

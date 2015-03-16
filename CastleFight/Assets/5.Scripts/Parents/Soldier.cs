@@ -182,9 +182,9 @@ public class Soldier : Unit
             //if the unit is in the next node.
             if (doneMoving)
             {
+                Debug.Log("ended");
                 //Debug.Log("reached node " + node.position);
                 nextPathNode = nextPathNode.next;
-                //nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
                 //Debug.Log("next position is " + nextPosition);
                 if (nextPathNode != null)
                 {
