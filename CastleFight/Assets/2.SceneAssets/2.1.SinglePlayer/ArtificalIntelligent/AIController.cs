@@ -26,6 +26,9 @@ public class AIController : MonoBehaviour {
 	public Barrack barrackPrefab;
 	public Tower towerPrefab;
 
+    int currentOrder;
+    int nextOrder;
+
 	void Awake(){
 		orderList.Clear ();
 		for (int i = 0; i < 5;i++)
@@ -90,12 +93,13 @@ public class AIController : MonoBehaviour {
 		float strengthRatio = AIStrength / playerStrength;
 		//if the AI is overwhemingly stronger, 
 		if (strengthRatio >= 1.5f) {
-			Debug.Log("attack");
+            //Debug.Log("attack");
 			attackOrder();
+            nextOrder = 1;
 			//issue an attack order
 		}
 		else{
-			Debug.Log("def");
+            //Debug.Log("def");
 			defenseOrder();
 		}
 		//if not, first, attack the caravan, and heal all unit. if there is no caravan, group unit up, wait for power to come up
@@ -116,14 +120,25 @@ public class AIController : MonoBehaviour {
 					s.soldierState = 1;
 					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
 				}
-				if (s.health >= 0.85f * s.maxHealth){
-					s.EndCurrentMove();
-					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-					Position2D end = GridMapUtils.GetTile(orderList[i].x,orderList[i].y);
-					s.soldierState = (int)orderList[i].z;
-					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+				else if (s.health >= 0.85f * s.maxHealth){
+                    if (currentOrder != nextOrder)
+                    {
+                        //s.EndCurrentMove();
+                        Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
+                        Position2D end = GridMapUtils.GetTile(orderList[i].x, orderList[i].y);
+                        s.soldierState = (int)orderList[i].z;
+                        s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+                        while (s.nextPathNode.next != null)
+                        {
+                            Debug.Log("Route: " + GridMapUtils.GetRealPosition(s.nextPathNode.next.position));
+                            s.nextPathNode = s.nextPathNode.next;
+                            i++;
+                        }
+                        s.EndCurrentMove();
+                        currentOrder = nextOrder;
+                    }
 				}
-				if (s.health > 0.225f * s.maxHealth || s.health < 0.85f*s.maxHealth){
+				else if (s.health > 0.225f * s.maxHealth && s.health < 0.85f*s.maxHealth){
 					//if he is healing
 					if (s.transform.position.y > 5.4f){					
 						s.EndCurrentMove();
