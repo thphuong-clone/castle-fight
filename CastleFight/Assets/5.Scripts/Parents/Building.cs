@@ -12,8 +12,14 @@ public class Building : Unit {
 
 	public GameObject buildingSprite;
 	public GameObject unitAura;
+	
+	public override void Awake (){
+		PlayerController.reupdateSoldier ();
+		base.Awake ();
+	}
 
 	public virtual void OnDestroy(){
 		PathFinder.GridMapUtils.MakeWorld ();
+		PlayerController.reupdateSoldier ();
 	}
 }

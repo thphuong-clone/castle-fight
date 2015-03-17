@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:\Unity5\Editor\Data\PlaybackEngines\metrosupport/Tools/UnityEngine.dll</HintPath>
+	  <HintPath>E:\Unity\Editor\Data\PlaybackEngines\metrosupport/Tools/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Unity5/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>E:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +109,7 @@
      <None Include="Assets\6.Prefabs\uIntelliSense\LICENSE.txt" />
      <None Include="Assets\uIntelliSense\Editor\Resources\additional-docs-data.xml" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
