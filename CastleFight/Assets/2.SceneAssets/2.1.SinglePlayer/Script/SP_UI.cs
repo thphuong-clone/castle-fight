@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using PathFinder;
 
 public class SP_UI : MonoBehaviour {
-	[SerializeField]int controlledSoldierState;
+	public static int controlledSoldierState;
 	//this button get the position of the player pressed
 	public Button unitCommandButton;
 

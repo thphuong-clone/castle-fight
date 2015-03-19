@@ -22,6 +22,8 @@ public class Soldier : Unit
     private Vector2 nextPosition;
     private bool doneMoving = true;
 
+    public bool isDebugMode;
+
     protected Vector2 tempPos;
 
     public int soldierState; //0 = idle, 1 = move only , 2 = move and attack , -1 = busy doing something else (mostly in a midle of a animation)
@@ -85,6 +87,10 @@ public class Soldier : Unit
     {
         while (!this.isDead)
         {
+            if (isDebugMode)
+            {
+                Debug.Log(r.velocity);
+            }
             switch (soldierState)
             {
                 case -1: // soldier is busy killing enemy
@@ -182,7 +188,6 @@ public class Soldier : Unit
             //if the unit is in the next node.
             if (doneMoving)
             {
-                Debug.Log("ended");
                 //Debug.Log("reached node " + node.position);
                 nextPathNode = nextPathNode.next;
                 //Debug.Log("next position is " + nextPosition);
@@ -225,10 +230,22 @@ public class Soldier : Unit
                         if (c.gameObject.GetComponent<Unit>().isPlayerOne != this.isPlayerOne)
                         {
                             //add to the enemy list if he is not dead yet.
-                            if (!c.gameObject.GetComponent<Unit>().isDead)
+                            if (isHuman)
                             {
-                                enemyList.Add(c.gameObject);
+                                if (!c.gameObject.GetComponent<Unit>().isDead)
+                                {
+                                    enemyList.Add(c.gameObject);
+                                }
                             }
+                            else
+                            {
+                                if (!c.gameObject.GetComponent<Unit>().isDead && c.gameObject.GetComponent<Unit>().isHuman)
+                                {
+                                    enemyList.Add(c.gameObject);
+                                }
+                            }
+                                
+
                         }
                     }
                     //that mean it's a moutain or whatever, I haven't invented it yet.
@@ -499,7 +516,7 @@ public class Soldier : Unit
         return returnVector;
     }
 
-    bool FloatEqual (float x, float y)
+    bool FloatEqual(float x, float y)
     {
         return (Math.Abs(x - y) < 0.07f);
     }
@@ -512,7 +529,7 @@ public class Soldier : Unit
     bool ReachedPoint(Vector2 p2)
     {
         //if (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y))
-//            Debug.Log("current: " + transform.position + "\nreached: " + p2);
+        //            Debug.Log("current: " + transform.position + "\nreached: " + p2);
         return (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y));
     }
 
@@ -544,6 +561,40 @@ public class Soldier : Unit
         }
 
         return false;
+    }
+
+    public void Deploy(Vector2 position)
+    {
+        Position2D start = GridMapUtils.GetTile(transform.position);
+        Position2D end = GridMapUtils.GetTile(position);
+        nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+        EndCurrentMove();
+    }
+
+    public void Deploy(Vector2 position, int state)
+    {
+        Position2D start = GridMapUtils.GetTile(transform.position);
+        Position2D end = GridMapUtils.GetTile(position);
+        nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+        soldierState = state;
+        EndCurrentMove();
+    }
+
+    public void Deploy(float x, float y)
+    {
+        Position2D start = GridMapUtils.GetTile(transform.position);
+        Position2D end = GridMapUtils.GetTile(x, y);
+        nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+        EndCurrentMove();
+    }
+
+    public void Deploy(float x, float y, int state)
+    {
+        Position2D start = GridMapUtils.GetTile(transform.position);
+        Position2D end = GridMapUtils.GetTile(x, y);
+        nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+        soldierState = state;
+        EndCurrentMove();
     }
 
     //	void OnDestroy(){

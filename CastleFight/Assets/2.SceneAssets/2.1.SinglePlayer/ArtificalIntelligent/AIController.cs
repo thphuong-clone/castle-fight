@@ -112,7 +112,7 @@ public class AIController : MonoBehaviour {
 			foreach(Soldier s in PlayerController.p2_listOfSoldierLists[i]){
 				//if the unit is almost dead, heal it
 				if (s.health <= 0.225f * s.maxHealth){
-					Debug.Log("DIE");
+                    //Debug.Log("DIE");
 					s.destinatedPos = new Vector2(0,5.5f);
 					s.EndCurrentMove();
 					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
@@ -128,12 +128,12 @@ public class AIController : MonoBehaviour {
                         Position2D end = GridMapUtils.GetTile(orderList[i].x, orderList[i].y);
                         s.soldierState = (int)orderList[i].z;
                         s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
-                        while (s.nextPathNode.next != null)
-                        {
-                            Debug.Log("Route: " + GridMapUtils.GetRealPosition(s.nextPathNode.next.position));
-                            s.nextPathNode = s.nextPathNode.next;
-                            i++;
-                        }
+                        //while (s.nextPathNode.next != null)
+                        //{
+                        //    Debug.Log("Route: " + GridMapUtils.GetRealPosition(s.nextPathNode.next.position));
+                        //    s.nextPathNode = s.nextPathNode.next;
+                        //    i++;
+                        //}
                         s.EndCurrentMove();
                         currentOrder = nextOrder;
                     }

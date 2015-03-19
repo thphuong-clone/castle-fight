@@ -35,12 +35,39 @@ namespace PathFinder
             return new Position2D(intX, intY);
         }
 
+        public static Position2D GetTile(Vector2 position)
+        {
+            //convert zero point centric map to zero point top left map
+            float topLeftX = position.x - (-4.5f);
+            float topLeftY = 8 - position.y;
+
+            int intX = (int)topLeftX;
+            int intY = (int)topLeftY;
+
+            if (intX == 9)
+                intX = 8;
+
+            if (intY == 16)
+                intY = 15;
+
+            return new Position2D(intX, intY);
+        }
+
         public static Vector2 GetRealPosition(Position2D position)
         {
 
             float top = 8 - position.y;
             float bottom = top - 1;
             float left = position.x + (-4.5f);
+            float right = left + 1;
+            return new Vector2((left + right) / 2, (top + bottom) / 2);
+        }
+
+        public static Vector2 GetRealPosition(int x, int y)
+        {
+            float top = 8 - y;
+            float bottom = top - 1;
+            float left = x + (-4.5f);
             float right = left + 1;
             return new Vector2((left + right) / 2, (top + bottom) / 2);
         }

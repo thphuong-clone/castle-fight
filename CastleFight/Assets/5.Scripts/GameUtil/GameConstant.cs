@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GameUtil
 {
     class GameConstant
     {
         //unit
-        public static int SWORDMAN = 1;
-        public static int ARCHER = 2;
-        public static int KNIGHT = 3;
-        public static int HEAVY_INFANTRY = 4;
-        public static int CANNON = 5;
+        public const int SWORDMAN = 0;
+        public const int ARCHER = 1;
+        public const int KNIGHT = 2;
+        public const int HEAVY_INFANTRY = 3;
+        public const int CANNON = 4;
         //building
         public static int BARRACK = 0;
         public static int WALL = 1;
@@ -31,5 +28,20 @@ namespace GameUtil
         public static int ARMOR_HEAVY_INFANTRY = 4;
         public static int ARMOR_CANNON = 5;
         public static int ARMOR_TOWER = 6;
+        //unit state
+        public static int STATE_IDLE = 0;
+        public static int STATE_MOVE_ONLY = 1;
+        public static int STATE_ATTACK_MOVE = 2;
+        public static int STATE_UNAVAILABLE = -1;
+        //unit price
+        public static int PRICE_SWORDMAN = 20;
+        public static int PRICE_ARCHER = 24;
+        public static int PRICE_HORSEMAN = 42;
+        public static int PRICE_HEAVY_INFANTRY = 60;
+        public static int PRICE_CANNON = 46;
+
+        //team
+        public static int TEAM_RED = 1;
+        public static int TEAM_BLUE = 2;
     }
 }

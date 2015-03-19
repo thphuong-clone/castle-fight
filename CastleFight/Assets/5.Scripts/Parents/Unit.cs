@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour {
 	//The player 1 is the player at the bottom, the player 2 is the player at the top.
 	//so if HE IS the player 1, he is at bot, if FALSE, he is at the top
 	public bool isPlayerOne;
+    public bool isHuman = true;
 
 	public bool isDead; //check if the unit is dead, so we can switch attack to another unit.
 	
