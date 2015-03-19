@@ -15,7 +15,7 @@ public class MPSurvivalGame : MonoBehaviour
 
     private int turn;
     private int waveRepeat = 5;
-    private float waveDuration = 2;
+    private float waveDuration = 20;
     private int p1Mob;
     private int p2Mob;
 

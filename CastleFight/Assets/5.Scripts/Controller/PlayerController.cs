@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     s.destinatedPos = new Vector2(p1_soldierOrder[i].x, p1_soldierOrder[i].y);
                     Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
-                    Debug.Log("from: " + start + " to: " + p1End);
+                    //Debug.Log("from: " + start + " to: " + p1End);
                     s.nextPathNode = PathFinder.PathFinder.FindPath(knownWorld, start, p1End);
                     s.EndCurrentMove();
                 }
@@ -192,6 +192,33 @@ public class PlayerController : MonoBehaviour {
 		}
 
 	}
+
+	public static void reupdateSoldier(){
+		try{
+			foreach( List<Soldier> ls in p1_listOfSoldierLists){
+				foreach(Soldier s in ls){
+					s.EndCurrentMove();
+					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
+					Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
+					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+				}
+			}
+			foreach( List<Soldier> ls in p2_listOfSoldierLists){
+				foreach(Soldier s in ls){
+					s.EndCurrentMove();
+					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
+					Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
+					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+				}
+			}
+		}
+		catch{
+			//Debug.LogWarning("Errr ?");
+			return;		
+		}
+	}
+
+
 
 }
 

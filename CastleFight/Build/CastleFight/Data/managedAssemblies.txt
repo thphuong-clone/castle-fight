@@ -1,3 +1,2 @@
 Assembly-CSharp.dll
 UnityEngine.UI.dll
-Assembly-CSharp-Firstpass.dll

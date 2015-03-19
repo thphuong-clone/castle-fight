@@ -36,7 +36,7 @@ namespace Template
 		public App()
 		{
 			this.InitializeComponent();
-			appCallbacks = new AppCallbacks(false);
+			appCallbacks = new AppCallbacks();
 			appCallbacks.RenderingStarted += RemoveSplashScreen;
 		}
 

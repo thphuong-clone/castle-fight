@@ -26,10 +26,12 @@ public class AIController : MonoBehaviour {
 	public Barrack barrackPrefab;
 	public Tower towerPrefab;
 
+	//what are those two ints, please explain Phuong
     int currentOrder;
     int nextOrder;
 
 	void Awake(){
+		possibleBuildPosition.Remove (new Vector3(0,5,0));
 		orderList.Clear ();
 		for (int i = 0; i < 5;i++)
 			orderList.Add (Vector3.zero);
@@ -42,7 +44,7 @@ public class AIController : MonoBehaviour {
 
 		StartCoroutine (updateBrain ());
 
-		StartCoroutine (updateOrder());
+		//StartCoroutine (updateOrder());
 		StartCoroutine (plusGold());
 	}
 
@@ -93,14 +95,19 @@ public class AIController : MonoBehaviour {
 		float strengthRatio = AIStrength / playerStrength;
 		//if the AI is overwhemingly stronger, 
 		if (strengthRatio >= 1.5f) {
-            //Debug.Log("attack");
-			attackOrder();
-            nextOrder = 1;
+			//currentOrder = 0;
+			nextOrder = 1;
+			Debug.Log("attack");
+			if (currentOrder != nextOrder)				
+				attackOrder();
 			//issue an attack order
 		}
 		else{
-            //Debug.Log("def");
-			defenseOrder();
+			//currentOrder = 0;
+			nextOrder = 2;
+			Debug.Log("defense");
+			if (currentOrder != nextOrder)
+				defenseOrder();
 		}
 		//if not, first, attack the caravan, and heal all unit. if there is no caravan, group unit up, wait for power to come up
 
@@ -109,41 +116,38 @@ public class AIController : MonoBehaviour {
 	//this is the general order, to micro almost die unit to go back to heal and strong unit to go fighting
 	void generalOrder(){
 		for (int i = 0; i < 5; i ++){
-			foreach(Soldier s in PlayerController.p2_listOfSoldierLists[i]){
+			for (int j = 0; j < PlayerController.p2_listOfSoldierLists[i].Count;j ++){
+				Soldier s = PlayerController.p2_listOfSoldierLists[i][j];
+			//foreach(Soldier s in PlayerController.p2_listOfSoldierLists[i]){
 				//if the unit is almost dead, heal it
-				if (s.health <= 0.225f * s.maxHealth){
-                    //Debug.Log("DIE");
+				if (s.health <= 0.325f * s.maxHealth){
+					Debug.Log("DIE");
 					s.destinatedPos = new Vector2(0,5.5f);
 					s.EndCurrentMove();
 					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-					Position2D end = GridMapUtils.GetTile(UnityEngine.Random.Range(-1,1.1f),5.5f);
+					s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.5f);
+					Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
+
 					s.soldierState = 1;
 					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
 				}
 				else if (s.health >= 0.85f * s.maxHealth){
-                    if (currentOrder != nextOrder)
-                    {
-                        //s.EndCurrentMove();
-                        Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
-                        Position2D end = GridMapUtils.GetTile(orderList[i].x, orderList[i].y);
+						//Debug.LogWarning("yo");
+						Position2D start = GridMapUtils.GetTile(s.transform.position.x, s.transform.position.y);
+						s.destinatedPos = new Vector2(orderList[i].x,orderList[i].y);
+						Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
                         s.soldierState = (int)orderList[i].z;
                         s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
-                        //while (s.nextPathNode.next != null)
-                        //{
-                        //    Debug.Log("Route: " + GridMapUtils.GetRealPosition(s.nextPathNode.next.position));
-                        //    s.nextPathNode = s.nextPathNode.next;
-                        //    i++;
-                        //}
                         s.EndCurrentMove();
                         currentOrder = nextOrder;
-                    }
 				}
-				else if (s.health > 0.225f * s.maxHealth && s.health < 0.85f*s.maxHealth){
+				else if (s.health > 0.325f * s.maxHealth && s.health < 0.85f*s.maxHealth){
 					//if he is healing
 					if (s.transform.position.y > 5.4f){					
 						s.EndCurrentMove();
 						Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-						Position2D end = GridMapUtils.GetTile(UnityEngine.Random.Range(-1,1.1f),5.5f);
+						s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.5f);
+						Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
 						s.soldierState = 1;
 						s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
 					}
@@ -151,14 +155,16 @@ public class AIController : MonoBehaviour {
 						if (s.health <= s.maxHealth * 0.5f){
 							s.EndCurrentMove();
 							Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-							Position2D end = GridMapUtils.GetTile(UnityEngine.Random.Range(-1,1.1f),5.5f);
+							s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.5f);
+							Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
 							s.soldierState = 2;
 							s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);						
 						}
 						else{
 							s.EndCurrentMove();
 							Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-							Position2D end = GridMapUtils.GetTile(orderList[i].x,orderList[i].y);
+							s.destinatedPos = new Vector2(orderList[i].x,orderList[i].y);
+							Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
 							s.soldierState = (int)orderList[i].z;
 							s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
 						}
@@ -169,15 +175,17 @@ public class AIController : MonoBehaviour {
 	}
 
 	//order the unit to go left, right up down, err, anywhere you like
-	void attackOrder(){
+	void attackOrder(){		
 		for (int i = 0; i < 5; i ++) {
 			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),-7,2);
+			PlayerController.p2_soldierOrder[i] = orderList[i];
 		}
 	}
 
-	void defenseOrder(){
+	void defenseOrder(){		
 		for (int i = 0; i < 5; i ++) {
 			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),1,2);
+			PlayerController.p2_soldierOrder[i] = orderList[i];
 		}
 	}
 
@@ -189,7 +197,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	IEnumerator randomSpawnUnit(){
-		ResourceSystem.p2_gold -= 5;
+		ResourceSystem.p2_gold = 50;
 		while(true){
 			yield return new WaitForSeconds(0.5f);
 			if (ResourceSystem.p2_gold >= 0){
@@ -326,8 +334,9 @@ public class AIController : MonoBehaviour {
 			if (PlayerController.p1_soldierOrder[_unitType].z == 0){
 				_sol.destinatedPos = new Vector2(_sol.transform.position.x,_sol.transform.position.y);
 			}
-			else{				
-				Position2D p1_end = GridMapUtils.GetTile(PlayerController.p1_soldierOrder[_unitType].x,PlayerController.p1_soldierOrder[_unitType].y);
+			else{
+				_sol.destinatedPos = new Vector2(PlayerController.p1_soldierOrder[_unitType].x,PlayerController.p1_soldierOrder[_unitType].y);				
+				Position2D p1_end = GridMapUtils.GetTile(_sol.destinatedPos.x,_sol.destinatedPos.y);
 				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
 				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p1_end);
 				_sol.EndCurrentMove();
@@ -338,8 +347,9 @@ public class AIController : MonoBehaviour {
 			if (PlayerController.p2_soldierOrder[_unitType].z == 0){
 				_sol.destinatedPos = new Vector2(_sol.transform.position.x,_sol.transform.position.y);
 			}
-			else{				
-				Position2D p2_end = GridMapUtils.GetTile(PlayerController.p2_soldierOrder[_unitType].x,PlayerController.p2_soldierOrder[_unitType].y);
+			else{								
+				_sol.destinatedPos = new Vector2(PlayerController.p2_soldierOrder[_unitType].x,PlayerController.p2_soldierOrder[_unitType].y);				
+				Position2D p2_end = GridMapUtils.GetTile(_sol.destinatedPos.x,_sol.destinatedPos.y);
 				Position2D start = GridMapUtils.GetTile(_sol.transform.position.x, _sol.transform.position.y);
 				_sol.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, p2_end);
 				_sol.EndCurrentMove();
