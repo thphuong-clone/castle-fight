@@ -39,6 +39,7 @@ public class P2_Controller : MonoBehaviour {
 	
 	
 	void Update(){
+#if UNITY_EDITOR
 		if (Input.GetMouseButtonDown(0)){
 			if (Input.mousePosition.y > Screen.height / 2){
 				if (isIdle)
@@ -47,9 +48,10 @@ public class P2_Controller : MonoBehaviour {
 				idleTime = 3;
 			}
 		}
+#endif
 		foreach (Touch t in Input.touches) {
 			if (t.phase == TouchPhase.Began){
-				if (Input.mousePosition.y > Screen.height / 2){
+				if (t.position.y > Screen.height / 2){
 					if (isIdle)
 						hideAllUI();
 					isIdle = false;
@@ -166,7 +168,7 @@ public class P2_Controller : MonoBehaviour {
 	IEnumerator plusGold(){
 		while (true) {
 			ResourceSystem.p2_gold ++;
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(1.5f);
 		}
 	}
 }

@@ -40,6 +40,7 @@ public class P1_Controller : MonoBehaviour {
 
 	void Update(){
 		//this is the PC or web input check
+#if UNITY_EDITOR
 		if (Input.GetMouseButtonDown(0)){
 			if (Input.mousePosition.y < Screen.height / 2){
 				if (isIdle)
@@ -48,18 +49,21 @@ public class P1_Controller : MonoBehaviour {
 				idleTime = 3;
 			}
 		}
+#endif
 		//This is the touch input check
 		foreach (Touch t in Input.touches) {
 			if (t.phase == TouchPhase.Began){
-				if (Input.mousePosition.y < Screen.height / 2){
+				if (t.position.y < Screen.height / 2){
 					if (isIdle)
 						hideAllUI();
+
 					isIdle = false;
 					idleTime = 3;
 					break;
 				}
 			}
 		}
+
 		if (!isIdle) {
 			idleTime -= Time.deltaTime;
 			if (idleTime <= 0){
@@ -167,7 +171,7 @@ public class P1_Controller : MonoBehaviour {
 	IEnumerator plusGold(){
 		while (true) {
 			ResourceSystem.p1_gold ++;
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(1.5f);
 		}
 	}
 }

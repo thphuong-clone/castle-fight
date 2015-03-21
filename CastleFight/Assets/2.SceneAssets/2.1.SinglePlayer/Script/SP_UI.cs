@@ -30,13 +30,51 @@ public class SP_UI : MonoBehaviour {
 	public Text playerMoney; 
 	//this button change the oder type, attack or move only
 	public Button orderButton;
-
+	
+	float idleTime;
+	bool isIdle;
 	void Awake(){
+		idleTime = 3;
+		isIdle = false;
 		controlledSoldierState = 2;
 		orderButton.image.color = new Color (1,0,0,0.6078f);
 		ResourceSystem.p1_gold = 160;
 		StartCoroutine (plusGold ());
 		StartCoroutine (updateGold ());
+	}
+
+	//This update is mainly used to check if the player is idle or not. If yes, hide all the stuffs
+	void Update(){
+#if UNITY_EDITOR
+		if (Input.GetMouseButtonDown(0)){
+			//if the player is idling, show up all the menu
+			if (isIdle)
+				hideAllUI();
+
+			isIdle = false;
+			idleTime = 3;
+			
+		}
+#endif
+		foreach (Touch t in Input.touches) {
+			if (t.phase == TouchPhase.Began){
+				if (isIdle)
+					hideAllUI();
+				isIdle = false;
+				idleTime = 3;
+				break;
+			}
+		}
+
+		if (!isIdle) {
+			idleTime -= Time.deltaTime;
+			if (idleTime <= 0){
+				isIdle = true;
+				hideAllUI();
+				hideMajorUI();
+			}
+		}
+
 	}
 
 	IEnumerator updateGold(){
@@ -49,7 +87,7 @@ public class SP_UI : MonoBehaviour {
 	IEnumerator plusGold(){
 		yield return new WaitForSeconds(0.1f);
 		while (true) {
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(1.5f);
 			ResourceSystem.p1_gold ++;
 		}
 	}

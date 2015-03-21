@@ -580,6 +580,14 @@ public class Soldier : Unit
     /// <summary>
     /// Deploy soldier to desired position, set the state of the soldier
     /// </summary>
+	public void Deploy(Vector3 _vector){
+		Position2D start = GridMapUtils.GetTile(transform.position);
+		Position2D end = GridMapUtils.GetTile(new Vector2(_vector.x,_vector.y));
+		nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
+		soldierState = (int)_vector.z;
+		EndCurrentMove();
+	}
+
     public void Deploy(Vector2 position, int state)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
