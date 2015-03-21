@@ -566,6 +566,9 @@ public class Soldier : Unit
         return false;
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position
+    /// </summary>
     public void Deploy(Vector2 position)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -574,6 +577,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position, set the state of the soldier
+    /// </summary>
     public void Deploy(Vector2 position, int state)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -583,6 +589,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position
+    /// </summary>
     public void Deploy(float x, float y)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -591,6 +600,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position, set the state of the soldier
+    /// </summary>
     public void Deploy(float x, float y, int state)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);

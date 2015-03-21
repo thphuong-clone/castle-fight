@@ -108,6 +108,8 @@
      <Compile Include="Assets\5.Scripts\Soldiers\Medic.cs" />
      <Compile Include="Assets\5.Scripts\Soldiers\SwordMan.cs" />
      <Compile Include="Assets\5.Scripts\Test.cs" />
+     <Compile Include="Assets\Effect\LeanTween.cs" />
+     <Compile Include="Assets\Effect\SlideButtonMenu.cs" />
      <None Include="Assets\uIntelliSense\LICENSE.txt" />
      <None Include="Assets\6.Prefabs\uIntelliSense\Editor\Resources\additional-docs-data.xml" />
      <None Include="Assets\6.Prefabs\uIntelliSense\LICENSE.txt" />

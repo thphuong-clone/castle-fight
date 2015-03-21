@@ -6,8 +6,13 @@ namespace PathFinder
 {
     public static class PathFinder
     {
+        /// <summary>
+        /// Find shortest path between two point
+        /// </summary>
+        /// <returns>Return the first node of the path</returns>
         public static SearchNode FindPath(SimpleWorld2D world, Position2D start, Position2D end)
         {
+            //flipping start and end to receive path from start to end
             return FindPathReversed(world, end, start);
         }
 
