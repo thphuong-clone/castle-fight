@@ -201,7 +201,7 @@ public class AIController : MonoBehaviour {
 		while(true){
 			yield return new WaitForSeconds(0.5f);
 			if (ResourceSystem.p2_gold >= 0){
-				if (UnityEngine.Random.Range(0,100) > chanceToBuildBarrack()){//25% chance to build a house
+				if (UnityEngine.Random.Range(0,100) > chanceToBuildBarrack()){
 					//will later improve this, based on current number of unit and barrack
 					buildBarrack();
 					ResourceSystem.p2_gold -= unitCost[3];
@@ -304,12 +304,15 @@ public class AIController : MonoBehaviour {
 		float adjustment = 25 * weightRatio; 
 		float returnFloat = 100 - adjustment;
 		//		Debug.Log ("Chance to NOT build barrack : " + returnFloat.ToString());
+		if (possibleBuildPosition.Count <= 0)
+			return 200;
+
 		return returnFloat;
 	}
 
 	IEnumerator plusGold(){
 		while (true){
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.75f);
 			ResourceSystem.p2_gold ++;
 		}
 	}

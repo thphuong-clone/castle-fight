@@ -11,4 +11,8 @@ public class SceneSwitch : MonoBehaviour {
 	public void playMultiplayer(){
 		Application.LoadLevel ("2.2.MultiplayerScene");
 	}
+
+	public void testCortana(){
+		Application.LoadLevel ("3.1.CortanaTest");
+	}
 }

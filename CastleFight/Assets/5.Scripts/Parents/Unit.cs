@@ -159,7 +159,10 @@ public class Unit : MonoBehaviour {
 				if (info.attackType == 2 || info.attackType == 1)
 					attackMultiply = 0.45f;
 				else
-					attackMultiply = 1;
+					if (info.attackType == 3)
+						attackMultiply = 0.75f;
+					else
+						attackMultiply = 1;
 			}
 
 			break;

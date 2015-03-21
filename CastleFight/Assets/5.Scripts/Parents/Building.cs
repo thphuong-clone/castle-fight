@@ -15,6 +15,7 @@ public class Building : Unit {
 	
 	public override void Awake (){
 		PlayerController.reupdateSoldier ();
+		StartCoroutine (gainHealth ());
 		base.Awake ();
 	}
 
@@ -22,4 +23,15 @@ public class Building : Unit {
 		PathFinder.GridMapUtils.MakeWorld ();
 		PlayerController.reupdateSoldier ();
 	}
+
+	IEnumerator gainHealth(){
+		while (true) {
+			yield return new WaitForSeconds(1);
+			if (this.health < this.maxHealth) 
+				this.health += 0.01f * this.maxHealth;
+			if (this.health > this.maxHealth)
+				this.health = this.maxHealth;
+		}
+	}
+
 }

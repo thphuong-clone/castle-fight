@@ -315,11 +315,13 @@ public class Caravan : MonoBehaviour {
 
 	void destinationComplete(){
 		if (currentNode > 0) {
-			ResourceSystem.p1_gold += 100;
+			ResourceSystem.p1_gold += 200;
+			ResourceSystem.p2_gold += 50;
 			//give player 1 the money
 		}
 		else {
-			ResourceSystem.p2_gold += 100;
+			ResourceSystem.p1_gold += 50;
+			ResourceSystem.p2_gold += 200;
 			//give player 2 the money
 		}
 		PlayerController.caravanList.Remove (this);
