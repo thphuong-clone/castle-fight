@@ -11,6 +11,7 @@ public class SurvivalMode : MonoBehaviour
     public HorseMan horsemanPrefab;
     public Gladiator gladiatorPrefab;
     public Cannon cannonPrefab;
+    public MPSurvivalMode.UI ui;
 
     private float[] COLUMN = { -1, 1, 3, -3 ,
                                -0.4f, 1.4f, 3.4f, -2.4f,
@@ -61,7 +62,7 @@ public class SurvivalMode : MonoBehaviour
             Dictionary<int, int> units = ChooseUnit(waveStrength);
 
             //ui display units on this wave
-
+            ui.ShowWaveAnnouncement(units);
             //foreach (KeyValuePair<int, int> k in units)
             //{
             //    Debug.Log(k.Key + ": " + k.Value);
