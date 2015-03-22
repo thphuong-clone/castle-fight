@@ -55,6 +55,7 @@
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SelectedSoldier.cs" />
      <Compile Include="Assets\2.SceneAssets\2.2.MPSurvivalMode\InputManager.cs" />
      <Compile Include="Assets\2.SceneAssets\2.2.MPSurvivalMode\MPSurvivalGame.cs" />
+     <Compile Include="Assets\2.SceneAssets\2.2.MPSurvivalMode\SurvivalMode.cs" />
      <Compile Include="Assets\2.SceneAssets\2.2.MPSurvivalMode\UI.cs" />
      <Compile Include="Assets\2.SceneAssets\3.1.CortanaTest\Dialogue.cs" />
      <Compile Include="Assets\2.SceneAssets\3.1.CortanaTest\TestCortana.cs" />

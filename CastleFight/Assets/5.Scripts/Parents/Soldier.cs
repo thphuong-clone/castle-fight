@@ -620,7 +620,23 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
-    //	void OnDestroy(){
-    //		Debug.LogWarning ("I am killed :(");
-    //	}
+    void OnDestroy()
+    {
+        //this is soooooooooo ugly, find a way to change it later >.<
+        //survival mode only
+        if (!isHuman)
+        {
+            if (isPlayerOne)
+            {
+                SurvivalMode.blueTeamRemaining--;
+                //Debug.Log("blue: " + SurvivalMode.blueTeamRemaining);
+            }
+            else
+            {
+                SurvivalMode.redTeamRemaining--;
+                //Debug.Log("red: " + SurvivalMode.redTeamRemaining);
+
+            }
+        }
+    }
 }
