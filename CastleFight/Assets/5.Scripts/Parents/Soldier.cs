@@ -194,6 +194,9 @@ public class Soldier : Unit
                 //Debug.Log("next position is " + nextPosition);
                 if (nextPathNode != null)
                 {
+                    Debug.Log(nextPathNode.position);
+                    Debug.Log(GridMapUtils.GetRealPosition(nextPathNode.position));
+
                     doneMoving = false;
                     nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
                 }

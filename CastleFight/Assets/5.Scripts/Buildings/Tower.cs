@@ -17,6 +17,11 @@ public class Tower : Building {
 		isAttacking = false;
 	}
 
+    public override PathFinder.Position2D[] GetOccupyingGrid()
+    {
+        return GameUtil.GameConstant.GRID_FOUR;
+    }
+
 	IEnumerator findEnemy(){
 		//while not finding enemy around, find an enemy in the range
 		while (!isAttacking) {
