@@ -194,6 +194,9 @@ public class Soldier : Unit
                 //Debug.Log("next position is " + nextPosition);
                 if (nextPathNode != null)
                 {
+//                    Debug.Log(nextPathNode.position);
+//                    Debug.Log(GridMapUtils.GetRealPosition(nextPathNode.position));
+
                     doneMoving = false;
                     nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
                 }
@@ -567,6 +570,9 @@ public class Soldier : Unit
         return false;
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position
+    /// </summary>
     public void Deploy(Vector2 position)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -575,6 +581,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position, set the state of the soldier
+    /// </summary>
 	public void Deploy(Vector3 _vector){
 		Position2D start = GridMapUtils.GetTile(transform.position);
 		Position2D end = GridMapUtils.GetTile(new Vector2(_vector.x,_vector.y));
@@ -592,6 +601,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position
+    /// </summary>
     public void Deploy(float x, float y)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -600,6 +612,9 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
+    /// <summary>
+    /// Deploy soldier to desired position, set the state of the soldier
+    /// </summary>
     public void Deploy(float x, float y, int state)
     {
         Position2D start = GridMapUtils.GetTile(transform.position);
@@ -609,7 +624,23 @@ public class Soldier : Unit
         EndCurrentMove();
     }
 
-    //	void OnDestroy(){
-    //		Debug.LogWarning ("I am killed :(");
-    //	}
+    void OnDestroy()
+    {
+        //this is soooooooooo ugly, find a way to change it later >.<
+        //survival mode only
+        if (!isHuman)
+        {
+            if (isPlayerOne)
+            {
+                SurvivalMode.blueTeamRemaining--;
+                //Debug.Log("blue: " + SurvivalMode.blueTeamRemaining);
+            }
+            else
+            {
+                SurvivalMode.redTeamRemaining--;
+                //Debug.Log("red: " + SurvivalMode.redTeamRemaining);
+
+            }
+        }
+    }
 }

@@ -56,6 +56,10 @@ public class Barrack : Building {
 		StartCoroutine (buildSoldier());
 	}
 
+    public override PathFinder.Position2D[] GetOccupyingGrid()
+    {
+        return GameUtil.GameConstant.GRID_FOUR;
+    }
 
 	IEnumerator buildSoldier(){
 		while (true) {

@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\ScreenShotTakers.cs">
     <Files>
-      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" Line="73" Column="52" />
-      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\MainMenuController.cs" Line="1" Column="1" />
+      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" Line="59" Column="41" />
+      <File FileName="Assets\5.Scripts\ScreenShotTakers.cs" Line="13" Column="4" />
+      <File FileName="Assets\2.SceneAssets\0.0.Prescene\Prescene.cs" Line="7" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

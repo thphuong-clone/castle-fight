@@ -49,7 +49,7 @@ public class MPSurvivalGame : MonoBehaviour
         StartCoroutine(StartWave());
     }
 
-    void SendGold(int amount, int side)
+    public void SendGold(int amount, int side)
     {
         if (side == GameConstant.TEAM_BLUE)
             p2Mob += amount;
@@ -75,7 +75,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    int StrengthDiff()
+    private int StrengthDiff()
     {
         p1Strength = PlayerController.p1_listOfSoldierLists[0].Count * 20 + PlayerController.p1_listOfSoldierLists[1].Count * 24
             + PlayerController.p1_listOfSoldierLists[2].Count * 42 + PlayerController.p1_listOfSoldierLists[3].Count * 60
@@ -88,7 +88,7 @@ public class MPSurvivalGame : MonoBehaviour
         return p1Strength - p2Strength;
     }
 
-    void CalculateMobStrength()
+    private void CalculateMobStrength()
     {
         int general;
         turn++;
@@ -151,11 +151,11 @@ public class MPSurvivalGame : MonoBehaviour
             {
                 sec = 6;
             }
-            yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(sec);
         }
     }
 
-    Dictionary<int, int> ChooseUnit(int s)
+    private Dictionary<int, int> ChooseUnit(int s)
     {
         Dictionary<int, int> units = new Dictionary<int, int>();
 
@@ -249,7 +249,7 @@ public class MPSurvivalGame : MonoBehaviour
         return units;
     }
 
-    void SpawnUnit(int type, int side, float x, float y)
+    private void SpawnUnit(int type, int side, float x, float y)
     {
         Soldier soldier;
 
@@ -291,7 +291,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    void SpawnFootman(int side, float x, float y)
+    private void SpawnFootman(int side, float x, float y)
     {
         Soldier footman = Instantiate<SwordMan>(swordmanPrefab);
 
@@ -310,7 +310,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    void SpawnArcher(int side, float x, float y)
+    private void SpawnArcher(int side, float x, float y)
     {
         Soldier archer = Instantiate<Archer>(archerPrefab);
 
@@ -329,7 +329,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    void SpawnKnight(int side, float x, float y)
+    private void SpawnKnight(int side, float x, float y)
     {
         Soldier knight = Instantiate<HorseMan>(horseManPrefab);
 
@@ -348,7 +348,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    void SpawnHeavyInfantry(int side, float x, float y)
+    private void SpawnHeavyInfantry(int side, float x, float y)
     {
         Soldier gladiatior = Instantiate<Gladiator>(gladiatorPrefab);
 
@@ -367,7 +367,7 @@ public class MPSurvivalGame : MonoBehaviour
         }
     }
 
-    void SpawnCannon(int side, float x, float y)
+    private void SpawnCannon(int side, float x, float y)
     {
         Soldier cannon = Instantiate<Cannon>(cannonPrefab);
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using PathFinder;
 
 public class PlayerController : MonoBehaviour {
-    public static SimpleWorld2D knownWorld = new SimpleWorld2D(9, 16);
+    public static SimpleWorld2D knownWorld = new SimpleWorld2D(18, 32);
 
 //The attack order for player one - the z dimension of the vector is the order.
 //0 = stay idle at current position, 1 is move, 2 is attack
@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour {
 			p1_soldierOrder.Add (Vector3.zero);
 			p2_soldierOrder.Add (Vector3.zero);
 		}
+
+        knownWorld = GridMapUtils.MakeWorld();
 	}
 
 

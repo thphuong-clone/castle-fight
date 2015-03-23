@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 
 public class MainCastle : Building {
+    public override PathFinder.Position2D[] GetOccupyingGrid()
+    {
+        return GameUtil.GameConstant.GRID_FOUR;
+    }
+
 	public override void Awake(){
 		StartCoroutine (checkAndHealSoldiers ());
 		base.Awake ();

@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class Wall : Building {
+    public override PathFinder.Position2D[] GetOccupyingGrid()
+    {
+        return GameUtil.GameConstant.GRID_TWO;
+    }
 
 	public override IEnumerator checkHealth (){
 		while (!isDead) {

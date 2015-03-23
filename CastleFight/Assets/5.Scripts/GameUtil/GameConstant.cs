@@ -1,4 +1,6 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
+using PathFinder;
 
 namespace GameUtil
 {
@@ -43,5 +45,17 @@ namespace GameUtil
         //team
         public static int TEAM_RED = 1;
         public static int TEAM_BLUE = 2;
+
+        //building grid
+        public static Position2D[] GRID_ONE = { new Position2D(0, 0) };
+
+        public static Position2D[] GRID_FOUR = { new Position2D(-1, -1), new Position2D(0, -1), 
+                                                 new Position2D(-1, 0), new Position2D(0, 0) };
+
+        public static Position2D[] GRID_TWO = { new Position2D(-1, 0), new Position2D(0, 0) };
+
+        public static Position2D[] GRID_SIX = { new Position2D(-1, -2), new Position2D(0, -2),
+                                                new Position2D(-1, -1), new Position2D(0, -1), 
+                                                new Position2D(-1, 0), new Position2D(0, 0)};
     }
 }

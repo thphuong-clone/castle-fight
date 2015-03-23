@@ -56,14 +56,50 @@ public class GameSetup : MonoBehaviour {
 
 	//press this button to play
 	public void playButton(){
-		//lots more stuff to come ....
-		
-		
-		if (MainMenuController.playSinglePlayer) {
-			Application.LoadLevel("2.1.SinglePlayerScene");	
+		//if the player play the survival maps
+		if (!isCastleFight) {
+			return;	
 		}
-		else{
-			Application.LoadLevel("2.2.MultiplayerScene");
+
+		//if play multi player
+		if (!MainMenuController.playSinglePlayer) {
+			switch(mapToPlay){
+			case 1: //The valley map
+				Application.LoadLevel("2.2.1.TheValleyMultiplayerMap");
+				break;
+			case 2://the maze map
+				Application.LoadLevel("2.2.0.MazeMultiplayer");
+				break;
+			case 3://two rivers
+				Application.LoadLevel("2.2.3.TwoRiversMultiplayerMap");
+				break;
+			case 4://four rivers
+				Application.LoadLevel("2.2.2.FourRiversMultiplayerMap");
+				break;
+			default:
+				Debug.Log("Error loading multiplayer map. I don't know why, honestly");
+				break;
+			}
+		}
+		else{//if not ....
+			switch(mapToPlay){
+			case 1: //The valley map
+				Application.LoadLevel("2.1.1.TheValleySinglePlayerMap");
+				break;
+			case 2://the maze map
+				Application.LoadLevel("2.1.0.MazeSinglePlayer");
+				break;
+			case 3://two rivers
+				Application.LoadLevel("2.1.2.TwoRiversSinglePlayerMap");
+				break;
+			case 4://four rivers
+				Application.LoadLevel("2.1.3.FourRiversSinglePlayerMap");
+				break;
+			default:
+				Debug.Log("Error loading multiplayer map. I don't know why, honestly");
+				break;
+			}
+
 		}
 	}
 	
@@ -72,7 +108,7 @@ public class GameSetup : MonoBehaviour {
 		foreach(Button b in fightMapList){
 			b.GetComponent<Image>().color =  new Color (0.7f,0.7f,0.7f,0.29411764705f);
 		}
-		fightMapList[map - 1].GetComponent<Image>().color =  new Color (1,1,1,0.60784313725f);
+		fightMapList[map - 1].GetComponent<Image>().color =  new Color (1,1,1,0.8f);
 
 		switch (map) {
 		case 1:
@@ -98,7 +134,7 @@ public class GameSetup : MonoBehaviour {
 		foreach(Button b in survivalMapList){
 			b.GetComponent<Image>().color =  new Color (0.7f,0.7f,0.7f,0.29411764705f);
 		}
-		survivalMapList[map - 1].GetComponent<Image>().color =  new Color (1,1,1,0.60784313725f);
+		survivalMapList[map - 1].GetComponent<Image>().color =  new Color (1,1,1,0.8f);
 		if (map == 1) {
 			mapInformation.text = "MAP: THE VALLEY";
 		}

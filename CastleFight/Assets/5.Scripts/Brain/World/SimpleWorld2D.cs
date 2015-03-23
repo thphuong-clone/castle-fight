@@ -24,6 +24,22 @@ namespace PathFinder
             gridMap[position.x, position.y] = status;
         }
 
+        public void SetPosition(int x, int y, bool status)
+        {
+            if (x < 0 || y < 0 || x >= width || y >= height)
+                return;
+            gridMap[x, y] = status;
+        }
+
+        public void SetPosition(Position2D position, Position2D[] area, bool value)
+        {
+            foreach (Position2D tile in area)
+            {
+                SetPosition(position.x + tile.x, position.y + tile.y, value);
+                //UnityEngine.Debug.Log((position.x + tile.x) + ", " + (position.y + tile.y) + " is " + value);
+            }
+        }
+
         public bool IsWalkable(Position2D position)
         {
             if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
@@ -110,6 +126,11 @@ namespace PathFinder
             {new Position2D(-1, 0), 1}, {new Position2D(1, 0), 1},
             {new Position2D(-1, -1), 2}, {new Position2D(0, -1), 1}, {new Position2D(1, -1), 2}
         };
+
+        public bool[,] GetGridMap()
+        {
+            return gridMap;
+        }
     }
 
 }

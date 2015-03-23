@@ -9,6 +9,10 @@ using UnityEngine;
 using System.Collections;
 
 public class Building : Unit {
+    public virtual PathFinder.Position2D[] GetOccupyingGrid()
+    {
+        return GameUtil.GameConstant.GRID_ONE;
+    }
 
 	public GameObject buildingSprite;
 	public GameObject unitAura;
