@@ -8,6 +8,8 @@ public class HorseMan :Soldier {
 			if (health <= 0){
 				isDead = true;
 				//push the unit back
+				if (r.mass != 5)
+					r.mass = 5;
 				r.velocity = Vector2.zero;
 				Vector2 force = calculateVelocity(destinatedPos);
 				force = new Vector2(force.x * 10 / moveSpeed,force.y * 10 / moveSpeed);

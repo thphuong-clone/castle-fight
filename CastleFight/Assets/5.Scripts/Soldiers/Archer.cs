@@ -116,6 +116,8 @@ public class Archer : Soldier {
 			yield return new WaitForSeconds(0.1f);	
 			if (health <= 0){
 				isDead = true;
+				if (r.mass != 2)
+					r.mass /= 2;
 				//push the unit back
 				r.velocity = Vector2.zero;
 				Vector2 force = calculateVelocity(destinatedPos);

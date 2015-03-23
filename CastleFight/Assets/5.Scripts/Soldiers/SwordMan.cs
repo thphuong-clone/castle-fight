@@ -8,11 +8,14 @@ public class SwordMan : Soldier {
 			yield return new WaitForSeconds(0.1f);	
 			if (health <= 0){
 				isDead = true;
+				if (r.mass != 2.5f)
+					r.mass = 2.5f;
 				//push the unit back
 				r.velocity = Vector2.zero;
 				Vector2 force = calculateVelocity(destinatedPos);
 				force = new Vector2(force.x * 10 / moveSpeed,force.y * 10 / moveSpeed);
 				r.AddForce( - calculateVelocity(destinatedPos) * 5000 / moveSpeed);
+
 				//remove the unit from the damn list
 				if (this.isPlayerOne)
 					PlayerController.p1_listOfSoldierLists[0].Remove(this);

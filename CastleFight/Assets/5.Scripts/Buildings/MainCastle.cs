@@ -104,6 +104,16 @@ public class MainCastle : Building {
 		
 	}
 
+	public override IEnumerator gainHealth(){
+		while (true) {
+			yield return new WaitForSeconds(1);
+			if (this.health < this.maxHealth) 
+				this.health += 0.005f * this.maxHealth;
+			if (this.health > this.maxHealth)
+				this.health = this.maxHealth;
+		}
+	}
+
 	public override void OnDestroy (){
 		if (this.isPlayerOne) {
 			PlayerController.p1_buildingList[0].Remove(this.gameObject.GetComponent<Building>());

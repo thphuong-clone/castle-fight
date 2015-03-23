@@ -315,7 +315,7 @@ public class Soldier : Unit
         //If touch the enemy
 
         r.drag = 100;
-
+		r.mass *= 4;
         if (!en.isDead)
         {
             //Deal damage to him, if this unit is not dead
@@ -343,6 +343,7 @@ public class Soldier : Unit
         if (soldierState == -1)
             soldierState = exState;
 
+		r.mass /= 4;
         r.drag = 12;
         ani.SetBool("Attack", false);
         isAttacking = false;

@@ -66,6 +66,8 @@ class TestCortana : MonoBehaviour
             if (!string.IsNullOrEmpty(Cortana.Interop.cortanaReceivedText))
             {
                 cortanaText.text = Cortana.Interop.cortanaReceivedText;
+				command = Cortana.Interop.cortanaReceivedText;
+				commandResolver(command);
             }
         }
     }
@@ -192,7 +194,7 @@ class TestCortana : MonoBehaviour
 		//this is the list of the soldier that is going to be commanded
 		List<Soldier> ls = PlayerController.p1_listOfSoldierLists [commandCase [0]];
 		//type of order, attack or move
-		Vector3 v = PlayerController.p1_soldierOrder [commandCase [0]];
+		//Vector3 v = PlayerController.p1_soldierOrder [commandCase [0]];
 		//set the position
 		Vector2 dPos = Vector2.zero;
 		switch (commandCase [3]) {

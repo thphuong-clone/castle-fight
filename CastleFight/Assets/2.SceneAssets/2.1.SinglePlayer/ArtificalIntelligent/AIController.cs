@@ -103,11 +103,20 @@ public class AIController : MonoBehaviour {
 			//issue an attack order
 		}
 		else{
+			if (strengthRatio <= 0.75f){
+				nextOrder = 3;
+				Debug.Log("Retreat!!!");
+				if (currentOrder != nextOrder)
+					retreatOrder();
+			}
+			else{
+				nextOrder = 2;
+				Debug.Log("defense");
+				if (currentOrder != nextOrder)
+					defenseOrder();
+			}
 			//currentOrder = 0;
-			nextOrder = 2;
-			Debug.Log("defense");
-			if (currentOrder != nextOrder)
-				defenseOrder();
+
 		}
 		//if not, first, attack the caravan, and heal all unit. if there is no caravan, group unit up, wait for power to come up
 
@@ -121,14 +130,16 @@ public class AIController : MonoBehaviour {
 			//foreach(Soldier s in PlayerController.p2_listOfSoldierLists[i]){
 				//if the unit is almost dead, heal it
 				if (s.health <= 0.325f * s.maxHealth){
-					Debug.Log("DIE");
+					//Debug.Log("DIE");
 					s.destinatedPos = new Vector2(0,5.5f);
 					s.EndCurrentMove();
 					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
 					s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.5f);
 					Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
-
-					s.soldierState = 1;
+					if (s.transform.position.y <= 5f)
+						s.soldierState = 1;
+					else
+						s.soldierState = 2;
 					s.nextPathNode = PathFinder.PathFinder.FindPath(PlayerController.knownWorld, start, end);
 				}
 				else if (s.health >= 0.85f * s.maxHealth){
@@ -189,6 +200,13 @@ public class AIController : MonoBehaviour {
 		}
 	}
 
+	void retreatOrder(){		
+		for (int i = 0; i < 5; i ++) {
+			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),5,2);
+			PlayerController.p2_soldierOrder[i] = orderList[i];
+		}
+	}
+
 	void attackCaravan(){
 		if (PlayerController.caravanList.Count == 0) {
 			return;		
@@ -197,7 +215,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	IEnumerator randomSpawnUnit(){
-		ResourceSystem.p2_gold = 50;
+		ResourceSystem.p2_gold = 140;
 		while(true){
 			yield return new WaitForSeconds(0.5f);
 			if (ResourceSystem.p2_gold >= 0){
@@ -312,7 +330,7 @@ public class AIController : MonoBehaviour {
 
 	IEnumerator plusGold(){
 		while (true){
-			yield return new WaitForSeconds(0.75f);
+			yield return new WaitForSeconds(1.15f);
 			ResourceSystem.p2_gold ++;
 		}
 	}

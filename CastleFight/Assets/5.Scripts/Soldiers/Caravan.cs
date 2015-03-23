@@ -333,10 +333,16 @@ public class Caravan : MonoBehaviour {
 		Destroy (p2_mapDisplayer);
 	}
 
-	void OnCollisionEnter2D(Collision2D col){
-//		if (col.gameObject.tag == "Soldier") {
-//			Debug.Log("Derp");		
-//		}
+	void OnCollisionEnter2D(Collision2D col){		
+		if (col.gameObject.tag == "Building") {
+			this.GetComponent<Collider2D>().isTrigger = true;	
+		}
+	}
+	
+	void OnTriggerExit2D(Collider2D col){
+		if (col.gameObject.tag == "Building") {
+			this.GetComponent<Collider2D>().isTrigger = false;	
+		}
 	}
 
 	//This function is absolutely useless, but I keep it here so that the game won't annoy me with the 

@@ -24,7 +24,7 @@ public class Building : Unit {
 		PlayerController.reupdateSoldier ();
 	}
 
-	IEnumerator gainHealth(){
+	public virtual IEnumerator gainHealth(){
 		while (true) {
 			yield return new WaitForSeconds(1);
 			if (this.health < this.maxHealth) 
