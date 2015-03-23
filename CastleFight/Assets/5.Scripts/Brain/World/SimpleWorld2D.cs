@@ -36,7 +36,7 @@ namespace PathFinder
             foreach (Position2D tile in area)
             {
                 SetPosition(position.x + tile.x, position.y + tile.y, value);
-                UnityEngine.Debug.Log((position.x + tile.x) + ", " + (position.y + tile.y) + " is " + value);
+                //UnityEngine.Debug.Log((position.x + tile.x) + ", " + (position.y + tile.y) + " is " + value);
             }
         }
 

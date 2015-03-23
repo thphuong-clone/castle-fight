@@ -1,7 +1,9 @@
-﻿/*
+﻿/**************************
+ * 
  * This class is responsible for the spawn of the caravan unit
- * The caravan is the only resource in the game.
-*/
+ * The caravan is the only resource in the game. Get it
+ * 
+**************************/
 using UnityEngine;
 using System.Collections;
 
@@ -9,10 +11,10 @@ public class CaravanSpawner : MonoBehaviour {
 	public Caravan caravanPrefab;
 
 	[SerializeField]
-	float caravanInitialDelay;//the time for the first caravan to appear to the game.
+	protected float caravanInitialDelay;//the time for the first caravan to appear to the game.
 
 	[SerializeField]
-	float caravanWaitTime;//the time for the caravan to be spawn
+	protected float caravanWaitTime;//the time for the caravan to be spawn
 
 	void Awake(){
 		StartCoroutine (caravanCountdown ());
@@ -26,10 +28,13 @@ public class CaravanSpawner : MonoBehaviour {
 		}
 	}
 
-	void spawnCaravan(){
+	protected virtual void spawnCaravan(){
 		Caravan newCaravan = (Caravan)Instantiate (caravanPrefab);
 		PlayerController.caravanList.Add (newCaravan);
-		newCaravan.transform.position = Vector3.zero;
+		newCaravan.transform.position = 
+			new Vector3(UnityEngine.Random.Range(-2f,2f),0.00001f,0);
+
+		newCaravan.transform.localRotation = Quaternion.Euler (new Vector3(0,0,UnityEngine.Random.Range(0.1f,359)));
 	}
 
 }

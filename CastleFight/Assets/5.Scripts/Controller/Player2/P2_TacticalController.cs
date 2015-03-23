@@ -24,6 +24,7 @@ public class P2_TacticalController : MonoBehaviour {
 	bool isAttackingOrder;
 	
 	void Awake(){
+		displayMap = GameObject.Find("Player2_DisplayMap");
 		isAttackingOrder = true;
 		orderButton.image.color = Color.red;
 		

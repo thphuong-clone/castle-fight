@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿/**************************
+ * 
+ * This class handles the behavior of the caravan
+ * Caravan is the main resource of this game, so every will try to rob them :(
+ * This is also responsible for the MAZE map since that is the first map developed
+ * 
+ *************************/ 
+
+using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using System;
@@ -8,7 +16,7 @@ public class Caravan : MonoBehaviour {
 	public int moveSpeed;
 
 	public GameObject aura;
-	SpriteRenderer auraColor;
+	protected SpriteRenderer auraColor;
 	Rigidbody2D r;
 
 	//0 for not follow anyone, 1 for following player one, and 2 for following player 2
@@ -20,9 +28,12 @@ public class Caravan : MonoBehaviour {
 	GameObject p2_mapDisplayer;
 
 	[SerializeField]
-	int currentNode;
+	protected int currentNode;
 
-	void Awake(){
+	protected int maximumNode;
+
+	protected virtual void Awake(){
+		maximumNode = 5;
 		currentNode = 0;
 		r = this.gameObject.GetComponent<Rigidbody2D> ();
 		auraColor = aura.gameObject.GetComponent<SpriteRenderer> ();
@@ -93,7 +104,7 @@ public class Caravan : MonoBehaviour {
 		}
 	}
 
-	void changeState(){		
+	protected virtual void changeState(){		
 		switch (followingState) {
 		case 0:
 			auraColor.color = new Color(1,1,1,0.21568627451f);
@@ -117,17 +128,17 @@ public class Caravan : MonoBehaviour {
 
 	}
 
-	Vector2 setUpDestinatedPos(){
+	protected virtual Vector2 setUpDestinatedPos(){
 		Vector2 returnVector = Vector2.zero;
 		if (followingState == 0) {
 			return returnVector;
 		}
 		switch (Mathf.Abs (currentNode)) {
 		case 0:
-			returnVector = Vector2.zero;
+			returnVector = new Vector2(0.00001f,0.00001f);
 			break;
 		case 1:
-			returnVector = new Vector2(3.5f,0);
+			returnVector = new Vector2(3.5f,0.00001f);
 			break;
 		case 2:
 			returnVector = new Vector2(3.5f,3);
@@ -154,30 +165,30 @@ public class Caravan : MonoBehaviour {
 	}
 
 	//move the the destinated position
-	void moveToPos(Vector2 _position){
+	protected void moveToPos(Vector2 _position){
 
 		if (followingState == 0)
 			return;
 
 		//This part is to fix a really weird bug that I don't know why it is happenning
-		if (followingState == 1 && currentNode == 1) {
-			//Debug.Log ("why?");
-			transform.localRotation = Quaternion.Euler(0,0,90);
-
-			Vector2 _returnVector = new Vector2 (-1, 0) * moveSpeed /4;
-			r.velocity = _returnVector;
-			if (Mathf.Abs (this.transform.position.x - _position.x) < 0.35f && Mathf.Abs (this.transform.position.y - _position.y) < 0.35f && followingState != 0) {
-				if (followingState == 1)
-					currentNode ++;
-				else
-					currentNode --;
-				
-				if (Mathf.Abs(currentNode) >= 6){
-					destinationComplete();
-				}
-			}
-			return;
-		}
+//		if (followingState == 1 && currentNode == 1) {
+//			//Debug.Log ("why?");
+//			transform.localRotation = Quaternion.Euler(0,0,90);
+//
+//			Vector2 _returnVector = new Vector2 (-1, 0) * moveSpeed /4;
+//			r.velocity = _returnVector;
+//			if (Mathf.Abs (this.transform.position.x - _position.x) < 0.35f && Mathf.Abs (this.transform.position.y - _position.y) < 0.35f && followingState != 0) {
+//				if (followingState == 1)
+//					currentNode ++;
+//				else
+//					currentNode --;
+//				
+//				if (Mathf.Abs(currentNode) > maximumNode){
+//					destinationComplete();
+//				}
+//			}
+//			return;
+//		}
 		//end of the weird bug fixxing part ????
 		float angle = 0;
 		float x = 0;
@@ -239,7 +250,7 @@ public class Caravan : MonoBehaviour {
 			else
 				currentNode --;
 
-			if (Mathf.Abs(currentNode) >= 6){
+			if (Mathf.Abs(currentNode) > maximumNode){
 				destinationComplete();
 			}
 		}
@@ -333,10 +344,16 @@ public class Caravan : MonoBehaviour {
 		Destroy (p2_mapDisplayer);
 	}
 
-	void OnCollisionEnter2D(Collision2D col){
-//		if (col.gameObject.tag == "Soldier") {
-//			Debug.Log("Derp");		
-//		}
+	void OnCollisionEnter2D(Collision2D col){		
+		if (col.gameObject.tag == "Building") {
+			this.GetComponent<Collider2D>().isTrigger = true;	
+		}
+	}
+	
+	void OnTriggerExit2D(Collider2D col){
+		if (col.gameObject.tag == "Building") {
+			this.GetComponent<Collider2D>().isTrigger = false;	
+		}
 	}
 
 	//This function is absolutely useless, but I keep it here so that the game won't annoy me with the 

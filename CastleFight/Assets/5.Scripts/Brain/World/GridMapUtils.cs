@@ -87,11 +87,11 @@ namespace PathFinder
                     //Debug.Log(GetTile(b.transform.position.x, b.transform.position.y));
                     Position2D buildingPosition = GetTile(b.transform.position.x, b.transform.position.y);
                     world.SetPosition(buildingPosition, b.GetOccupyingGrid(), true);
-                    Debug.Log("end " + b.name);
+                    //Debug.Log("end " + b.name);
                 }
             }
 
-            Debug.Log("end red");
+            //Debug.Log("end red");
 
             foreach (List<Building> lb in PlayerController.p2_buildingList)
             {
@@ -100,11 +100,11 @@ namespace PathFinder
                     //Debug.Log(GetTile(b.transform.position.x, b.transform.position.y));
                     Position2D buildingPosition = GetTile(b.transform.position.x, b.transform.position.y);
                     world.SetPosition(buildingPosition, b.GetOccupyingGrid(), true);
-                    Debug.Log("end " + b.name);
+                    //Debug.Log("end " + b.name);
                 }
             }
 
-            Debug.Log("end blue");
+            //Debug.Log("end blue");
 
             return world;
         }

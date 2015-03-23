@@ -1,11 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\Test.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\ScreenShotTakers.cs">
     <Files>
-      <File FileName="Assets\5.Scripts\Test.cs" Line="12" Column="17" />
-      <File FileName="Assets\2.SceneAssets\2.2.MPSurvivalMode\MPSurvivalGame.cs" Line="144" Column="1" />
-      <File FileName="Assets\5.Scripts\Parents\Unit.cs" Line="117" Column="8" />
-      <File FileName="Assets\2.SceneAssets\1.0.SceneSeletion\SceneSwitch.cs" Line="16" Column="42" />
+      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" Line="59" Column="41" />
+      <File FileName="Assets\5.Scripts\ScreenShotTakers.cs" Line="13" Column="4" />
+      <File FileName="Assets\2.SceneAssets\0.0.Prescene\Prescene.cs" Line="7" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

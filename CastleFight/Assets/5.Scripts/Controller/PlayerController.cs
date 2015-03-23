@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour {
 					p2_listOfSoldierLists[4].Add(s.gameObject.GetComponent<Cannon>());
 				break;
 			default:
-				Debug.Log("Errr,<color=red>WRONG</color>  name");
+				Debug.Log("Errr,<color=red>WRONG</color>  name : " + s.gameObject.name);
 				break;
 			}
 		}
