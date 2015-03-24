@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Linq;
 
 public class Dialogue
 {
@@ -23,13 +23,17 @@ public class Dialogue
 
         if (xmlPath != null)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlPath);
+            XDocument xmlDoc = new XDocument();
+            xmlDoc = XDocument.Load(xmlPath);
+
+            UnityEngine.Debug.Log(xmlPath);
 
             List<Speech> speechsInDialogue = new List<Speech>();
-            XmlNode root = xmlDoc.SelectSingleNode("dialogue");
+            XElement root = (XElement) xmlDoc.FirstNode;
 
-            foreach (XmlNode node in root.SelectNodes("speech"))
+            UnityEngine.Debug.Log(root == null);
+
+            foreach (XElement node in root.Elements("speech"))
             {
                 speechsInDialogue.Add(GetSpeech(node));
             }
@@ -38,12 +42,12 @@ public class Dialogue
         }
     }
 
-    public Speech GetSpeech(XmlNode node)
+    public Speech GetSpeech(XElement node)
     {
         Speech speech = new Speech();
 
-        speech.character = node.Attributes.GetNamedItem("character").Value;
-        speech.dialogueText = node.Attributes.GetNamedItem("dialogueText").Value;
+        speech.character = node.Attribute("character").Value;
+        speech.dialogueText = node.Attribute("dialogueText").Value;
 
         return speech;
     }
