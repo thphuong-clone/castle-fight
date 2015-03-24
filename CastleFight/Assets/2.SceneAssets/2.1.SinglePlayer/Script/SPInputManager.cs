@@ -34,8 +34,6 @@ public class SPInputManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		//if the player click the mouse (or touch the screen) Unity is sooooo awesome.
-		//The point is the detect the input of player to destroy the bomb.
 		//#if UNITY_EDITOR		
 		if (Input.GetMouseButtonDown(0)){
 			bool hitUI = false;

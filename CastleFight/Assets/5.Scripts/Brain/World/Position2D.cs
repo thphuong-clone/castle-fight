@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace PathFinder
 {
+    [Serializable]
     public class Position2D
     {
         public int x;

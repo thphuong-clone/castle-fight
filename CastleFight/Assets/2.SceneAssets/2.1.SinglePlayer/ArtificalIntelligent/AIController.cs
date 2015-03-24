@@ -305,7 +305,7 @@ public class AIController : MonoBehaviour {
 			//do nothing	
 		}
 
-		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld ();	
+		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld (MapManager.persistentWorld);	
 	}
 
 	//this function calculate should the AI build a barrack or not.

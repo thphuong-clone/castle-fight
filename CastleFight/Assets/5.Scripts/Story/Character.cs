@@ -4,9 +4,9 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public string name;
-    public UnityEngine.UI.Image portrait;
+    public Sprite portrait;
 
-    public Character(string name, UnityEngine.UI.Image portrait)
+    public Character(string name, Sprite portrait)
     {
         this.name = name;
         this.portrait = portrait;

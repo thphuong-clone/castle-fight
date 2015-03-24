@@ -24,7 +24,7 @@ public class Building : Unit {
 	}
 
 	public virtual void OnDestroy(){
-		PathFinder.GridMapUtils.MakeWorld ();
+		PathFinder.GridMapUtils.MakeWorld (MapManager.persistentWorld);
 		PlayerController.reupdateSoldier ();
 	}
 

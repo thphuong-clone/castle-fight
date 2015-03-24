@@ -59,6 +59,7 @@ public class StoryTeller : MonoBehaviour
 
             ChangeText(speech.dialogueText);
         }
+
     }
 
     void Update()
@@ -95,13 +96,16 @@ public class StoryTeller : MonoBehaviour
 
     void ChangeCharacter(Character nextCharacter)
     {
-        portrait.sprite = nextCharacter.portrait.sprite;
+        portrait.sprite = nextCharacter.portrait;
         characterName.text = nextCharacter.name;
+        LeanTween.alpha(portrait.gameObject.GetComponent<RectTransform>(), 1, 0.5f).setFrom(0).setIgnoreTimeScale(true);
+        LeanTween.textAlpha(characterName.gameObject.GetComponent<RectTransform>(), 1, 0.5f).setFrom(0).setIgnoreTimeScale(true);
     }
 
     void ChangeText(string nextText)
     {
         dialogueText.text = nextText;
+        LeanTween.textAlpha(dialogueText.gameObject.GetComponent<RectTransform>(), 1, 0.5f).setFrom(0).setIgnoreTimeScale(true);
     }
 
     public void LoadDialogue(string dialogueName)

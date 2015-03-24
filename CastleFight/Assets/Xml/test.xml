@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <dialogue>
-  <speech character="Prince" dialogueText="Hi, I am a prince"/>
-  <speech character="Chancellor" dialogueText="Hi, I am the new king"/>
+  <speech character="Prince" dialogueText="Hi, I am a prince."/>
+  <speech character="Chancellor" dialogueText="Hi, I am the new king."/>
+  <speech character="Chancellor" dialogueText="Would you go die please, Prince?"/>
+  <speech character="Prince" dialogueText="Ok, here you go."/>
+  <speech character="Prince" dialogueText="Bye!"/>
 </dialogue>

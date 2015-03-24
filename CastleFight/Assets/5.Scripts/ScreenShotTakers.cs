@@ -16,7 +16,7 @@ public class ScreenShotTakers : MonoBehaviour {
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			Debug.Log("Screenshot Captured : " + DateTime.Now.ToString() +  ".png");
-			Application.CaptureScreenshot(Application.persistentDataPath + DateTime.Now.ToString() +  ".png");		
+			Application.CaptureScreenshot(Application.persistentDataPath + "/" + DateTime.Now.GetHashCode() +  ".png");
 		}
 	}
 }

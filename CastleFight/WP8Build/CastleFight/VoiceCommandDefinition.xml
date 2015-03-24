@@ -2,13 +2,44 @@
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.1">
 
   <CommandSet xml:lang="en-gb">
-    <CommandPrefix>Castle Fight</CommandPrefix>
-    <Example>Speak to the game</Example>
+    <Example>What is your order</Example>
 
-    <Command Name="startBattle">
-      <Example>Battle</Example>
-      <ListenFor> {naturalLanguage} </ListenFor>
-      <Feedback> Starting Game... </Feedback>
+    <Command Name="orderKnight">
+      <Example>Rider Attack</Example>
+      <ListenFor> knight </ListenFor>
+      <ListenFor> rider </ListenFor>
+      <Feedback> Yes, Your Highness! </Feedback>
+      <Navigate/>
+    </Command>
+    
+    <Command Name="orderFootman">
+      <Example>Footman Attack</Example>
+      <ListenFor> swordman </ListenFor>
+      <ListenFor> footman </ListenFor>
+      <Feedback> Yes, Your Highness! </Feedback>
+      <Navigate/>
+    </Command>
+    
+    <Command Name="orderArcher">
+      <Example>Arcer Attack</Example>
+      <ListenFor> archer </ListenFor>
+      <Feedback> Yes, Your Highness! </Feedback>
+      <Navigate/>
+    </Command>
+    
+    <Command Name="orderHeavyInfantry">
+      <Example>Heavy Infantry Attack</Example>
+      <ListenFor> heavy infantry </ListenFor>
+      <ListenFor> gladiator </ListenFor>
+      <Feedback> Yes, Your Highness! </Feedback>
+      <Navigate/>
+    </Command>
+    
+    <Command Name="orderCannon">
+      <Example>Cannon Attack</Example>
+      <ListenFor> cannon </ListenFor>
+      <ListenFor> artillery </ListenFor>
+      <Feedback> Yes, Your Highness! </Feedback>
       <Navigate/>
     </Command>
 

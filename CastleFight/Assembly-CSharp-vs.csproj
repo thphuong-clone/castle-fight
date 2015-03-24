@@ -105,6 +105,8 @@
      <Compile Include="Assets\5.Scripts\Cortana\VoiceCommand.cs" />
      <Compile Include="Assets\5.Scripts\GameUtil\GameConstant.cs" />
      <Compile Include="Assets\5.Scripts\InputManager.cs" />
+     <Compile Include="Assets\5.Scripts\Map\Map.cs" />
+     <Compile Include="Assets\5.Scripts\Map\MapManager.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Building.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Soldier.cs" />
      <Compile Include="Assets\5.Scripts\Parents\Unit.cs" />

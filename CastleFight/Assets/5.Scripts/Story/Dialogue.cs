@@ -42,12 +42,8 @@ public class Dialogue
     {
         Speech speech = new Speech();
 
-        //UnityEngine.Debug.Log("weeeeeee");
-
         speech.character = node.Attributes.GetNamedItem("character").Value;
-        //UnityEngine.Debug.Log("name: " + speech.character);
         speech.dialogueText = node.Attributes.GetNamedItem("dialogueText").Value;
-        //UnityEngine.Debug.Log("text: " + speech.dialogueText);
 
         return speech;
     }

@@ -7,8 +7,8 @@ namespace PathFinder
 {
     public class GridMapUtils
     {
-        public static float tileHeight = 0.5f;
-        public static float tileWidth = 0.5f;
+        private static float tileHeight = 0.5f;
+        private static float tileWidth = 0.5f;
 
         //
         //NO custom grid map size for now, just use 9:16
@@ -41,8 +41,8 @@ namespace PathFinder
         public static Position2D GetTile(Vector2 position)
         {
             //convert zero point centric map to zero point top left map
-            float topLeftX = position.x - (-4.5f);
-            float topLeftY = 8 - position.y;
+            float topLeftX = (position.x - (-4.5f))/tileHeight;
+            float topLeftY = (8 - position.y)/tileWidth;
 
             int intX = (int)topLeftX;
             int intY = (int)topLeftY;
@@ -68,10 +68,10 @@ namespace PathFinder
 
         public static Vector2 GetRealPosition(int x, int y)
         {
-            float top = 8 - y;
-            float bottom = top - 1;
-            float left = x + (-4.5f);
-            float right = left + 1;
+            float top = 8 - y*tileHeight;
+            float bottom = top - 1*tileHeight;
+            float left = x*tileWidth + (-4.5f);
+            float right = left + 1*tileWidth;
             return new Vector2(((left + right) / 2)/tileHeight, ((top + bottom) / 2))/tileWidth;
         }
 
@@ -107,6 +107,36 @@ namespace PathFinder
             //Debug.Log("end blue");
 
             return world;
+        }
+
+        public static SimpleWorld2D MakeWorld(SimpleWorld2D persistentWorld)
+        {
+            if (persistentWorld != null)
+            {
+                SimpleWorld2D world = new SimpleWorld2D(persistentWorld);
+
+                foreach (List<Building> lb in PlayerController.p1_buildingList)
+                {
+                    foreach (Building b in lb)
+                    {
+                        Position2D buildingPosition = GetTile(b.transform.position.x, b.transform.position.y);
+                        world.SetPosition(buildingPosition, b.GetOccupyingGrid(), true);
+                    }
+                }
+
+                foreach (List<Building> lb in PlayerController.p2_buildingList)
+                {
+                    foreach (Building b in lb)
+                    {
+                        Position2D buildingPosition = GetTile(b.transform.position.x, b.transform.position.y);
+                        world.SetPosition(buildingPosition, b.GetOccupyingGrid(), true);
+                    }
+                }
+
+                return world;
+            }
+            else
+                return MakeWorld();
         }
 
         public static bool IsInsideGridCell(Vector2 position, Position2D cellPosition)

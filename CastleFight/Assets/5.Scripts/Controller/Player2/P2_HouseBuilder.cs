@@ -168,7 +168,7 @@ public class P2_HouseBuilder : MonoBehaviour {
 		}
 		
 		cancleBuilding ();
-		PlayerController.knownWorld = GridMapUtils.MakeWorld ();	
+		PlayerController.knownWorld = GridMapUtils.MakeWorld (MapManager.persistentWorld);	
 	}
 	
 	public void cancleBuilding(){
