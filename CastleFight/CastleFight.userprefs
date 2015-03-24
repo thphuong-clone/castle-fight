@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\ScreenShotTakers.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SP_UI.cs">
     <Files>
-      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" Line="59" Column="41" />
-      <File FileName="Assets\5.Scripts\ScreenShotTakers.cs" Line="13" Column="4" />
-      <File FileName="Assets\2.SceneAssets\0.0.Prescene\Prescene.cs" Line="7" Column="38" />
+      <File FileName="Assets\2.SceneAssets\MapAssets\1.TheValley\Valley_AI.cs" Line="1" Column="1" />
+      <File FileName="Assets\2.SceneAssets\2.1.SinglePlayer\ArtificalIntelligent\AIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\5.Scripts\Buildings\Barrack.cs" Line="1" Column="1" />
+      <File FileName="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SP_UI.cs" Line="101" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

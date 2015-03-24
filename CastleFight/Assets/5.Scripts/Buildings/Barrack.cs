@@ -35,15 +35,15 @@ public class Barrack : Building {
 	public Cannon cannonPrefab;
 	//The time cost it takes to build the unit.
 	[SerializeField]
-	float swordmanCost ;
+	public float swordmanCost ;
 	[SerializeField]
-	float archerCost;
+	public float archerCost;
 	[SerializeField]
-	float horsemanCost;
+	public float horsemanCost;
 	[SerializeField]
-	float gladiatorCost;
+	public float gladiatorCost;
 	[SerializeField]
-	float cannonCost;
+	public float cannonCost;
 
 	public override void Awake (){
 		base.Awake ();

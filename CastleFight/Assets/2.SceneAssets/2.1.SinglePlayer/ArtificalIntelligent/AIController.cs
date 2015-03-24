@@ -13,7 +13,7 @@ public class AIController : MonoBehaviour {
 	[SerializeField]public float AI_Gold;
 
 	//this is the order list.
-	[SerializeField]List<Vector3> orderList = new List<Vector3> (); 
+	[SerializeField]protected List<Vector3> orderList = new List<Vector3> (); 
 
 	[SerializeField]List<Vector3> possibleBuildPosition;
 
@@ -36,7 +36,7 @@ public class AIController : MonoBehaviour {
 		for (int i = 0; i < 5;i++)
 			orderList.Add (Vector3.zero);
 		
-		attackOrder();
+		//attackOrder();
 
 		AI_Gold = ResourceSystem.p2_gold;
 
@@ -81,7 +81,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	//this function decides what the AI should do - it's important
-	void whatShouldIDo(){
+	protected virtual void whatShouldIDo(){
 		//first, check if the current army power and the player army power
 		//evaluate the player strength
 		float playerStrength = PlayerController.p1_listOfSoldierLists [0].Count * 20 + PlayerController.p1_listOfSoldierLists [1].Count * 24
@@ -94,10 +94,10 @@ public class AIController : MonoBehaviour {
 
 		float strengthRatio = AIStrength / playerStrength;
 		//if the AI is overwhemingly stronger, 
-		if (strengthRatio >= 1.5f) {
+		if (strengthRatio >= 1.5f && Time.timeSinceLevelLoad > 30f) {
 			//currentOrder = 0;
 			nextOrder = 1;
-			Debug.Log("attack");
+			//Debug.Log("attack");
 			if (currentOrder != nextOrder)				
 				attackOrder();
 			//issue an attack order
@@ -105,13 +105,13 @@ public class AIController : MonoBehaviour {
 		else{
 			if (strengthRatio <= 0.75f){
 				nextOrder = 3;
-				Debug.Log("Retreat!!!");
+				//Debug.Log("Retreat!!!");
 				if (currentOrder != nextOrder)
 					retreatOrder();
 			}
 			else{
 				nextOrder = 2;
-				Debug.Log("defense");
+				//Debug.Log("defense");
 				if (currentOrder != nextOrder)
 					defenseOrder();
 			}
@@ -131,10 +131,10 @@ public class AIController : MonoBehaviour {
 				//if the unit is almost dead, heal it
 				if (s.health <= 0.325f * s.maxHealth){
 					//Debug.Log("DIE");
-					s.destinatedPos = new Vector2(0,5.5f);
+					s.destinatedPos = new Vector2(0,5.75f);
 					s.EndCurrentMove();
 					Position2D start = GridMapUtils.GetTile(s.transform.position.x,s.transform.position.y);
-					s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.5f);
+					s.destinatedPos = new Vector2(UnityEngine.Random.Range(-1,1.1f),5.75f);
 					Position2D end = GridMapUtils.GetTile(s.destinatedPos.x,s.destinatedPos.y);
 					if (s.transform.position.y <= 5f)
 						s.soldierState = 1;
@@ -186,21 +186,21 @@ public class AIController : MonoBehaviour {
 	}
 
 	//order the unit to go left, right up down, err, anywhere you like
-	void attackOrder(){		
+	protected void attackOrder(){		
 		for (int i = 0; i < 5; i ++) {
 			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),-7,2);
 			PlayerController.p2_soldierOrder[i] = orderList[i];
 		}
 	}
 
-	void defenseOrder(){		
+	protected virtual void defenseOrder(){		
 		for (int i = 0; i < 5; i ++) {
 			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),1,2);
 			PlayerController.p2_soldierOrder[i] = orderList[i];
 		}
 	}
 
-	void retreatOrder(){		
+	protected void retreatOrder(){		
 		for (int i = 0; i < 5; i ++) {
 			orderList[i] = new Vector3(UnityEngine.Random.Range(-1.5f,1.6f),5,2);
 			PlayerController.p2_soldierOrder[i] = orderList[i];
@@ -215,7 +215,7 @@ public class AIController : MonoBehaviour {
 	}
 
 	IEnumerator randomSpawnUnit(){
-		ResourceSystem.p2_gold = 140;
+		ResourceSystem.p2_gold = 80;
 		while(true){
 			yield return new WaitForSeconds(0.5f);
 			if (ResourceSystem.p2_gold >= 0){
@@ -288,7 +288,7 @@ public class AIController : MonoBehaviour {
 		build.transform.rotation = Quaternion.Euler (new Vector3(0,0,180));
 		build.unitAura.GetComponent<SpriteRenderer> ().color = new Color(0,0,1,0.58823529411f);
 		PlayerController.p2_buildingList [1].Add (build);
-		build.currentSoldierBuilt = UnityEngine.Random.Range(1,6);
+		build.currentSoldierBuilt = UnityEngine.Random.Range(4,6);
 		Vector3 buildPosition = possibleBuildPosition [UnityEngine.Random.Range (0,possibleBuildPosition.Count)];		
 		build.transform.position = buildPosition;
 		possibleBuildPosition.Remove (buildPosition);
@@ -304,7 +304,8 @@ public class AIController : MonoBehaviour {
 		catch{
 			//do nothing	
 		}
-
+		build.gladiatorCost *= 0.75f;
+		build.cannonCost *= 0.75f;
 		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld ();	
 	}
 
