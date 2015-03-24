@@ -26,12 +26,8 @@ public class Dialogue
             XDocument xmlDoc = new XDocument();
             xmlDoc = XDocument.Load(xmlPath);
 
-            UnityEngine.Debug.Log(xmlPath);
-
             List<Speech> speechsInDialogue = new List<Speech>();
             XElement root = (XElement) xmlDoc.FirstNode;
-
-            UnityEngine.Debug.Log(root == null);
 
             foreach (XElement node in root.Elements("speech"))
             {

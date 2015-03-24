@@ -14,9 +14,9 @@ namespace GameUtil
         public const int HEAVY_INFANTRY = 3;
         public const int CANNON = 4;
         //building
-        public static int BARRACK = 0;
-        public static int WALL = 1;
-        public static int TOWER = 2;
+        public const int BARRACK = 0;
+        public const int WALL = 1;
+        public const int TOWER = 2;
         //attack
         public static int ATTACK_TYPE_SWORDMAN = 1;
         public static int ATTACK_TYPE_ARCHER = 2;

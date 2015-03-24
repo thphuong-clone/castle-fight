@@ -49,6 +49,7 @@
      <Compile Include="Assets\2.SceneAssets\0.0.Prescene\Prescene.cs" />
      <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" />
      <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\MainMenuController.cs" />
+     <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\RandomBattleGenerator.cs" />
      <Compile Include="Assets\2.SceneAssets\1.1.SceneSeletion\SceneSwitch.cs" />
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\ArtificalIntelligent\AIController.cs" />
      <Compile Include="Assets\2.SceneAssets\2.1.SinglePlayer\Script\SPInputManager.cs" />
