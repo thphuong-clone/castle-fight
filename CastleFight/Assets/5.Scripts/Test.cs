@@ -25,6 +25,13 @@ public class Test : MonoBehaviour {
 				Time.timeScale = 3;
 		}
 
+		if (Input.GetKeyDown(KeyCode.A)){
+			if (Time.timeScale == 0.5f)
+				Time.timeScale =1;
+			else
+				Time.timeScale = 0.5f;
+		}
+
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 //			Application.CaptureScreenshot(count.ToString() + ".png");
 //			count ++;		

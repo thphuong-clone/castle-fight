@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using PathFinder;
 
 namespace GameUtil
@@ -13,9 +14,9 @@ namespace GameUtil
         public const int HEAVY_INFANTRY = 3;
         public const int CANNON = 4;
         //building
-        public static int BARRACK = 0;
-        public static int WALL = 1;
-        public static int TOWER = 2;
+        public const int BARRACK = 0;
+        public const int WALL = 1;
+        public const int TOWER = 2;
         //attack
         public static int ATTACK_TYPE_SWORDMAN = 1;
         public static int ATTACK_TYPE_ARCHER = 2;
@@ -57,5 +58,11 @@ namespace GameUtil
         public static Position2D[] GRID_SIX = { new Position2D(-1, -2), new Position2D(0, -2),
                                                 new Position2D(-1, -1), new Position2D(0, -1), 
                                                 new Position2D(-1, 0), new Position2D(0, 0)};
+
+        //story, use this anonymous class for now, will change to xml if have time
+        public static Dictionary<string, string> dialoguesIndex = new Dictionary<string, string>
+        {
+            {"test", "Assets/Xml/test.xml"}
+        };
     }
 }

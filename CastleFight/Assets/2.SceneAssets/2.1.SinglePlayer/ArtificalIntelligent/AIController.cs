@@ -304,9 +304,10 @@ public class AIController : MonoBehaviour {
 		catch{
 			//do nothing	
 		}
+
+		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld (MapManager.persistentWorld);	
 		build.gladiatorCost *= 0.75f;
 		build.cannonCost *= 0.75f;
-		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld ();	
 	}
 
 	//this function calculate should the AI build a barrack or not.

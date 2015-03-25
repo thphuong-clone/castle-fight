@@ -170,7 +170,7 @@ public class P1_HouseBuilder : MonoBehaviour
 
         //congratulations, you have a building!
         cancleBuilding();
-		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld ();	
+		PlayerController.knownWorld = PathFinder.GridMapUtils.MakeWorld (MapManager.persistentWorld);	
     }
 
     public void cancleBuilding(){

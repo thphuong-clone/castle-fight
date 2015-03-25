@@ -17,6 +17,20 @@ namespace PathFinder
             gridMap = new bool[width, height];
         }
 
+        public SimpleWorld2D(bool [,] map)
+        {
+            this.width = map.GetLength(0);
+            this.height = map.GetLength(1);
+            this.gridMap = map;
+        }
+
+        public SimpleWorld2D(SimpleWorld2D world)
+        {
+            this.width = world.width;
+            this.height = world.height;
+            this.gridMap = world.gridMap;
+        }
+
         public void SetPosition(Position2D position, bool status)
         {
             if (position.x < 0 || position.y < 0 || position.x >= width || position.y >= height)
@@ -126,6 +140,11 @@ namespace PathFinder
             {new Position2D(-1, 0), 1}, {new Position2D(1, 0), 1},
             {new Position2D(-1, -1), 2}, {new Position2D(0, -1), 1}, {new Position2D(1, -1), 2}
         };
+
+        public void SetGridMap(bool[,] gridMap)
+        {
+            this.gridMap = gridMap;
+        }
 
         public bool[,] GetGridMap()
         {

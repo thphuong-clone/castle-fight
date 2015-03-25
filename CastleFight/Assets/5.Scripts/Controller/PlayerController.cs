@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 			p2_soldierOrder.Add (Vector3.zero);
 		}
 
-        knownWorld = GridMapUtils.MakeWorld();
+        knownWorld = GridMapUtils.MakeWorld(MapManager.persistentWorld);
 	}
 
 
