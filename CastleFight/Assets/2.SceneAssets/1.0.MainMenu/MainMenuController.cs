@@ -13,8 +13,11 @@ public class MainMenuController : MonoBehaviour {
 	public GameObject gameSetupMenu;
 
 	public static bool playSinglePlayer;
+	
+	public GameObject tapToPlay;
 
 	void Awake(){
+		StartCoroutine (tapTapTap ());
 		playSinglePlayer = true;
 	}
 
@@ -73,4 +76,12 @@ public class MainMenuController : MonoBehaviour {
 		Debug.Log ("Yo");
 	}
 
+	IEnumerator tapTapTap(){
+		while (true) {
+			tapToPlay.gameObject.SetActive(true);
+			yield return new WaitForSeconds(0.75f);
+			tapToPlay.gameObject.SetActive(false);
+			yield return new WaitForSeconds(0.75f);
+		}
+	}
 }

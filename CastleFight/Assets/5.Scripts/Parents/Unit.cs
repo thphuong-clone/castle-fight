@@ -213,14 +213,17 @@ public class Unit : MonoBehaviour {
 		p1_mapDisplayer.transform.parent = p1_parent.transform;
 		p2_mapDisplayer.transform.parent = p2_parent.transform;
 
+
+		p1_mapDisplayer.transform.localScale = new Vector3 (1.5f,1.5f,1.5f);
+		p2_mapDisplayer.transform.localScale = new Vector3 (1.5f,1.5f,1.5f);
 		//Change the color of the display icon, red of blue 
 		if (this.isPlayerOne) {
-			p1_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(1,0,0,0.60784313725f);
-			p2_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(1,0,0,0.60784313725f);
+			p1_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(1,0,0,0.88235294117f);
+			p2_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(1,0,0,0.88235294117f);
 		}
 		else{
-			p1_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(0,0,1,0.60784313725f);
-			p2_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(0,0,1,0.60784313725f);
+			p1_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(0,0,1,0.88235294117f);
+			p2_mapDisplayer.GetComponent<SpriteRenderer>().color = new Color(0,0,1,0.88235294117f);
 		}
 		p2_mapDisplayer.transform.localRotation = Quaternion.Euler (new Vector3(0,0,0));
 		updateMapDisplay ();

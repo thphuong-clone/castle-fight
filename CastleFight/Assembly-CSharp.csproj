@@ -46,7 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\1.Scenes\Demo\DemoScript.cs" />
+     <Compile Include="Assets\1.Scenes\EpicLOGO\DemoScript.cs" />
      <Compile Include="Assets\2.SceneAssets\0.0.Prescene\Prescene.cs" />
      <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" />
      <Compile Include="Assets\2.SceneAssets\1.0.MainMenu\MainMenuController.cs" />

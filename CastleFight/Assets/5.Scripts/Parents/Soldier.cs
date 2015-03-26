@@ -184,7 +184,8 @@ public class Soldier : Unit
     {
         //if there are next node.
         if (node != null)
-        {
+		{
+			ani.SetBool("Attack", false);
             //if the unit is in the next node.
             if (doneMoving)
             {
@@ -202,7 +203,7 @@ public class Soldier : Unit
                 }
 				else
 				{
-					Debug.Log("den noi roi");
+					//Debug.Log("den noi roi");
 				}
             }
 
@@ -222,7 +223,8 @@ public class Soldier : Unit
     {
         if (!isAttacking)
         {
-
+			
+			ani.SetBool("Attack", false);
             Vector2 thisPos = new Vector2(transform.position.x, transform.position.y);
             //find all the collider in the range of the unit, which is 1.5 radius - maybe 2, I can't decide yet
             Collider2D[] col = Physics2D.OverlapCircleAll(thisPos, 2f);
@@ -322,7 +324,7 @@ public class Soldier : Unit
         //If touch the enemy
 
         r.drag = 100;
-		r.mass *= 4;
+		r.mass *= 2;
         if (!en.isDead)
         {
             //Deal damage to him, if this unit is not dead
@@ -350,7 +352,7 @@ public class Soldier : Unit
         if (soldierState == -1)
             soldierState = exState;
 
-		r.mass /= 4;
+		r.mass /= 2;
         r.drag = 12;
         ani.SetBool("Attack", false);
         isAttacking = false;

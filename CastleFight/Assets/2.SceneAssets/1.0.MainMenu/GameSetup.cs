@@ -20,6 +20,7 @@ public class GameSetup : MonoBehaviour {
 	public Text gameInformation;
 	public Text mapInformation;
 
+
 	[SerializeField]List<Button> fightMapList = new List<Button>();
 	[SerializeField]List<Button> survivalMapList = new List<Button>();
 
@@ -33,7 +34,7 @@ public class GameSetup : MonoBehaviour {
 			annoucingText.text = "SINGLE\nBATTLE";
 		else
 			annoucingText.text = "LOCAL\nBATTLE";		
-		
+
 	}
 
 	public void castleFightButton(){
@@ -58,6 +59,30 @@ public class GameSetup : MonoBehaviour {
 	public void playButton(){
 		//if the player play the survival maps
 		if (!isCastleFight) {
+			if (!MainMenuController.playSinglePlayer){
+				switch(mapToPlay){
+				case 1:
+					//load the valley multiplayer map
+					break;
+				case 2:
+					//load four rivers multiplayer map
+					break;
+				default:
+					break;				
+				}
+			}
+			else{
+				switch(mapToPlay){
+				case 1:
+					//load the valley single player map
+					break;
+				case 2:
+					//load four rivers single player map
+					break;
+				default:
+					break;				
+				}
+			}
 			return;	
 		}
 
@@ -143,4 +168,6 @@ public class GameSetup : MonoBehaviour {
 		}
 
 	}
+
+
 }
