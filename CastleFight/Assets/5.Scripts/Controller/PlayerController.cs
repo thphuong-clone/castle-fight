@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 //This function find all the soldier on the field and add that soldier to its approtiate list.
+	//funtion is called at awake
 	void updateSoldierList(){
 		//add all the unit on map to the list.
 		GameObject[] soldierArray = GameObject.FindGameObjectsWithTag ("Soldier");

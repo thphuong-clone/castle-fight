@@ -11,12 +11,17 @@ public class MainMenuController : MonoBehaviour {
 	public GameObject mainMenu;
 	public GameObject gameModesMenu;
 	public GameObject gameSetupMenu;
+	public GameObject constructionMenu;
+
+	public GameObject SPUI;
 
 	public static bool playSinglePlayer;
 	
 	public GameObject tapToPlay;
 
-	void Awake(){
+	public Text underConstruction;
+
+	void Enable(){
 		StartCoroutine (tapTapTap ());
 		playSinglePlayer = true;
 	}
@@ -28,12 +33,16 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void instantPlay(){
-		Debug.Log ("Magic!!!");	
+		//Debug.Log ("Magic!!!");	
+		SPUI.SetActive (true);
+		this.gameObject.SetActive (false);
 	}
 
 //functions for the game mode menu
 	public void playCampaign(){
-		Debug.Log ("Under construction!");
+		underConstruction.text = "CAMPAIGN";
+		hideEverything ();
+		constructionMenu.gameObject.SetActive (true);
 	}
 
 	public void playSingleBattle(){
@@ -49,7 +58,9 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void playOnline(){
-		Debug.Log ("Under construction!");
+		underConstruction.text = "ONLINE\nBATTLE";
+		hideEverything ();
+		constructionMenu.gameObject.SetActive (true);
 	}
 
 	public void backToMainMenu(){
@@ -70,10 +81,11 @@ public class MainMenuController : MonoBehaviour {
 		mainMenu.gameObject.SetActive (false);
 		gameModesMenu.gameObject.SetActive (false);
 		gameSetupMenu.gameObject.SetActive (false);
+		constructionMenu.gameObject.SetActive (false);
 	}
 	
 	public void moveBackOneLevel(){
-		Debug.Log ("Yo");
+		//Debug.Log ("Yo");
 	}
 
 	IEnumerator tapTapTap(){

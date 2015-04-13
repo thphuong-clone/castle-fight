@@ -22,6 +22,8 @@ public class P1_Controller : MonoBehaviour {
 	public GameObject moneyBackGround;
 	public Text playerMoney;
 
+	public GameObject winLose;
+
 	bool isIdle;
 	float idleTime;
 
@@ -76,6 +78,10 @@ public class P1_Controller : MonoBehaviour {
 
 	void Start(){
 		playerMoney.text = ResourceSystem.p1_gold.ToString();
+	}
+
+	void OnDisable(){
+		winLose.gameObject.SetActive (true);
 	}
 
 //hide all the UI element, if player cancel.

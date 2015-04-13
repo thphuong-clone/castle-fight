@@ -49,38 +49,28 @@ class RandomBattleGenerator : MonoBehaviour
         {
             int random = UnityEngine.Random.Range(0, 100);
 
-            if (random < 25)
+            if (random < 60)
             {
-                SpawnBuilding(GameConstant.BARRACK, position, GameConstant.TEAM_RED);
+                SpawnBuilding(GameConstant.BARRACK, position, side);
             }
-            else if (random >= 25 && random < 50)
+            else if (random >= 60 && random < 70)
             {
-                SpawnBuilding(GameConstant.TOWER, position, GameConstant.TEAM_RED);
+                SpawnBuilding(GameConstant.TOWER, position, side);
             }
         }
     }
 
     public void SpawnRandomUnit(int side)
     {
-        int lowBorder = 5;
-        float realLowBorder;
+        int unit = UnityEngine.Random.Range(0, 4);
 
         if (side == GameConstant.TEAM_RED)
-            realLowBorder = -8 + lowBorder;
-        else if (side == GameConstant.TEAM_BLUE)
-            realLowBorder = 8 - lowBorder;
-        else
-            return;
-
-        for (int i = 0; i < unitAmount; i++)
         {
-            float x;
-            float y;
-
-            //while (PlayerController.knownWorld.IsWalkable(GridMapUtils.GetTile(x, y)))
-            //{
-
-            //}
+            SpawnUnit(unit, new Vector2(0.5f, -0.4f), side);
+        }
+        else if (side == GameConstant.TEAM_BLUE)
+        {
+            SpawnUnit(unit, new Vector2(-0.5f, 0.5f), side);
         }
     }
 
@@ -91,10 +81,12 @@ class RandomBattleGenerator : MonoBehaviour
         switch (type)
         {
             case GameConstant.BARRACK:
-                building = Instantiate<Barrack>(barrackPrefab);
+				building = Instantiate<Barrack>(barrackPrefab);
+				building.transform.name = "Barrack";
                 break;
             case GameConstant.TOWER:
-                building = Instantiate<Tower>(towerPrefab);
+				building = Instantiate<Tower>(towerPrefab);
+				building.transform.name = "WatchTower";
                 break;
             default:
                 building = new Building();
@@ -105,12 +97,21 @@ class RandomBattleGenerator : MonoBehaviour
         if (side == GameConstant.TEAM_RED)
         {
             building.isPlayerOne = true;
-            building.gameObject.GetComponent<SpriteRenderer>().color = red;
+            building.unitAura.GetComponent<SpriteRenderer>().color = red;
+            int healthPercent = UnityEngine.Random.Range(64, 200);
+            if (healthPercent > 100)
+                healthPercent = 100;
+            building.health = healthPercent * building.maxHealth / 100;
         }
         else if (side == GameConstant.TEAM_BLUE)
         {
             building.isPlayerOne = false;
-            building.gameObject.GetComponent<SpriteRenderer>().color = blue;
+            building.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
+            int healthPercent = UnityEngine.Random.Range(27, 200);
+            if (healthPercent > 100)
+                healthPercent = 100;
+            building.health = healthPercent * building.maxHealth / 100;
+            building.unitAura.GetComponent<SpriteRenderer>().color = blue;
         }
     }
 
@@ -122,19 +123,24 @@ class RandomBattleGenerator : MonoBehaviour
         {
             case GameConstant.SWORDMAN:
                 soldier = Instantiate<SwordMan>(swordmanPrefab);
-                break;
+				soldier.transform.name = "SwordMan";
+				break;
             case GameConstant.ARCHER:
-                soldier = Instantiate<Archer>(archerPrefab);
+				soldier = Instantiate<Archer>(archerPrefab);
+				soldier.transform.name = "Archer";
                 break;
             case GameConstant.KNIGHT:
-                soldier = Instantiate<HorseMan>(horsemanPrefab);
+				soldier = Instantiate<HorseMan>(horsemanPrefab);
+				soldier.transform.name = "HorseMan";
                 break;
             case GameConstant.HEAVY_INFANTRY:
-                soldier = Instantiate<Gladiator>(gladiatorPrefab);
+				soldier = Instantiate<Gladiator>(gladiatorPrefab);
+				soldier.transform.name = "Gladiator";
                 break;
             case GameConstant.CANNON:
-                soldier = Instantiate<Cannon>(cannonPrefab);
-                break;
+				soldier = Instantiate<Cannon>(cannonPrefab);
+				soldier.transform.name = "Cannon";
+	            break;
             default:
                 soldier = new Soldier();
                 break;

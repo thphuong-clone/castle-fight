@@ -1,10 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\5.Scripts\Parents\Soldier.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\UnityProjects\New Unity Project\Assets\BallDropping.cs">
     <Files>
-      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\MainMenuController.cs" Line="20" Column="33" />
-      <File FileName="Assets\2.SceneAssets\1.0.MainMenu\GameSetup.cs" Line="37" Column="1" />
-      <File FileName="Assets\5.Scripts\Parents\Soldier.cs" Line="355" Column="14" />
+      <File FileName="..\..\..\UnityProjects\New Unity Project\Assets\BallDropping.cs" Line="9" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MainCastle : Building {
     public override PathFinder.Position2D[] GetOccupyingGrid()
@@ -104,9 +105,34 @@ public class MainCastle : Building {
 		}
 		yield return new WaitForSeconds (0.5f);
 		this.gameObject.transform.position = new Vector3(100,100,100);
+		loseFunction ();
 		yield return new WaitForSeconds (5f);
 		Destroy (this.gameObject);
 		
+	}
+
+	void loseFunction(){
+		Time.timeScale = 0.00000001f;
+		//maybe I need an if else to check the game type so that ...
+		//or a static variable to check the game type ....
+		try{			
+			GameObject.Find ("Player1-UI").gameObject.SetActive(false);
+			GameObject.Find ("Player2-UI").gameObject.SetActive (false);
+			//GameObject.Find ("WinLose Annoucement").gameObject.SetActive(true);
+			if (this.isPlayerOne) {
+				GameObject.Find ("P1_Winning Text").gameObject.GetComponent<Text>().text = "BOOOOO\nYOU LOSE!!!";
+				GameObject.Find ("P2_Winning Text").gameObject.GetComponent<Text>().text = "CONGRATULATION\nYOU WIN!!!!";
+			}
+			else{
+				GameObject.Find ("P2_Winning Text").gameObject.GetComponent<Text>().text = "BOOOOO\nYOU LOSE!!!";
+				GameObject.Find ("P1_Winning Text").gameObject.GetComponent<Text>().text = "CONGRATULATION\nYOU WIN!!!!";		
+			}
+		}
+		catch{
+			GameObject.FindObjectOfType<SP_UI>().showWindLose(!this.isPlayerOne);
+		}
+
+
 	}
 
 	public override IEnumerator gainHealth(){

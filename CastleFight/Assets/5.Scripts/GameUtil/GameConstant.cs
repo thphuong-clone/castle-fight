@@ -43,6 +43,15 @@ namespace GameUtil
         public static int PRICE_HEAVY_INFANTRY = 60;
         public static int PRICE_CANNON = 46;
 
+        public static Dictionary<int, int> UNIT_PRICE = new Dictionary<int, int>
+        {
+            {SWORDMAN, PRICE_SWORDMAN},
+            {ARCHER, PRICE_ARCHER},
+            {KNIGHT, PRICE_HORSEMAN},
+            {HEAVY_INFANTRY, PRICE_HEAVY_INFANTRY},
+            {CANNON, PRICE_CANNON}
+        };
+
         //team
         public static int TEAM_RED = 1;
         public static int TEAM_BLUE = 2;

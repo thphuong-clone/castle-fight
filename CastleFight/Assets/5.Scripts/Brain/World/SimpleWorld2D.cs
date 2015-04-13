@@ -17,7 +17,7 @@ namespace PathFinder
             gridMap = new bool[width, height];
         }
 
-        public SimpleWorld2D(bool [,] map)
+        public SimpleWorld2D(bool[,] map)
         {
             this.width = map.GetLength(0);
             this.height = map.GetLength(1);
@@ -66,6 +66,19 @@ namespace PathFinder
             if (x < 0 || y < 0 || x >= width || y >= height)
                 return false;
             return !gridMap[x, y];
+        }
+
+        public bool IsNarrowPosition(Position2D position)
+        {
+            foreach (Position2D sur in neighbors.Keys)
+            {
+                if (!IsWalkable(position.x + sur.x, position.y + sur.y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool HasLineOfSight(Position2D start, Position2D end)

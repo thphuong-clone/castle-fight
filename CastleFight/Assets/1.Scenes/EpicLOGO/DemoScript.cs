@@ -40,7 +40,7 @@ public class DemoScript : MonoBehaviour {
 		swordPosition = bossSword.transform.position;
 		castle_one.transform.position += new Vector3 (0,30,0);
 		castle_two.transform.position += new Vector3 (0,30,0);
-		bossSword.transform.position += new Vector3 (0, 20, 0);
+		bossSword.transform.position += new Vector3 (0, 25, 0);
 		firstSword.transform.position = new Vector3 (-20.5f,-20,0);
 		secondSword.transform.position = new Vector3 (20.5f,-20,0);
 		kickAssLogo.transform.position = new Vector3 (0,-30,0);
@@ -172,14 +172,14 @@ public class DemoScript : MonoBehaviour {
 		mainCamera.GetComponent<Animator>().SetBool("AnotherShake",true);
 		for (int i = 0; i < 999999999; i ++)  {
 			fatherCamera.transform.position = Vector3.MoveTowards
-				(fatherCamera.transform.position, new Vector3(0,16,0),Time.deltaTime * speed / 40);
+				(fatherCamera.transform.position, new Vector3(0,22,0),Time.deltaTime * speed / 40);
 
-			if (fatherCamera.transform.position.y >= 11.5f){					
+			if (fatherCamera.transform.position.y >= 16.5f){					
 				mainCamera.GetComponent<Animator>().SetBool("MassiveScreenShake",false);
 				mainCamera.GetComponent<Animator>().SetBool("AnotherShake",false);
 			}
 
-			if (fatherCamera.transform.position == new Vector3(0,16,0)){
+			if (fatherCamera.transform.position == new Vector3(0,22,0)){
 				fatherCamera.transform.parent = bossSword.transform;
 				fatherCamera.transform.localPosition = Vector3.zero;
 				break;
@@ -218,6 +218,7 @@ public class DemoScript : MonoBehaviour {
 		mainCamera.GetComponent<Animator> ().SetBool ("ShakeNow",true);
 		yield return new WaitForSeconds (0.1f);
 		mainCamera.GetComponent<Animator> ().SetBool ("ShakeNow",false);
+		yield return null;
 	}
 
 	void activeAllStars(){

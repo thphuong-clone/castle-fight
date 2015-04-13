@@ -30,7 +30,10 @@ public class SP_UI : MonoBehaviour {
 	public Text playerMoney; 
 	//this button change the oder type, attack or move only
 	public Button orderButton;
-	
+
+	public GameObject winLoseCanvas;
+	public Text winText;
+
 	float idleTime;
 	bool isIdle;
 	void Awake(){
@@ -219,5 +222,17 @@ public class SP_UI : MonoBehaviour {
 		hideMajorUI ();
 		cancleEverythingButton.gameObject.SetActive (true);
 		houseBuiltMenu.gameObject.SetActive (true);
+	}
+
+	public void showWindLose(bool win){
+		hideAllUI ();
+		hideMajorUI ();
+		winLoseCanvas.gameObject.SetActive (true);
+		if (win){
+			winText.text = "WIN!!!!";
+		}
+		else{
+			winText.text = "LOSE :(";
+		}
 	}
 }

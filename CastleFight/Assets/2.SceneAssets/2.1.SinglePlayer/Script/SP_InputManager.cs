@@ -62,7 +62,9 @@ public class SP_InputManager : MonoBehaviour {
 					b.SP_isSelected();
 				}
 				if (hitInfo.transform.gameObject.tag == "SelectedSoldier"){
-
+					if (!hitInfo.transform.gameObject.GetComponent<SelectedSoldier>().parentSoldier.isPlayerOne)
+						return;
+					
 					SelectedSoldier s = hitInfo.transform.gameObject.GetComponent<SelectedSoldier>();
 					s.isSelected();
 					controlingState = -1;

@@ -82,6 +82,51 @@ public class Soldier : Unit
         isAttacking = false;
     }
 
+    //void Start()
+    //{
+    //    if (isPlayerOne)
+    //    {
+    //        this.gameObject.layer = 9;
+    //    }
+    //    else
+    //    {
+    //        this.gameObject.layer = 10;
+    //    }
+    //}
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Soldier other = (Soldier)col.gameObject.GetComponent("Soldier");
+        if (other != null && other.isPlayerOne == this.isPlayerOne)
+        {
+            if (soldierState == GameUtil.GameConstant.STATE_ATTACK_MOVE || soldierState == GameUtil.GameConstant.STATE_MOVE_ONLY)
+            {
+                //if (NearPoint(nextPosition) && nextPathNode != null && PlayerController.knownWorld.IsNarrowPosition(nextPathNode.position))
+                //{
+                //    this.GetComponent<Collider2D>().isTrigger = true;
+                //}
+                //else
+                //{
+                //    if (Physics2D.GetIgnoreCollision(this.GetComponent<Collider2D>(), col.collider))
+                //        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), col.collider, false);
+                //}
+                Deploy(destinatedPos);
+            }
+            //else
+            //{
+            //    if (Physics2D.GetIgnoreCollision(this.GetComponent<Collider2D>(), col.collider))
+            //        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), col.collider, false);
+            //}
+        }
+    }
+
+    //void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if (Physics2D.GetIgnoreCollision(this.GetComponent<Collider2D>(), col.collider))
+    //        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), col.collider, false);
+    //}
+
+
     //This loop will be caled almost every frame, for the soldier to do his action.
     IEnumerator soldierLoop()
     {
@@ -130,8 +175,8 @@ public class Soldier : Unit
                     yield return new WaitForSeconds(0.05f);
                     break;
             }
-//            if (listOfCollidingEnemy.Count == 0)
-//                collideEnemy = false;
+            //            if (listOfCollidingEnemy.Count == 0)
+            //                collideEnemy = false;
             yield return null;
         }
         yield return null;
@@ -195,16 +240,12 @@ public class Soldier : Unit
                 //Debug.Log("next position is " + nextPosition);
                 if (nextPathNode != null)
                 {
-//                    Debug.Log(nextPathNode.position);
-//                    Debug.Log(GridMapUtils.GetRealPosition(nextPathNode.position));
+                    //                    Debug.Log(nextPathNode.position);
+                    //                    Debug.Log(GridMapUtils.GetRealPosition(nextPathNode.position));
 
                     doneMoving = false;
                     nextPosition = GridMapUtils.GetRealPosition(nextPathNode.position);
                 }
-				else
-				{
-					//Debug.Log("den noi roi");
-				}
             }
 
             //Debug.Log("moving to " + nextPosition);
@@ -254,7 +295,7 @@ public class Soldier : Unit
                                     enemyList.Add(c.gameObject);
                                 }
                             }
-                                
+
 
                         }
                     }
@@ -302,10 +343,10 @@ public class Soldier : Unit
         //		float dis = this.radius + en.radius + 0.35f;
 
         //move close the the eemey
-		Collider2D thisCollider = this.gameObject.GetComponent<Collider2D> ();
-		Collider2D enemyCollider = enemy.gameObject.GetComponent<Collider2D> ();
+        Collider2D thisCollider = this.gameObject.GetComponent<Collider2D>();
+        Collider2D enemyCollider = enemy.gameObject.GetComponent<Collider2D>();
         int count = 0;
-        while (!Physics2D.IsTouching(thisCollider,enemyCollider))
+        while (!Physics2D.IsTouching(thisCollider, enemyCollider))
         {
             //while (calculateDistance(enemy) > dis) {
             r.velocity = calculateVelocity(new Vector2(enemy.transform.position.x, enemy.transform.position.y));
@@ -400,67 +441,67 @@ public class Soldier : Unit
     }
 
 
-//    public virtual void OnCollisionEnter2D(Collision2D col)
-//    {
-//        if (col.gameObject.tag == "Building" || col.gameObject.tag == "Soldier")
-//        {
-//            if (col.gameObject.GetComponent<Unit>().isPlayerOne != this.isPlayerOne)
-//            {
-//                listOfCollidingEnemy.Add(col.gameObject.GetComponent<Unit>());
-//                collideEnemy = true;
-//            }
-//        }
-//
-//    }
+    //    public virtual void OnCollisionEnter2D(Collision2D col)
+    //    {
+    //        if (col.gameObject.tag == "Building" || col.gameObject.tag == "Soldier")
+    //        {
+    //            if (col.gameObject.GetComponent<Unit>().isPlayerOne != this.isPlayerOne)
+    //            {
+    //                listOfCollidingEnemy.Add(col.gameObject.GetComponent<Unit>());
+    //                collideEnemy = true;
+    //            }
+    //        }
+    //
+    //    }
 
     //This function need rework
-//    public virtual void OnCollisionStay2D(Collision2D unit)
-//    {
-//        //		//if collide a "friendly" wall
-//        //		try{
-//        //			//if collider a friendly unit - this code will be get rid off by the A* pathfinding smart algorithm
-//        //			if (unit.gameObject.GetComponent<Unit>().isPlayerOne == this.isPlayerOne){
-//        //				if (unit.gameObject.tag == "building"){
-//        //					if (Mathf.Abs (transform.position.y - lastY) < 0.02f){
-//        //						r.velocity = new Vector2 (1, 0) * moveSpeed  / 2 * direction;
-//        //					}
-//        //				}
-//        //			}
-//        //			//enemy !!!!
-//        //			else{
-//        //				if (unit.gameObject.tag == "Building" && this.soldierState == 1) {
-//        //						collideEnemy = true;
-//        //					soldierState = 2;
-//        //				}
-//        //			}
-//        //		}
-//        //		//collide on a moutain, hmmmm
-//        //		catch(Exception e){
-//        //			string s = e.ToString();
-//        //			s = "";
-//        //			if (s != ""){
-//        //				Debug.Log(s);
-//        //			}
-//        ////			Debug.Log(e.ToString());
-//        //		}
-//
-//    }
+    //    public virtual void OnCollisionStay2D(Collision2D unit)
+    //    {
+    //        //		//if collide a "friendly" wall
+    //        //		try{
+    //        //			//if collider a friendly unit - this code will be get rid off by the A* pathfinding smart algorithm
+    //        //			if (unit.gameObject.GetComponent<Unit>().isPlayerOne == this.isPlayerOne){
+    //        //				if (unit.gameObject.tag == "building"){
+    //        //					if (Mathf.Abs (transform.position.y - lastY) < 0.02f){
+    //        //						r.velocity = new Vector2 (1, 0) * moveSpeed  / 2 * direction;
+    //        //					}
+    //        //				}
+    //        //			}
+    //        //			//enemy !!!!
+    //        //			else{
+    //        //				if (unit.gameObject.tag == "Building" && this.soldierState == 1) {
+    //        //						collideEnemy = true;
+    //        //					soldierState = 2;
+    //        //				}
+    //        //			}
+    //        //		}
+    //        //		//collide on a moutain, hmmmm
+    //        //		catch(Exception e){
+    //        //			string s = e.ToString();
+    //        //			s = "";
+    //        //			if (s != ""){
+    //        //				Debug.Log(s);
+    //        //			}
+    //        ////			Debug.Log(e.ToString());
+    //        //		}
+    //
+    //    }
 
 
 
     //On collision exit, I just want to make sure that there is 
-//    public virtual void OnCollisionExit2D(Collision2D col)
-//    {
-//        if (col.gameObject.tag == "Building" || col.gameObject.tag == "Soldier")
-//        {
-//            if (col.gameObject.GetComponent<Unit>().isPlayerOne != this.isPlayerOne)
-//            {
-//                listOfCollidingEnemy.Remove(col.gameObject.GetComponent<Unit>());
-//                if (listOfCollidingEnemy.Count == 0)
-//                    collideEnemy = false;
-//            }
-//        }
-//    }
+    //    public virtual void OnCollisionExit2D(Collision2D col)
+    //    {
+    //        if (col.gameObject.tag == "Building" || col.gameObject.tag == "Soldier")
+    //        {
+    //            if (col.gameObject.GetComponent<Unit>().isPlayerOne != this.isPlayerOne)
+    //            {
+    //                listOfCollidingEnemy.Remove(col.gameObject.GetComponent<Unit>());
+    //                if (listOfCollidingEnemy.Count == 0)
+    //                    collideEnemy = false;
+    //            }
+    //        }
+    //    }
 
 
     //Calculate the distance between two gameobject
@@ -544,6 +585,11 @@ public class Soldier : Unit
         //if (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y))
         //            Debug.Log("current: " + transform.position + "\nreached: " + p2);
         return (FloatEqual(transform.position.x, p2.x) && FloatEqual(transform.position.y, p2.y));
+    }
+
+    bool NearPoint(Vector2 pos)
+    {
+        return (Math.Abs(transform.position.x - pos.x) < 1 && Math.Abs(transform.position.y - pos.y) < 1);
     }
 
     //Check if the unit has reach the destinated position. Might increase a little bit more.

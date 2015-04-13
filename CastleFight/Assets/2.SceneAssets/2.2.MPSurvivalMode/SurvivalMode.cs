@@ -11,15 +11,12 @@ public class SurvivalMode : MonoBehaviour
     public HorseMan horsemanPrefab;
     public Gladiator gladiatorPrefab;
     public Cannon cannonPrefab;
-    public MPSurvivalMode.UI ui;
+    public MPSurvivalMode.UI p1UI;
+    public MPSurvivalMode.UI p2UI;
 
-    private float[] COLUMN = { -1, 1, 3, -3 ,
-                               -0.4f, 1.4f, 3.4f, -2.4f,
-                               0f, 1.8f, 3.8f, -2.8f
-                               -1, 1, 3, -3 ,
-                             -1, 1, 3, -3};
+    private float[] COLUMN = { -1, 1, 2, -2 };
 
-    private int wave;
+    public int wave;
     public int waveStrength = 200;
     public int wavePrepareDuration = 20;
 
@@ -32,6 +29,8 @@ public class SurvivalMode : MonoBehaviour
     private Queue<int> blueTeamUnits;
 
     private static Color neutral = new Color(0, 0, 0, 0.60784313725f);
+    private static Color red = new Color(1, 0, 0, 0.60784313725f);
+    private static Color blue = new Color(0, 0, 1, 0.60784313725f);
 
     void Update()
     {
@@ -41,6 +40,10 @@ public class SurvivalMode : MonoBehaviour
 
     void Awake()
     {
+        ResourceSystem.p1_gold = 200;
+        ResourceSystem.p2_gold = 200;
+
+
         redTeamRemaining = 0;
         blueTeamRemaining = 0;
 
@@ -58,21 +61,36 @@ public class SurvivalMode : MonoBehaviour
         while (true)
         {
             wave++;
+            p1UI.gameObject.SetActive(true);
+            p2UI.gameObject.SetActive(true);
 
             Dictionary<int, int> units = ChooseUnit(waveStrength);
 
-            //ui display units on this wave
-            ui.ShowWaveAnnouncement(units);
-            //foreach (KeyValuePair<int, int> k in units)
-            //{
-            //    Debug.Log(k.Key + ": " + k.Value);
-            //}
+            //yield return new WaitForSeconds(wavePrepareDuration + 1);
 
-            yield return new WaitForSeconds(wavePrepareDuration);
+            p1UI.Gold = (int)ResourceSystem.p1_gold;
+            p2UI.Gold = (int)ResourceSystem.p2_gold;
+            p1UI.ShowWaveAnnouncement(units);
+            p2UI.ShowWaveAnnouncement(units);
 
             //hide all ui
 
+            yield return new WaitForSeconds(wavePrepareDuration + 2);
+
+            foreach (int unit in p1UI.attackForce.buyUnitList)
+            {
+                blueTeamUnits.Enqueue(unit);
+            }
+            blueTeamRemaining += p1UI.attackForce.buyUnitList.Count;
+            foreach(int unit in p2UI.attackForce.buyUnitList)
+            {
+                redTeamUnits.Enqueue(unit);
+            }
+            redTeamRemaining += p2UI.attackForce.buyUnitList.Count;
+
             //start wave
+            SpawnDefenseUnit(GameConstant.TEAM_RED);
+            SpawnDefenseUnit(GameConstant.TEAM_BLUE);
             StartCoroutine(SpawnWave(redTeamUnits, GameConstant.TEAM_RED));
             StartCoroutine(SpawnWave(blueTeamUnits, GameConstant.TEAM_BLUE));
 
@@ -113,6 +131,24 @@ public class SurvivalMode : MonoBehaviour
             yield return new WaitForSeconds(10);
         }
 
+    }
+
+    private void SpawnDefenseUnit(int side)
+    {
+        if (side == GameConstant.TEAM_RED)
+        {
+            foreach (int unit in p1UI.defenseForce.buyUnitList)
+            {
+                SpawnUnit(unit, side, true, 0, -3);
+            }
+        }
+        else if (side == GameConstant.TEAM_BLUE)
+        {
+            foreach (int unit in p2UI.defenseForce.buyUnitList)
+            {
+                SpawnUnit(unit, side, true, 0, -3);
+            }
+        }
     }
 
     private Dictionary<int, int> ChooseUnit(int strength)
@@ -162,20 +198,6 @@ public class SurvivalMode : MonoBehaviour
         }
 
         return wave;
-    }
-
-    private void SendUnit(int unit, int side)
-    {
-        if (side == GameConstant.TEAM_BLUE)
-        {
-            blueTeamUnits.Enqueue(unit);
-            blueTeamRemaining++;
-        }
-        else if (side == GameConstant.TEAM_RED)
-        {
-            redTeamUnits.Enqueue(unit);
-            redTeamRemaining++;
-        }
     }
 
     private void SpawnUnit(int type, int side, Vector2 position)
@@ -259,6 +281,66 @@ public class SurvivalMode : MonoBehaviour
         {
             soldier.isPlayerOne = true;
             soldier.Deploy(x, 7);
+        }
+    }
+
+    private void SpawnUnit(int type, int side, bool isHuman, float x, float y)
+    {
+        Soldier soldier;
+
+        switch (type)
+        {
+            case GameConstant.SWORDMAN:
+                soldier = Instantiate<SwordMan>(swordmanPrefab);
+                break;
+            case GameConstant.ARCHER:
+                soldier = Instantiate<Archer>(archerPrefab);
+                break;
+            case GameConstant.KNIGHT:
+                soldier = Instantiate<HorseMan>(horsemanPrefab);
+                break;
+            case GameConstant.HEAVY_INFANTRY:
+                soldier = Instantiate<Gladiator>(gladiatorPrefab);
+                break;
+            case GameConstant.CANNON:
+                soldier = Instantiate<Cannon>(cannonPrefab);
+                break;
+            default:
+                soldier = new Soldier();
+                break;
+        }
+
+        soldier.isHuman = isHuman;
+        //soldier.GetComponent<SpriteRenderer>().color = neutral;
+        soldier.transform.position = new Vector2(x, y);
+        soldier.soldierState = GameConstant.STATE_ATTACK_MOVE;
+        if (side == GameConstant.TEAM_RED)
+        {
+            if (!isHuman)
+            {
+                soldier.isPlayerOne = false;
+                soldier.GetComponent<SpriteRenderer>().color = neutral;
+                soldier.Deploy(x, -7);
+            }
+            else
+            {
+                soldier.isPlayerOne = true;
+                soldier.GetComponent<SpriteRenderer>().color = red;
+            }
+        }
+        else if (side == GameConstant.TEAM_BLUE)
+        {
+            if (isHuman)
+            {
+                soldier.isPlayerOne = true;
+                soldier.GetComponent<SpriteRenderer>().color = neutral;
+                soldier.Deploy(x, 7);
+            }
+            else
+            {
+                soldier.isPlayerOne = false;
+                soldier.GetComponent<SpriteRenderer>().color = blue;
+            }
         }
     }
 }
